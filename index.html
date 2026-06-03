@@ -281,7 +281,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, runTransaction, serverTimestamp, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -597,7 +597,36 @@ async function markWirdComplete(studentId){
         const allCompleted=weekDates.every(date=>student.completedWirdDays.includes(date));
         if(allCompleted){ const weekKey=`${weekDates[0]}_to_${weekDates[6]}`; if(!student.weeklyBonusGiven) student.weeklyBonusGiven=[]; if(!student.weeklyBonusGiven.includes(weekKey)){ student.points+=currentBonusValue; student.pointsLog.push({type:'bonus',pts:currentBonusValue,note:`مكافأة إكمال الأسبوع الكامل (${weekKey})`,date:dateStr}); student.weeklyBonusGiven.push(weekKey); showToast(`🎉 مكافأة إكمال الأسبوع الكامل: +${currentBonusValue} نقطة`, true); } }
 
-        writeGroupsToFirebase(data); render();
+        // --- NEW UPDATE LOGIC START ---
+        let targetGroupIndex = -1, targetStickerIndex = -1, targetStudentIndex = -1;
+        for(let gi=0; gi<data.length; gi++){
+            for(let si=0; si<data[gi].stickers.length; si++){
+                const sti = data[gi].stickers[si].students.findIndex(s => s.id === studentId);
+                if(sti !== -1){ targetGroupIndex = gi; targetStickerIndex = si; targetStudentIndex = sti; break; }
+            }
+            if(targetStudentIndex !== -1) break;
+        }
+
+        if(targetStudentIndex !== -1) {
+            const updates = {};
+            const basePath = `groups/${targetGroupIndex}/stickers/${targetStickerIndex}/students/${targetStudentIndex}`;
+            updates[`${basePath}/points`] = student.points;
+            updates[`${basePath}/pointsLog`] = student.pointsLog;
+            updates[`${basePath}/completedWirdDays`] = student.completedWirdDays;
+            if(student.weeklyBonusGiven) {
+                updates[`${basePath}/weeklyBonusGiven`] = student.weeklyBonusGiven;
+            }
+            
+            await update(ref(db), updates).catch(err => {
+                console.error(err);
+                showToast('❌ حدث خطأ أثناء حفظ النقاط في الخادم', false);
+            });
+        }
+        
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        render();
+        // --- NEW UPDATE LOGIC END ---
+
         localStorage.setItem('lastCompletedDate',todayStr); localStorage.setItem('lastCompletedSiblingKey',getSiblingKey(student.name));
         showToast(`✅ تم تسجيل إنجاز الورد اليومي وأضيفت ${pointsToAdd} نقطة`, true);
         openStudentProfile(studentId);
@@ -641,7 +670,7 @@ function calculateDailyWird(profile, studentId){
     return {displayText,statsText:`إجمالي المحفوظ: ${totalPages} صفحة | صفحات اليوم: ${todayPages.length}`,todayPages,totalPages,cycleDay:dayIdx+1,isRestDay:false};
 }
 function getSurahLabel(page,surahIdx){ if(!surahIdx){ let surahs=QURAN_DATA.filter(q=>page>=q.s&&page<=q.e); return surahs.map(s=>s.n).join("، "); } else{ const s=QURAN_DATA.find(q=>q.i===surahIdx); return s?s.n:`ص${page}`; } }
-function populatePageSelectors(startId,endId,selectedStart=null,selectedEnd=null){ const start=document.getElementById(startId), end=document.getElementById(endId); if(!start||!end) return; let html='<option value="">صفحة...</option>'; for(let i=1;i<=604;i++){ let surahs=QURAN_DATA.filter(q=>i>=q.s&&i<=q.e); if(surahs.length){ surahs.forEach(s=>{ const val=`${i}-${s.i}`; html+=`<option value="${val}" ${selectedStart===val?'selected':''}>${i} - ${s.n}</option>`; }); } else{ const val=`${i}-0`; html+=`<option value="${val}" ${selectedStart===val?'selected':''}>${i}</option>`; } } start.innerHTML=html; end.innerHTML=html.replace(/selected/g,''); if(selectedStart) start.value=selectedStart; if(selectedEnd) end.value=selectedEnd; }
+function populatePageSelectors(startId,endId,selectedStart=null,selectedEnd=null){ const start=document.getElementById(startId), end=document.getElementById(endId); if(!start||end===null) return; let html='<option value="">صفحة...</option>'; for(let i=1;i<=604;i++){ let surahs=QURAN_DATA.filter(q=>i>=q.s&&i<=q.e); if(surahs.length){ surahs.forEach(s=>{ const val=`${i}-${s.i}`; html+=`<option value="${val}" ${selectedStart===val?'selected':''}>${i} - ${s.n}</option>`; }); } else{ const val=`${i}-0`; html+=`<option value="${val}" ${selectedStart===val?'selected':''}>${i}</option>`; } } start.innerHTML=html; end.innerHTML=html.replace(/selected/g,''); if(selectedStart) start.value=selectedStart; if(selectedEnd) end.value=selectedEnd; }
 
 // Move student 
 window.openMoveModal=function(gi,si,sti){ if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; } const student=data[gi].stickers[si].students[sti]; currentMoveData={gi,si,sti,studentId:student.id}; document.getElementById('moveCurrentStudentInfo').innerHTML=`<strong>${student.name}</strong><br><small>المجموعة الحالية: ${data[gi].name} - ${data[gi].stickers[si].title}</small>`; const gSel=document.getElementById('modalTargetGroup'); gSel.innerHTML='<option value="">-- اختر المجموعة --</option>'; data.forEach((g,idx)=>{ const opt=document.createElement('option'); opt.value=idx; opt.textContent=g.name; if(idx===gi) opt.textContent+=' (الحالية)'; gSel.appendChild(opt); }); gSel.onchange=function(){ const tgi=parseInt(this.value); const stSel=document.getElementById('modalTargetSticker'); stSel.innerHTML='<option value="">-- اختر الستكر --</option>'; if(!isNaN(tgi)){ data[tgi].stickers.forEach((st,si2)=>{ const opt=document.createElement('option'); opt.value=si2; opt.textContent=st.title; if(tgi===gi && si2===si) opt.textContent+=' (الحالي)'; stSel.appendChild(opt); }); } }; gSel.value=gi; const stSel=document.getElementById('modalTargetSticker'); stSel.innerHTML='<option value="">-- اختر الستكر --</option>'; data[gi].stickers.forEach((st,si2)=>{ const opt=document.createElement('option'); opt.value=si2; opt.textContent=st.title; if(si2===si) opt.textContent+=' (الحالي)'; stSel.appendChild(opt); }); modalMoveBackdrop.style.display='flex'; };

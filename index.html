@@ -2191,7 +2191,7 @@ document.getElementById('examSaveBtn').addEventListener('click', function() {
     if (currentExamId) { const exam = exams.find(e => e.id === currentExamId); if (exam && exam.questions) questions = exam.questions; }
     else if (window._tempExamQuestions) { questions = window._tempExamQuestions; }
     if (questions.length === 0) { showToast('❌ أضف سؤالاً واحداً على الأقل', false); return; }
-    const now = new Date();
+    const now = new Date().toISOString();
     if (currentExamId) {
         const exam = exams.find(e => e.id === currentExamId);
         if (exam) { exam.title=title; exam.description=description; exam.links=links; exam.showResults=showResults; exam.allowImages=allowImages; exam.questions=questions; exam.coverImages=[..._examCoverImages]; exam.updatedAt=now; saveExamsToFirebase(); showToast('✅ تم تحديث الاختبار بنجاح', true); }
@@ -2780,8 +2780,15 @@ window.handleInstructionsPdfUpload = async function(input) {
 
     // حفظ في Firebase
     instructionsData = { pages: uploadedUrls, updatedAt: new Date().toISOString() };
-    await set(ref(db, 'instructions'), instructionsData);
-    showToast(`✅ تم رفع ${total} صفحة بنجاح`, true);
+    localStorage.setItem('instructions_local', JSON.stringify(instructionsData));
+    try {
+        await set(ref(db, 'instructions'), instructionsData);
+        showToast(`✅ تم رفع ${total} صفحة بنجاح`, true);
+    } catch (err) {
+        console.error('Instructions save error:', err);
+        showToast('❌ فشل حفظ التعليمات في Firebase، تم الحفظ محلياً فقط', false);
+    }
+    statusEl.innerHTML = '';
     renderInstructionsSection();
 };
 
@@ -2803,9 +2810,10 @@ async function getImgBBKey() {
 }
 
 // تحميل بيانات التعليمات من Firebase
-let instructionsData = { pages: [] };
+let instructionsData = JSON.parse(localStorage.getItem('instructions_local')) || { pages: [] };
 onValue(ref(db, 'instructions'), snap => {
     instructionsData = snap.exists() ? snap.val() : { pages: [] };
+    localStorage.setItem('instructions_local', JSON.stringify(instructionsData));
     if (document.getElementById('instructionsSection')?.style.display !== 'none') renderInstructionsSection();
 });
 

@@ -3206,18 +3206,25 @@ window.addEventListener('popstate', function(event) {
     }
 });
 
+// ========== حل مشكلة فقدان التركيز (Focus) بشكل نهائي ==========
+let focusOutTimeout = null;
+
 document.addEventListener('focusin', (e) => {
     const t = e.target?.tagName;
     if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || e.target?.isContentEditable) {
+        if (focusOutTimeout) {
+            clearTimeout(focusOutTimeout); // إلغاء التحديث المعلق لحماية الحقل الجديد
+            focusOutTimeout = null;
+        }
         isRendering = true; 
     }
 });
 
 document.addEventListener('focusout', (e) => {
-    setTimeout(() => {
+    focusOutTimeout = setTimeout(() => {
         isRendering = false; 
         debouncedRender();   
-    }, 200); 
+    }, 300); // زدنا المدة قليلاً لضمان عدم تداخل الأحداث في الهواتف البطيئة
 });
 
 // ================= التهيئة النهائية =================

@@ -43,6 +43,10 @@
             --grades-font-size: 16px;
             --group-name-size: 1.4rem;
             --sticker-name-size: 1.1rem;
+            --hidaya-title-size: 1.1rem;
+            --hidaya-body-size: 0.95rem;
+            --survey-font-size: 1rem;
+            --home-font-size: 1rem;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { width: 100%; height: 100%; overflow-x: auto; -webkit-text-size-adjust: none; text-size-adjust: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; background: #f0f2f5; margin: 0; padding: 0; min-width: 1100px; font-size: 16px; }
@@ -113,6 +117,12 @@
         .home-card-exams .home-card-icon { background: linear-gradient(135deg, #e91e63, #880e4f); }
         .home-card-instructions .home-card-icon { background: linear-gradient(135deg, #FF6F00, #E65100); }
         .home-card-vision .home-card-icon { background: linear-gradient(135deg, #2E7D32, #1B5E20); }
+        #homeScreen { font-size: var(--home-font-size); transition: font-size 0.2s ease; }
+        #homeScreen .home-screen-intro h2 { font-size: 1.6em; }
+        #homeScreen .home-screen-intro p { font-size: 0.95em; }
+        #homeScreen .home-card-icon { font-size: 1.8em; }
+        #homeScreen .home-card h3 { font-size: 1.2em; }
+        #homeScreen .home-card p { font-size: 0.85em; }
         /* عارض تعليمات النظام */
         .instructions-page-img { width: 100%; display: block; border-bottom: 3px solid #e0e0e0; }
         .instructions-page-img:last-child { border-bottom: none; }
@@ -127,14 +137,14 @@
         .vision-section { max-width: 900px; margin: 0 auto; }
         .vision-main-title { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin: 1.5rem 0 0.5rem 0; padding-bottom: 0.5rem; border-bottom: 3px solid var(--gold); display: flex; align-items: center; gap: 0.5rem; }
         .vision-sub-title { font-size: 1.3rem; font-weight: 700; color: #00796B; margin: 1rem 0 0.4rem 1rem; padding-right: 0.8rem; border-right: 4px solid #00796B; }
-        .vision-article { background: #f8faf8; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1rem 1.2rem; margin: 0.5rem 0 0.5rem 2rem; line-height: 1.9; color: #333; white-space: pre-wrap; }
+        .vision-article { background: #f8faf8; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1rem 1.2rem; margin: 0.5rem 0 0.5rem 2rem; line-height: 1.9; color: #333; white-space: pre-wrap; font-size: var(--hidaya-body-size); transition: font-size 0.2s ease; }
         /* بطاقة هداية (عنوان + مقالة) */
         .hidaya-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; box-shadow: 0 3px 12px rgba(0,0,0,0.07); transition: box-shadow 0.2s; }
         .hidaya-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
         .hidaya-card-header { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 0.85rem 1.2rem; border-bottom: 2px solid #4CAF50; display: flex; align-items: center; gap: 0.6rem; }
-        .hidaya-card-icon { font-size: 1.4rem; }
-        .hidaya-card-title { font-size: 1.1rem; font-weight: 800; color: #1b5e20; flex: 1; }
-        .hidaya-card-body { padding: 1rem 1.2rem; font-size: 0.95rem; color: #333; line-height: 1.9; white-space: pre-wrap; }
+        .hidaya-card-icon { font-size: var(--hidaya-title-size); transition: font-size 0.2s ease; }
+        .hidaya-card-title { font-size: var(--hidaya-title-size) !important; font-weight: 800; color: #1b5e20; flex: 1; transition: font-size 0.2s ease; }
+        .hidaya-card-body { padding: 1rem 1.2rem; font-size: var(--hidaya-body-size) !important; color: #333; line-height: 1.9; white-space: pre-wrap; transition: font-size 0.2s ease; }
         .hidaya-card-image { width: 100%; max-height: 320px; object-fit: cover; display: block; }
         .hidaya-card-actions { display: flex; gap: 5px; margin-right: auto; }
         .vision-admin-controls { background: #f0faf0; border: 2px dashed #4CAF50; border-radius: 10px; padding: 1rem; margin: 1rem 0; }
@@ -277,6 +287,9 @@
         .survey-add-row { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:flex-end; }
         .survey-q-item { background:#f8faf8; border:1px solid #ddd; border-radius:8px; padding:0.8rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
         .sr-card { background:#f8faf8; border:1px solid #ddd; border-radius:10px; padding:1rem 1.2rem; margin-bottom:0.8rem; }
+        #survey-panel-form, #survey-panel-form *, #survey-panel-builder, #survey-panel-builder * { font-size: var(--survey-font-size) !important; transition: font-size 0.2s ease; }
+        #survey-panel-form input[type="checkbox"], #survey-panel-form input[type="radio"], #survey-panel-builder input[type="checkbox"], #survey-panel-builder input[type="radio"] { width: auto !important; }
+        #survey-panel-form .survey-modal-close, #survey-panel-builder .survey-modal-close { font-size: 1.1rem !important; }
         /* ========= أنماط الاختبارات والمسابقات ========= */
         .exam-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: all 0.2s; }
         .exam-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
@@ -405,7 +418,7 @@
             <div class="buttons-container">
                 <button id="btnManageUsers" class="button"><i class="fas fa-users-cog"></i> إدارة المستخدمين</button>
                 <div class="dropdown" tabindex="0"><button class="button" style="background:#2196F3;"><i class="fas fa-database"></i> استيراد وتصدير البيانات <i class="fas fa-chevron-down" style="font-size:0.8em; margin-right:5px;"></i></button><div class="dropdown-content"><button id="btnBackupOnly" class="button"><i class="fas fa-download" style="color:#2196F3;"></i> سحب البيانات فقط (نسخة)</button><button id="btnRestoreBackup" class="button"><i class="fas fa-file-import" style="color:#ff9800;"></i> استعادة بيانات سابقة</button><button id="btnExportData" class="button"><i class="fas fa-file-excel" style="color:#1D6F42;"></i> تصدير إكسل (Excel)</button><button id="btnBackupAndPurge" class="button"><i class="fas fa-file-archive" style="color:#800080;"></i> سحب وتفريغ النظام لـ دورة جديدة</button></div></div>
-                <div class="dropdown" tabindex="0"><button class="button" style="background:#607D8B;"><i class="fas fa-search"></i> التحكم بحجم الخط <i class="fas fa-chevron-down" style="font-size:0.8em; margin-right:5px;"></i></button><div class="dropdown-content" style="min-width: 240px;"><div class="dropdown-header">الطلاب والبيانات</div><button id="btnZoomIn" class="button"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير</button><button id="btnZoomOut" class="button"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير</button><button id="btnZoomReset" class="button"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي</button><div class="dropdown-header">عناوين المجموعات</div><button id="btnZoomGroupIn" class="button"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير المجموعات</button><button id="btnZoomGroupOut" class="button"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير المجموعات</button><button id="btnZoomGroupReset" class="button"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للمجموعات</button><div class="dropdown-header" id="examFontSectionHeader" style="display:none;">نصوص الاختبار</div><button id="btnExamZoomIn" class="button" style="display:none;" onclick="changeExamFont(2)"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير الاختبار</button><button id="btnExamZoomOut" class="button" style="display:none;" onclick="changeExamFont(-2)"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير الاختبار</button><button id="btnExamZoomReset" class="button" style="display:none;" onclick="changeExamFont(0)"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للاختبار</button></div></div>
+                <div class="dropdown" tabindex="0"><button class="button" style="background:#607D8B;"><i class="fas fa-search"></i> التحكم بحجم الخط <i class="fas fa-chevron-down" style="font-size:0.8em; margin-right:5px;"></i></button><div class="dropdown-content" style="min-width: 240px;"><div class="dropdown-header" id="gradesFontSectionHeader">الطلاب والبيانات</div><button id="btnZoomIn" class="button"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير</button><button id="btnZoomOut" class="button"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير</button><button id="btnZoomReset" class="button"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي</button><div class="dropdown-header" id="groupFontSectionHeader">عناوين المجموعات</div><button id="btnZoomGroupIn" class="button"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير المجموعات</button><button id="btnZoomGroupOut" class="button"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير المجموعات</button><button id="btnZoomGroupReset" class="button"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للمجموعات</button><div class="dropdown-header" id="examFontSectionHeader" style="display:none;">نصوص الاختبار</div><button id="btnExamZoomIn" class="button" style="display:none;" onclick="changeExamFont(2)"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير الاختبار</button><button id="btnExamZoomOut" class="button" style="display:none;" onclick="changeExamFont(-2)"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير الاختبار</button><button id="btnExamZoomReset" class="button" style="display:none;" onclick="changeExamFont(0)"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للاختبار</button><div class="dropdown-header" id="hidayaFontSectionHeader" style="display:none;">قسم الهدايات</div><button id="btnHidayaZoomIn" class="button" style="display:none;"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير الهدايات</button><button id="btnHidayaZoomOut" class="button" style="display:none;"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير الهدايات</button><button id="btnHidayaZoomReset" class="button" style="display:none;"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للهدايات</button><div class="dropdown-header" id="surveyFontSectionHeader" style="display:none;">نموذج معلومات الطالب</div><button id="btnSurveyZoomIn" class="button" style="display:none;"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير النموذج</button><button id="btnSurveyZoomOut" class="button" style="display:none;"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير النموذج</button><button id="btnSurveyZoomReset" class="button" style="display:none;"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للنموذج</button><div class="dropdown-header" id="homeFontSectionHeader" style="display:none;">الصفحة الرئيسية</div><button id="btnHomeZoomIn" class="button" style="display:none;"><i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير الرئيسية</button><button id="btnHomeZoomOut" class="button" style="display:none;"><i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير الرئيسية</button><button id="btnHomeZoomReset" class="button" style="display:none;"><i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي للرئيسية</button></div></div>
                 <button id="btnResetPoints" class="button danger"><i class="fas fa-eraser"></i> تصفير النقاط</button>
                 <button id="btnManagePoints" class="button gold"><i class="fas fa-star"></i> إدارة النقاط</button>
                 <button id="btnCalcCum" class="button" style="display:none"><i class="fas fa-calculator"></i> حساب التراكمي للجميع</button>
@@ -623,10 +636,12 @@ window.openSurveyModal = function() {
     surveyEditIndex = -1;
     const modal = document.getElementById('surveyModal');
     modal.style.display = 'flex';
+    _setActiveFontGroups('survey');
     _renderSurvey();
 }
 window.closeSurveyModal = function() {
     document.getElementById('surveyModal').style.display = 'none';
+    _restoreFontGroupsForCurrentSection();
 }
 window.switchSurveyTab = function(tab) {
     surveyCurrentTab = tab;
@@ -700,6 +715,12 @@ function _fillBuilder() {
             <input type="checkbox" id="ssActive" onchange="updateSurveySettings()" ${surveySettings.isActive ? 'checked' : ''} style="transform:scale(1.2);">
             ${surveySettings.isActive ? '🟢 النموذج مفتوح ويستقبل الردود' : '🔴 النموذج مغلق حالياً'}
         </label>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px dashed #c8e6c9;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-size:0.85rem;font-weight:bold;color:#555;"><i class="fas fa-text-height"></i> حجم خط الفورم:</span>
+            <button type="button" onclick="changeSurveyFont('out')" class="button small" style="background:#F44336;"><i class="fas fa-search-minus"></i> تصغير</button>
+            <button type="button" onclick="changeSurveyFont('reset')" class="button small" style="background:#2196F3;"><i class="fas fa-sync-alt"></i> الحجم العادي</button>
+            <button type="button" onclick="changeSurveyFont('in')" class="button small" style="background:#4CAF50;"><i class="fas fa-search-plus"></i> تكبير</button>
+        </div>
     </div>`;
     const typeLabels = {text:'نص قصير',textarea:'نص طويل',number:'رقم',tel:'هاتف',date:'تاريخ',select:'قائمة',radio:'اختيار واحد',checkbox:'متعدد'};
     let qHtml = '';
@@ -1540,6 +1561,7 @@ window.openStudentProfile = async function(studentId, noPush = false){
     if (!noPush) {
         history.pushState({ modal: 'studentProfile', studentId: studentId }, '', '#studentProfile');
     }
+    _setActiveFontGroups('survey');
     studentProfileContent.innerHTML=`
         <div class="student-profile-header"><h2><i class="fas fa-user-graduate"></i> الصفحة الشخصية للطالب</h2><button class="student-profile-close" onclick="closeStudentProfile()"><i class="fas fa-times"></i> إغلاق</button></div>
         <div class="student-profile-content">
@@ -1556,6 +1578,7 @@ function renderCertificates(certs,studentId){ if(!certs?.length) return '<div st
 window.closeStudentProfile = function(){
     // إغلاق المودال مباشرة ثم العودة للخلف
     studentProfileModal.style.display = 'none';
+    _restoreFontGroupsForCurrentSection();
     history.back();
 };
 window.openEditMemorizationModal=async function(studentId){ if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; } const profile=studentProfiles[studentId]||{certificates:[],customRanges:[],joinDate:getSecureDate().toISOString().split('T')[0],startDate:getSecureDate().toISOString().split('T')[0]}; if(!profile.customRanges) profile.customRanges=[]; const ranges=profile.customRanges||[]; const today=getSecureDate().toISOString().split('T')[0]; let savedHtml=''; if(ranges.length===0) savedHtml='<div style="text-align:center;color:#666;padding:1rem;">لا توجد نطاقات محفوظة</div>'; else ranges.forEach((r,idx)=>{ const sn=getSurahLabel(r.start,r.sIdx); const en=(r.start!==r.end)?getSurahLabel(r.end,r.eIdx):sn; let disp=(r.start!==r.end&&sn!==en)?`${sn} .. ${en}`:sn; disp+=` (ص${r.start}-${r.end})`; savedHtml+=`<div class="saved-range-item"><div class="saved-range-info">${escapeHtml(disp)}</div><div class="saved-range-actions"><button class="range-action-btn range-edit-btn" onclick="editExistingRange('${studentId}',${idx})"><i class="fas fa-edit"></i> تعديل</button><button class="range-action-btn range-delete-btn" onclick="deleteRange('${studentId}',${idx})"><i class="fas fa-trash"></i> حذف</button></div></div>`; }); memorizationModalContent.innerHTML=`<div style="padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;font-size:1.5rem;"><i class="fas fa-book-quran"></i> تعديل المحفوظ - إدارة النطاقات المحفوظة</h3><button id="closeMemorizationModalBtn" class="memorization-close-btn"><i class="fas fa-times"></i> إغلاق</button></div><div style="background:#f8f9fa;padding:1rem;border-radius:8px;margin-bottom:1rem;"><div style="font-weight:bold;margin-bottom:0.5rem;color:var(--accent);">إضافة نطاق جديد:</div><div class="page-range-selector"><select id="rangeStart" class="range-select"></select><span style="font-weight:bold;color:#555;">إلى</span><select id="rangeEnd" class="range-select"></select><button id="addRangeBtn" class="range-add-btn" onclick="addNewRange('${studentId}')"><i class="fas fa-plus"></i> إضافة</button></div></div><div style="margin-bottom:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;"><div style="font-weight:bold;color:var(--accent);"><i class="fas fa-list-check"></i> النطاقات المحفوظة:</div><div id="rangesCount" style="background:var(--accent);color:white;padding:0.3rem 0.8rem;border-radius:12px;font-weight:bold;">${ranges.length} نطاق</div></div><div id="savedRangesList" class="saved-ranges-list">${savedHtml}</div></div><div style="display:flex;gap:1rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #eee;"><div style="flex:1;"><label style="display:block;margin-bottom:0.5rem;font-weight:bold;color:#555;">تاريخ بداية الدورة:</label><input type="date" id="memorizationStartDate" value="${escapeHtml(profile.startDate||today)}" style="width:100%;padding:0.5rem;border:1px solid #ddd;border-radius:5px;"></div><div style="font-size:0.9rem;color:#666;background:#e3f2fd;padding:0.75rem;border-radius:6px;max-width:300px;"><i class="fas fa-info-circle"></i> سيتم حساب الورد اليومي بناءً على هذا التاريخ</div></div><div style="display:flex;justify-content:flex-end;gap:1rem;padding-top:1rem;border-top:1px solid #eee;"><button onclick="saveMemorization('${studentId}')" style="background:var(--accent);color:white;border:none;padding:0.75rem 1.5rem;border-radius:5px;cursor:pointer;font-weight:bold;display:flex;align-items:center;gap:0.5rem;"><i class="fas fa-save"></i> حفظ المحفوظ</button></div></div>`; memorizationModal.style.display='flex'; setTimeout(()=>{ populatePageSelectors('rangeStart','rangeEnd'); document.getElementById('closeMemorizationModalBtn').addEventListener('click',()=>{ memorizationModal.style.display='none'; }); },100); };
@@ -1616,28 +1639,40 @@ btnDeleteMessage.addEventListener('click',async()=>{ if(role!=='admin'){ alert('
 function renderMessagesControls(){ messagesControls.style.display=(role==='admin')?'flex':'none'; }
 
 // ================= دوال التبويبات والخط =================
-function _toggleExamFontBtns(show) {
-    ['btnExamZoomIn','btnExamZoomOut','btnExamZoomReset','examFontSectionHeader'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = show ? '' : 'none';
+// خريطة كل مجموعة أزرار تحكم بالخط: المعرّفات (Headers + Buttons) التابعة لها
+const FONT_CONTROL_GROUPS = {
+    grades:   ['gradesFontSectionHeader','btnZoomIn','btnZoomOut','btnZoomReset'],
+    groups:   ['groupFontSectionHeader','btnZoomGroupIn','btnZoomGroupOut','btnZoomGroupReset'],
+    exam:     ['examFontSectionHeader','btnExamZoomIn','btnExamZoomOut','btnExamZoomReset'],
+    hidaya:   ['hidayaFontSectionHeader','btnHidayaZoomIn','btnHidayaZoomOut','btnHidayaZoomReset'],
+    survey:   ['surveyFontSectionHeader','btnSurveyZoomIn','btnSurveyZoomOut','btnSurveyZoomReset'],
+    home:     ['homeFontSectionHeader','btnHomeZoomIn','btnHomeZoomOut','btnHomeZoomReset']
+};
+// تعرض فقط مجموعات الأزرار المطلوبة (يمكن تمرير مفتاح واحد أو مصفوفة مفاتيح)، وتخفي باقي كل المجموعات
+function _setActiveFontGroups(activeKeys){
+    const active = Array.isArray(activeKeys) ? activeKeys : (activeKeys ? [activeKeys] : []);
+    Object.keys(FONT_CONTROL_GROUPS).forEach(key => {
+        const show = active.includes(key);
+        FONT_CONTROL_GROUPS[key].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = show ? '' : 'none';
+        });
     });
-    // إخفاء أقسام الطلاب والمجموعات عند دخول الاختبارات
-    const gradesBtns = ['btnZoomIn','btnZoomOut','btnZoomReset','btnZoomGroupIn','btnZoomGroupOut','btnZoomGroupReset'];
-    const gradesHeaders = document.querySelectorAll('#cumulativeArea .dropdown-header');
-    gradesBtns.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = show ? 'none' : '';
-    });
-    gradesHeaders.forEach(el => {
-        // أخفِ header الطلاب والمجموعات فقط لما نكون في الاختبارات
-        if (el.id !== 'examFontSectionHeader') el.style.display = show ? 'none' : '';
-    });
+}
+// تحدد القسم المعروض حالياً وتعرض مجموعة أزرار الخط المطابقة له (تُستخدم بعد إغلاق المودالات)
+function _restoreFontGroupsForCurrentSection(){
+    if (homeScreen.style.display !== 'none') { _setActiveFontGroups('home'); return; }
+    if (mainContentArea.style.display !== 'none') { _setActiveFontGroups(['grades','groups']); return; }
+    if (examsSection.style.display !== 'none') { _setActiveFontGroups('exam'); return; }
+    if (document.getElementById('visionSection')?.style.display !== 'none') { _setActiveFontGroups('hidaya'); return; }
+    if (document.getElementById('instructionsSection')?.style.display !== 'none') { _setActiveFontGroups([]); return; }
+    _setActiveFontGroups([]);
 }
 function _hideAllSections(){ homeScreen.style.display='none'; mainContentArea.style.display='none'; examsSection.style.display='none'; document.getElementById('visionSection').style.display='none'; document.getElementById('instructionsSection').style.display='none'; }
 function showHomeScreen(noPush){
     _hideAllSections();
     homeScreen.style.display='block';
-    _toggleExamFontBtns(false);
+    _setActiveFontGroups('home');
     if (!noPush && window.location.hash !== '#home') {
         history.pushState({ section: 'home' }, '', '#home');
     }
@@ -1646,7 +1681,7 @@ function showSection(view, noPush){
     _hideAllSections();
     currentView=view;
     mainContentArea.style.display='block';
-    _toggleExamFontBtns(false);
+    _setActiveFontGroups(['grades','groups']);
     if(view==='grades'){ tabGrades.classList.add('active'); tabHomework.classList.remove('active'); }
     else { tabHomework.classList.add('active'); tabGrades.classList.remove('active'); }
     updateZoomButtonsLabels();
@@ -1658,7 +1693,7 @@ function showSection(view, noPush){
 function showExamsSection(noPush){
     _hideAllSections();
     examsSection.style.display='block';
-    _toggleExamFontBtns(true);
+    _setActiveFontGroups('exam');
     renderExamsList();
     if (!noPush && window.location.hash !== '#exams') {
         history.pushState({ section: 'exams' }, '', '#exams');
@@ -1667,6 +1702,7 @@ function showExamsSection(noPush){
 window.showVisionSection = function(noPush){
     _hideAllSections();
     document.getElementById('visionSection').style.display='block';
+    _setActiveFontGroups('hidaya');
     renderVisionSection();
     if (!noPush && window.location.hash !== '#vision') {
         history.pushState({ section: 'vision' }, '', '#vision');
@@ -1675,6 +1711,7 @@ window.showVisionSection = function(noPush){
 window.showInstructionsSection = function(noPush){
     _hideAllSections();
     document.getElementById('instructionsSection').style.display='block';
+    _setActiveFontGroups([]);
     renderInstructionsSection();
     if (!noPush && window.location.hash !== '#instructions') {
         history.pushState({ section: 'instructions' }, '', '#instructions');
@@ -1684,9 +1721,77 @@ window.showHomeScreen=showHomeScreen; window.showSection=showSection; window.sho
 tabGrades.addEventListener('click',()=>{ showSection('grades'); });
 tabHomework.addEventListener('click',()=>{ showSection('homework'); });
 function updateZoomButtonsLabels(){ if(currentView==='grades'){ btnZoomIn.innerHTML='<i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير (التقديرات)'; btnZoomOut.innerHTML='<i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير (التقديرات)'; btnZoomReset.innerHTML='<i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي (التقديرات)'; } else { btnZoomIn.innerHTML='<i class="fas fa-search-plus" style="color:#4CAF50; width:20px; text-align:center;"></i> تكبير (الواجبات)'; btnZoomOut.innerHTML='<i class="fas fa-search-minus" style="color:#F44336; width:20px; text-align:center;"></i> تصغير (الواجبات)'; btnZoomReset.innerHTML='<i class="fas fa-sync-alt" style="color:#2196F3; width:20px; text-align:center;"></i> الحجم العادي (الواجبات)'; } }
-async function changeFontSize(direction){ if(role!=='admin'){ showToast('❌ تغيير حجم الخط مسموح للمدير فقط', false); return; } let cssVar, dbPath, currentLabel; if(currentView==='grades'){ cssVar='--grades-font-size'; dbPath='settings/gradesFontSize'; currentLabel='أسماء الطلاب والتقديرات'; } else { cssVar='--homework-font-size'; dbPath='settings/homeworkFontSize'; currentLabel='الواجبات'; } let currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 16; let newSize; if(direction==='in') newSize=Math.min(currentSize*1.1, 60); else if(direction==='out') newSize=Math.max(currentSize*0.9, 12); else newSize=16; document.documentElement.style.setProperty(cssVar, newSize+'px'); try { await set(ref(db, dbPath), newSize); showToast(`✅ تم تحديث خط ${currentLabel}: ${Math.round(newSize)}px`, true); render(); } catch(err){ console.error(err); } }
-async function changeGroupFontSize(direction){ if(role!=='admin'){ showToast('❌ تغيير حجم خط المجموعات مسموح للمدير فقط', false); return; } let cssVar='--group-name-size', dbPath='settings/groupNameSize', currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1.4; let newSize; if(direction==='in') newSize=Math.min(currentSize*1.1, 2.5); else if(direction==='out') newSize=Math.max(currentSize*0.9, 1.0); else newSize=1.4; document.documentElement.style.setProperty(cssVar, newSize+'rem'); cssVar='--sticker-name-size'; currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1.1; if(direction==='in') newSize=Math.min(currentSize*1.1, 2.0); else if(direction==='out') newSize=Math.max(currentSize*0.9, 0.9); else newSize=1.1; document.documentElement.style.setProperty(cssVar, newSize+'rem'); try { await set(ref(db, 'settings/groupFontSizes'), { groupNameSize: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--group-name-size')), stickerNameSize: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sticker-name-size')) }); showToast(`✅ تم تحديث خط المجموعات والستكرات`, true); render(); } catch(err){ console.error(err); } }
-function setupFontSizeControls(){ btnZoomIn?.addEventListener('click', () => changeFontSize('in')); btnZoomOut?.addEventListener('click', () => changeFontSize('out')); btnZoomReset?.addEventListener('click', () => changeFontSize('reset')); btnZoomGroupIn?.addEventListener('click', () => changeGroupFontSize('in')); btnZoomGroupOut?.addEventListener('click', () => changeGroupFontSize('out')); btnZoomGroupReset?.addEventListener('click', () => changeGroupFontSize('reset')); }
+async function changeFontSize(direction){ if(role!=='admin'){ showToast('❌ تغيير حجم الخط مسموح للمدير فقط', false); return; } let cssVar, dbPath, currentLabel; if(currentView==='grades'){ cssVar='--grades-font-size'; dbPath='settings/gradesFontSize'; currentLabel='أسماء الطلاب والتقديرات'; } else { cssVar='--homework-font-size'; dbPath='settings/homeworkFontSize'; currentLabel='الواجبات'; } let currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 16; let newSize; if(direction==='in') newSize=Math.min(currentSize*1.1, 64); else if(direction==='out') newSize=Math.max(currentSize*0.9, 6); else newSize=16; document.documentElement.style.setProperty(cssVar, newSize+'px'); try { await set(ref(db, dbPath), newSize); showToast(`✅ تم تحديث خط ${currentLabel}: ${Math.round(newSize)}px`, true); render(); } catch(err){ console.error(err); } }
+async function changeGroupFontSize(direction){ if(role!=='admin'){ showToast('❌ تغيير حجم خط المجموعات مسموح للمدير فقط', false); return; } let cssVar='--group-name-size', dbPath='settings/groupNameSize', currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1.4; let newSize; if(direction==='in') newSize=Math.min(currentSize*1.1, 5.5); else if(direction==='out') newSize=Math.max(currentSize*0.9, 0.4); else newSize=1.4; document.documentElement.style.setProperty(cssVar, newSize+'rem'); cssVar='--sticker-name-size'; currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1.1; if(direction==='in') newSize=Math.min(currentSize*1.1, 4.5); else if(direction==='out') newSize=Math.max(currentSize*0.9, 0.35); else newSize=1.1; document.documentElement.style.setProperty(cssVar, newSize+'rem'); try { await set(ref(db, 'settings/groupFontSizes'), { groupNameSize: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--group-name-size')), stickerNameSize: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sticker-name-size')) }); showToast(`✅ تم تحديث خط المجموعات والستكرات`, true); render(); } catch(err){ console.error(err); } }
+
+// ===== تكبير/تصغير خط قسم الهدايات (العناوين والمقالات) =====
+async function changeHidayaFont(direction){
+    if(role!=='admin'){ showToast('❌ تغيير حجم الخط مسموح للمدير فقط', false); return; }
+    let titleVar='--hidaya-title-size', bodyVar='--hidaya-body-size';
+    let titleSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(titleVar)) || 1.1;
+    let bodySize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(bodyVar)) || 0.95;
+    let newTitle, newBody;
+    if(direction==='in'){ newTitle=Math.min(titleSize*1.1, 4.5); newBody=Math.min(bodySize*1.1, 4.5); }
+    else if(direction==='out'){ newTitle=Math.max(titleSize*0.9, 0.35); newBody=Math.max(bodySize*0.9, 0.35); }
+    else { newTitle=1.1; newBody=0.95; }
+    document.documentElement.style.setProperty(titleVar, newTitle+'rem');
+    document.documentElement.style.setProperty(bodyVar, newBody+'rem');
+    try {
+        await set(ref(db, 'settings/hidayaFontSizes'), { titleSize: newTitle, bodySize: newBody });
+        showToast(`✅ تم تحديث خط الهدايات`, true);
+    } catch(err){ console.error(err); }
+}
+
+// ===== تكبير/تصغير خط نموذج معلومات الطالب (الفورم) =====
+async function changeSurveyFont(direction){
+    if(role!=='admin'){ showToast('❌ تغيير حجم الخط مسموح للمدير فقط', false); return; }
+    let cssVar='--survey-font-size', currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1;
+    let newSize;
+    if(direction==='in') newSize=Math.min(currentSize*1.1, 4.5);
+    else if(direction==='out') newSize=Math.max(currentSize*0.9, 0.35);
+    else newSize=1;
+    document.documentElement.style.setProperty(cssVar, newSize+'rem');
+    try {
+        await set(ref(db, 'settings/surveyFontSize'), newSize);
+        showToast(`✅ تم تحديث خط نموذج معلومات الطالب`, true);
+    } catch(err){ console.error(err); }
+}
+
+// ===== تكبير/تصغير خط الصفحة الرئيسية (البطاقات والنصوص) =====
+async function changeHomeFont(direction){
+    if(role!=='admin'){ showToast('❌ تغيير حجم الخط مسموح للمدير فقط', false); return; }
+    let cssVar='--home-font-size', currentSize=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(cssVar)) || 1;
+    let newSize;
+    if(direction==='in') newSize=Math.min(currentSize*1.1, 4.5);
+    else if(direction==='out') newSize=Math.max(currentSize*0.9, 0.35);
+    else newSize=1;
+    document.documentElement.style.setProperty(cssVar, newSize+'rem');
+    try {
+        await set(ref(db, 'settings/homeFontSize'), newSize);
+        showToast(`✅ تم تحديث خط الصفحة الرئيسية`, true);
+    } catch(err){ console.error(err); }
+}
+window.changeHidayaFont = changeHidayaFont;
+window.changeSurveyFont = changeSurveyFont;
+window.changeHomeFont = changeHomeFont;
+
+function setupFontSizeControls(){
+    btnZoomIn?.addEventListener('click', () => changeFontSize('in'));
+    btnZoomOut?.addEventListener('click', () => changeFontSize('out'));
+    btnZoomReset?.addEventListener('click', () => changeFontSize('reset'));
+    btnZoomGroupIn?.addEventListener('click', () => changeGroupFontSize('in'));
+    btnZoomGroupOut?.addEventListener('click', () => changeGroupFontSize('out'));
+    btnZoomGroupReset?.addEventListener('click', () => changeGroupFontSize('reset'));
+    document.getElementById('btnHidayaZoomIn')?.addEventListener('click', () => changeHidayaFont('in'));
+    document.getElementById('btnHidayaZoomOut')?.addEventListener('click', () => changeHidayaFont('out'));
+    document.getElementById('btnHidayaZoomReset')?.addEventListener('click', () => changeHidayaFont('reset'));
+    document.getElementById('btnSurveyZoomIn')?.addEventListener('click', () => changeSurveyFont('in'));
+    document.getElementById('btnSurveyZoomOut')?.addEventListener('click', () => changeSurveyFont('out'));
+    document.getElementById('btnSurveyZoomReset')?.addEventListener('click', () => changeSurveyFont('reset'));
+    document.getElementById('btnHomeZoomIn')?.addEventListener('click', () => changeHomeFont('in'));
+    document.getElementById('btnHomeZoomOut')?.addEventListener('click', () => changeHomeFont('out'));
+    document.getElementById('btnHomeZoomReset')?.addEventListener('click', () => changeHomeFont('reset'));
+}
 
 // ================= دوال المصادقة =================
 onAuthStateChanged(auth,async(user)=>{ if(user){ const userSnap=await get(ref(db,`users/${user.uid}`)); const ud=userSnap.val()||{}; currentUser={uid:user.uid,email:user.email,role:ud.role||'user',groupIndex:ud.groupIndex}; role=currentUser.role; updateUIAfterAuth(); showToast(`✅ مرحبًا ${user.email}`, true); } else { currentUser=null; role=null; updateUIAfterAuth(); } });
@@ -2427,7 +2532,7 @@ window.changeExamFont = function(delta) {
     if (delta === 0) {
         _examFontSize = 16;
     } else {
-        _examFontSize = Math.max(12, Math.min(28, _examFontSize + delta));
+        _examFontSize = Math.max(6, Math.min(64, _examFontSize + delta));
     }
     // تطبيق على كل محتوى قسم الاختبارات
     const container = document.getElementById('examsContainer');
@@ -3002,7 +3107,10 @@ async function optimizedFirebaseFetch() {
             if (s.pointsReasons) pointsReasons = s.pointsReasons;
             if (s.homeworkFontSize) document.documentElement.style.setProperty('--homework-font-size', s.homeworkFontSize + 'px'); 
             if (s.gradesFontSize) document.documentElement.style.setProperty('--grades-font-size', s.gradesFontSize + 'px'); 
-            if (s.groupFontSizes) { document.documentElement.style.setProperty('--group-name-size', s.groupFontSizes.groupNameSize + 'rem'); document.documentElement.style.setProperty('--sticker-name-size', s.stickerNameSize + 'rem'); } 
+            if (s.groupFontSizes) { document.documentElement.style.setProperty('--group-name-size', s.groupFontSizes.groupNameSize + 'rem'); document.documentElement.style.setProperty('--sticker-name-size', s.groupFontSizes.stickerNameSize + 'rem'); } 
+            if (s.hidayaFontSizes) { document.documentElement.style.setProperty('--hidaya-title-size', s.hidayaFontSizes.titleSize + 'rem'); document.documentElement.style.setProperty('--hidaya-body-size', s.hidayaFontSizes.bodySize + 'rem'); }
+            if (s.surveyFontSize) document.documentElement.style.setProperty('--survey-font-size', s.surveyFontSize + 'rem');
+            if (s.homeFontSize) document.documentElement.style.setProperty('--home-font-size', s.homeFontSize + 'rem');
         }
         if (examsSnap.exists()) { exams = examsSnap.val() || []; } else { exams = JSON.parse(localStorage.getItem('exams_local')) || []; }
         normalizeData(); return true;

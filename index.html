@@ -269,6 +269,9 @@
         .points-summary-section { flex: 1; min-width: 120px; text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
         .points-total { font-size: 1.5rem; font-weight: 900; color: #D4AF37; line-height: 1; }
         .points-log-btn { background: #6c757d; color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        .monthly-points-box { display:flex; align-items:center; gap:6px; background:#f5f3ff; border:1px solid #d8d0f5; border-radius:8px; padding:3px 10px; font-size:0.8rem; }
+        .monthly-points-label { color:#6c5ce7; font-weight:600; }
+        .monthly-points-value { font-weight:900; font-size:0.95rem; }
         /* ========= فورم تسجيل معلومات الطلاب ========= */
         .survey-btn-wrapper { text-align: center; margin: 1rem 0 0.5rem 0; }
         .survey-open-btn { background: linear-gradient(135deg, #006400 0%, #004d00 100%); color: #fff; border: none; padding: 0.7rem 2rem; border-radius: 2rem; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(0,100,0,0.25); transition: all 0.3s ease; }
@@ -440,6 +443,7 @@
 <div id="memorizationModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div style="background:#fff;border-radius:10px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl"><div id="memorizationModalContent"></div></div></div>
 <div id="modalManagePoints" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;z-index:10001;padding:1rem;overflow-y:auto;"><div style="background:#fff;border-radius:14px;width:95%;max-width:1200px;margin:auto;direction:rtl;padding:1.5rem;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-star"></i> إدارة النقاط والإعدادات</h3><button onclick="closeManagePointsModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div class="points-tabs"><button class="points-tab-btn active" data-tab="points">💰 النقاط</button><button class="points-tab-btn" data-tab="settings">⚙️ إعدادات الورد</button><button class="points-tab-btn" data-tab="weekly">📊 كشف الورد الأسبوعي</button></div><div id="tabPoints" class="points-tab-content active"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;"><input id="pointsSearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="pointsGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div id="pointsStudentList" style="display:flex;flex-direction:column;gap:12px;"></div></div><div id="tabSettings" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">⚙️ إعدادات نقاط الورد اليومي</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;"><label>عدد النقاط لكل ورد مكتمل:</label><input type="number" id="pointsPerWirdInput" min="1" max="100" style="width:100%;"></div><div style="flex:1;"><label>مكافأة إكمال الأسبوع كاملاً (نقاط إضافية):</label><input type="number" id="weeklyBonusInput" min="0" max="100" style="width:100%;"></div><div style="display:flex;align-items:flex-end;"><button id="saveWirdPointsBtn" class="button gold">حفظ الإعدادات</button></div></div></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">📋 أسباب النقاط الجاهزة (الإجراءات السريعة)</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>السبب:</label><input type="text" id="newReasonText" placeholder="مثال: حفظ ممتاز" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:100px;"><label>النوع:</label><select id="newReasonType" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"><option value="add">إضافة ➕</option><option value="remove">خصم ➖</option></select></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newReasonPts" min="1" placeholder="مثال: 5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddReason" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditReason" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="reasonsList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div><div id="tabWeekly" class="points-tab-content"><div style="margin-bottom:1rem;"><div style="display:flex;gap:0.5rem;margin-bottom:1rem;"><button id="weekCurrentBtn" class="button small" onclick="loadWeeklyStatus('current')">الأسبوع الحالي</button><button id="weekPreviousBtn" class="button small ghost" onclick="loadWeeklyStatus('previous')">الأسبوع السابق</button></div><div id="weeklyStatusTable" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;"></div></div></div></div></div>
 <div id="modalPointsLog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="pointsLogTitle" style="color:var(--accent);margin:0;"><i class="fas fa-history"></i> سجل النقاط</h3><button onclick="closePointsLogModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="pointsLogContent"></div></div></div>
+<div id="modalMonthlyArchive" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="monthlyArchiveTitle" style="color:#6c5ce7;margin:0;"><i class="fas fa-calendar-alt"></i> أرشيف معدل النقاط الشهري</h3><button onclick="closeMonthlyArchiveModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="monthlyArchiveContent"></div></div></div>
 <div id="modalManageUsers" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:10000;padding:1rem;"><div style="background:#fff;border-radius:12px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-users-cog"></i> إدارة المستخدمين</h3><button onclick="closeManageUsersModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="margin-bottom:1rem;padding:1rem;background:#f8f9fa;border-radius:8px;"><h4>إضافة مستخدم جديد</h4><div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;"><input type="email" id="newUserEmail" placeholder="البريد الإلكتروني" style="width:100%;"><input type="password" id="newUserPass" placeholder="كلمة المرور" style="width:100%;"><select id="newUserRole" style="width:auto;"><option value="admin">مدير عام</option><option value="manager">مشرف مجموعة</option></select></div><div id="managerGroupSelector" style="margin-top:8px;display:none;"><label>المجموعة:</label><select id="newUserGroupIndex" style="width:100%;"></select></div><button id="btnAddUser" class="button gold" style="margin-top:8px;"><i class="fas fa-user-plus"></i> إضافة</button></div><div><h4>المستخدمون الحاليون</h4><div id="usersList" style="max-height:400px;overflow-y:auto;"></div></div></div></div>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;" />
 
@@ -953,7 +957,8 @@ window.renderSurveyResults = function() {
     }
     let html = `<div style="margin-bottom:0.7rem;font-size:0.9rem;color:#555;">إجمالي: <strong>${filtered.length}</strong> استجابة</div>`;
     [...filtered].reverse().forEach(r => {
-        const date = new Date(r.timestamp).toLocaleString('ar-SA');
+        // استخدم en-GB للتاريخ الميلادي
+        const date = new Date(r.timestamp).toLocaleString('en-GB');
         let answersHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-top:0.6rem;">';
         surveyQuestions.forEach((q, qi) => {
             answersHtml += `<div style="background:#fff;border-radius:6px;padding:0.4rem 0.7rem;border:1px solid #e0e0e0;">
@@ -986,7 +991,9 @@ window.exportSurveyResultsCSV = function() {
     if (!surveyResponses.length) { showToast('❌ لا توجد بيانات', false); return; }
     let csv = '\uFEFF' + ['الاسم','المجموعة','التاريخ',...surveyQuestions.map(q=>q.label)].join(',') + '\n';
     surveyResponses.forEach(r => {
-        const row = [r.studentName, r.groupName, new Date(r.timestamp).toLocaleString('ar-SA'), ...surveyQuestions.map((q,i)=>r.answers[i]||'')];
+        // استخدم en-GB للتاريخ
+        const date = new Date(r.timestamp).toLocaleString('en-GB');
+        const row = [r.studentName, r.groupName, date, ...surveyQuestions.map((q,i)=>r.answers[i]||'')];
         csv += row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',') + '\n';
     });
     const a = document.createElement('a');
@@ -1092,7 +1099,7 @@ function render(){
                     const gradeCell=(field,val)=>{ const td=document.createElement('td'); if(canEditGroup(gi)){ const sel=document.createElement('select'); if(s.attendance==='absent_unexcused'){ sel.innerHTML='<option value="0">0</option>'; sel.disabled=true; } else{ const empty=document.createElement('option'); empty.value=''; empty.text='-'; sel.appendChild(empty); for(let v=10;v>=1;v--){const o=document.createElement('option');o.value=String(v);o.text=String(v);sel.appendChild(o);} sel.disabled=s.attendance!=='present'; } sel.onchange=(e)=>setGrade(gi,si,sti,field,e.target.value); sel.value=val||''; td.appendChild(sel); } else { td.textContent=(s.attendance==='absent_unexcused')?'0':(val||'-'); } return td; };
                     tr.appendChild(gradeCell('hifz',s.gradeHifz)); tr.appendChild(gradeCell('ward',s.gradeWard)); tr.appendChild(gradeCell('akhlak',s.gradeAkhlak));
                     const notesTd=document.createElement('td'); notesTd.className='notes'; if(s.attendance==='present'){ const nh=noteForHifz(s.gradeHifz), nw=noteForWard(s.gradeWard); if(nh||nw){ notesTd.innerHTML=(nh?`<div>${escapeHtml(nh)}</div>`:''); if(nh&&nw) notesTd.innerHTML+=`<div class="notes-separator"></div>`; notesTd.innerHTML+=(nw?`<div>${escapeHtml(nw)}</div>`:''); } } else if(s.attendance==='absent_unexcused') notesTd.innerHTML=''; tr.appendChild(notesTd);
-                    const ptsTd=document.createElement('td'); ptsTd.innerHTML=`<div style="text-align:center;"><span id="pts_display_${sid}" style="font-size:1.2rem;font-weight:900;color:#D4AF37;">⭐ ${s.points||0}</span></div>`; tr.appendChild(ptsTd);
+                    const ptsTd=document.createElement('td'); ptsTd.innerHTML=`<div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;"><span id="pts_display_${sid}" style="font-size:1.2rem;font-weight:900;color:#D4AF37;">⭐ ${s.points||0}</span><span id="monthly_pts_table_${sid}" title="معدل النقاط لهذا الشهر" style="font-size:0.7rem;font-weight:700;color:${calcCurrentMonthlyPoints(s)>0?'#28a745':(calcCurrentMonthlyPoints(s)<0?'#dc3545':'#999')};">📅 ${calcCurrentMonthlyPoints(s)>0?'+':''}${calcCurrentMonthlyPoints(s)}</span></div>`; tr.appendChild(ptsTd);
                     if(role==='admin'||(role==='manager'&&canEditGroup(gi))){ const actTd=document.createElement('td'); const eBtn=document.createElement('button'); eBtn.className='button small'; eBtn.innerHTML='<i class="fas fa-edit"></i> تعديل'; eBtn.onclick=()=>openEditModal(gi,si,sti); actTd.appendChild(eBtn); if(role==='admin'){ const mBtn=document.createElement('button'); mBtn.className='button small'; mBtn.style.background='#9C27B0'; mBtn.innerHTML='<i class="fas fa-exchange-alt"></i> نقل'; mBtn.onclick=()=>openMoveModal(gi,si,sti); actTd.appendChild(mBtn); const dBtn=document.createElement('button'); dBtn.className='button small danger'; dBtn.innerHTML='<i class="fas fa-trash"></i> حذف'; dBtn.onclick=()=>adminDeleteStudent(gi,si,sti); actTd.appendChild(dBtn); } tr.appendChild(actTd); }
                 } else {
                     ['recitation','memorization','review'].forEach(field=>{ const td=document.createElement('td'); const wrapDiv=document.createElement('div'); wrapDiv.className='homework-cell-wrapper'; const div=document.createElement('div'); div.className=role==='admin'?'homework-editable':'homework-readonly'; div.textContent=homeworkData[s.id]?.[field]||''; if(role==='admin'){ div.contentEditable=true; div.onfocus=()=>div.classList.add('homework-modified'); div.onblur=()=>{ div.classList.remove('homework-modified'); updateHomework(s.id,field,div.textContent); }; wrapDiv.appendChild(div); const hist=document.createElement('div'); hist.className='history-btn'; hist.innerHTML='<i class="fas fa-history"></i>'; hist.title='سجل التعديلات'; hist.onclick=()=>window.viewHomeworkHistory(s.id); wrapDiv.appendChild(hist); } else { wrapDiv.appendChild(div); } td.appendChild(wrapDiv); tr.appendChild(td); });
@@ -1185,11 +1192,49 @@ modalMoveCancel.addEventListener('click',()=>{ modalMoveBackdrop.style.display='
 // ================= دوال الواجبات =================
 function updateHomework(studentId,field,value){ if(role!=='admin') return; if(!homeworkData[studentId]) homeworkData[studentId]={history:[]}; const old=homeworkData[studentId][field]; if(old!==value && old && old.trim()!==''){ if(!homeworkData[studentId].history) homeworkData[studentId].history=[]; homeworkData[studentId].history.unshift({field,value:old,timestamp:getSecureDate().toISOString()}); homeworkData[studentId].history=homeworkData[studentId].history.slice(0,10); } homeworkData[studentId][field]=value; homeworkModified=true; updateSaveButtonState(); }
 btnSaveHomework.addEventListener('click',async()=>{ if(!homeworkModified) return; showLoading(); await writeHomeworkToFirebase(homeworkData); hideLoading(); });
-window.viewHomeworkHistory=function(studentId){ if(!homeworkData[studentId]?.history?.length){ historyContent.innerHTML='<div style="text-align:center;color:#999">لا يوجد سجل تعديلات</div>'; } else { let html=''; const fn={'recitation':'واجب التلاوة','memorization':'واجب الحفظ','review':'واجب المراجعة'}; homeworkData[studentId].history.forEach((item,idx)=>{ const date=new Date(item.timestamp).toLocaleString('ar-SA'); const field=fn[item.field]||item.field; html+=`<div class="history-item"><div class="history-info"><div class="history-date">${date} - ${field}</div><div class="history-val">${escapeHtml(item.value)}</div></div>`; if(role==='admin') html+=`<button class="history-del-btn" onclick="deleteHomeworkHistoryItem('${studentId}', ${idx})"><i class="fas fa-trash-alt"></i></button>`; html+=`</div>`; }); historyContent.innerHTML=html; } modalHistoryBackdrop.style.display='flex'; };
+window.viewHomeworkHistory=function(studentId){ if(!homeworkData[studentId]?.history?.length){ historyContent.innerHTML='<div style="text-align:center;color:#999">لا يوجد سجل تعديلات</div>'; } else { let html=''; const fn={'recitation':'واجب التلاوة','memorization':'واجب الحفظ','review':'واجب المراجعة'}; homeworkData[studentId].history.forEach((item,idx)=>{ const date = new Date(item.timestamp).toLocaleString('en-GB'); // ميلادي
+                const field=fn[item.field]||item.field; html+=`<div class="history-item"><div class="history-info"><div class="history-date">${date} - ${field}</div><div class="history-val">${escapeHtml(item.value)}</div></div>`; if(role==='admin') html+=`<button class="history-del-btn" onclick="deleteHomeworkHistoryItem('${studentId}', ${idx})"><i class="fas fa-trash-alt"></i></button>`; html+=`</div>`; }); historyContent.innerHTML=html; } modalHistoryBackdrop.style.display='flex'; };
 window.deleteHomeworkHistoryItem=async function(studentId,idx){ if(role!=='admin') return; if(!confirm('حذف هذا السجل؟')) return; homeworkData[studentId].history.splice(idx,1); await set(ref(db,'homework/'+studentId),homeworkData[studentId]); viewHomeworkHistory(studentId); showToast('✅ تم حذف السجل', true); };
 
 // ================= دوال النقاط المطورة (مع تحديث مركز) =================
 function findStudentById(sid){ for(const g of data) for(const st of g.stickers) for(const s of st.students) if(s.id===sid) return s; return null; }
+
+// ===== معدل النقاط الشهري =====
+// يحسب صافي النقاط (إضافة وخصم) لشهر وسنة معيّنين من سجل الطالب، بالاعتماد على الطابع الزمني الدقيق (ts)
+function calcPointsForMonth(student, year, month){
+    if(!student?.pointsLog) return 0;
+    let total = 0;
+    student.pointsLog.forEach(entry=>{
+        if(typeof entry.ts !== 'number') return; // السجلات القديمة بدون ts لا تُحسب لشهر محدد
+        const d = new Date(entry.ts);
+        if(d.getFullYear()===year && d.getMonth()===month){
+            const isAdd = ['add','wird','bonus'].includes(entry.type);
+            total += isAdd ? entry.pts : -entry.pts;
+        }
+    });
+    return total;
+}
+// معدل الشهر الحالي للطالب (يتصفر تلقائياً أول كل شهر لأنه يُحسب من السجل الفعلي للشهر الحالي فقط)
+function calcCurrentMonthlyPoints(student){
+    const now = getSecureDate();
+    return calcPointsForMonth(student, now.getFullYear(), now.getMonth());
+}
+// أرشيف كل الشهور التي فيها سجل نقاط للطالب (لمراقبة سيره طيلة السنة)، الأحدث أولاً
+function getStudentMonthlyArchive(student){
+    if(!student?.pointsLog) return [];
+    const months = new Map(); // key: "YYYY-MM" -> {year, month, total}
+    student.pointsLog.forEach(entry=>{
+        if(typeof entry.ts !== 'number') return;
+        const d = new Date(entry.ts);
+        const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
+        const isAdd = ['add','wird','bonus'].includes(entry.type);
+        const val = isAdd ? entry.pts : -entry.pts;
+        if(!months.has(key)) months.set(key, {year:d.getFullYear(), month:d.getMonth(), total:0});
+        months.get(key).total += val;
+    });
+    return Array.from(months.values()).sort((a,b)=> b.year-a.year || b.month-a.month);
+}
+const ARABIC_MONTH_NAMES = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
 // دالة مساعدة للحصول على مسار الطالب
 function getStudentPath(studentId) {
@@ -1225,15 +1270,16 @@ window.applyQuickReason = async function(sid, selectEl) {
     if(!s) return;
     const amt = parseInt(reason.pts);
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    // استخدم en-GB للتاريخ الميلادي
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     if(!s.pointsLog) s.pointsLog = [];
     if(reason.type === 'add') {
         s.points = (s.points || 0) + amt;
-        s.pointsLog.push({type: 'add', pts: amt, note: reason.text, date: ds});
+        s.pointsLog.push({type: 'add', pts: amt, note: reason.text, date: ds, ts: now.getTime()});
         showToast(`✅ تمت إضافة ${amt} نقطة لـ ${s.name}`, true);
     } else {
         s.points = (s.points || 0) - amt;
-        s.pointsLog.push({type: 'remove', pts: amt, note: reason.text, date: ds});
+        s.pointsLog.push({type: 'remove', pts: amt, note: reason.text, date: ds, ts: now.getTime()});
         showToast(`✅ تم خصم ${amt} نقطة من ${s.name}`, true);
     }
     // تحديث مركز للنقاط فقط
@@ -1247,16 +1293,17 @@ window.inlineAddPts = async function(sid) {
     if(!amt || amt<=0){ showToast('❌ أدخل عدد نقاط صحيح', false); return; }
     const note = document.getElementById('pts_note_'+sid)?.value.trim()||'';
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     const s = findStudentById(sid);
     if(s){
         if(!s.pointsLog) s.pointsLog = [];
         s.points = (s.points||0) + amt;
-        s.pointsLog.push({type:'add', pts:amt, note, date:ds});
-        // تحديث مركز للنقاط فقط
+        s.pointsLog.push({type:'add', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
         const disp = document.getElementById('pts_display_'+sid);
         if(disp) disp.textContent='⭐ '+s.points;
+        const monthlyDisp = document.getElementById('monthly_pts_table_'+sid);
+        if(monthlyDisp){ const mp=calcCurrentMonthlyPoints(s); monthlyDisp.textContent=`📅 ${mp>0?'+':''}${mp}`; monthlyDisp.style.color = mp>0?'#28a745':(mp<0?'#dc3545':'#999'); }
         showToast(`✅ تمت إضافة ${amt} نقطة`, true);
     }
     document.getElementById('pts_amt_'+sid).value = '';
@@ -1268,16 +1315,17 @@ window.inlineRemPts = async function(sid) {
     if(!amt || amt<=0){ showToast('❌ أدخل عدد نقاط صحيح', false); return; }
     const note = document.getElementById('pts_note_'+sid)?.value.trim()||'';
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     const s = findStudentById(sid);
     if(s){
         if(!s.pointsLog) s.pointsLog = [];
         s.points = (s.points||0) - amt;
-        s.pointsLog.push({type:'remove', pts:amt, note, date:ds});
-        // تحديث مركز للنقاط فقط
+        s.pointsLog.push({type:'remove', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
         const disp = document.getElementById('pts_display_'+sid);
         if(disp) disp.textContent='⭐ '+s.points;
+        const monthlyDisp = document.getElementById('monthly_pts_table_'+sid);
+        if(monthlyDisp){ const mp=calcCurrentMonthlyPoints(s); monthlyDisp.textContent=`📅 ${mp>0?'+':''}${mp}`; monthlyDisp.style.color = mp>0?'#28a745':(mp<0?'#dc3545':'#999'); }
         showToast(`✅ تم خصم ${amt} نقطة`, true);
     }
     document.getElementById('pts_amt_'+sid).value = '';
@@ -1289,13 +1337,12 @@ window.doAddPointsInline = async function(sid) {
     if(!amt || amt<=0){ showToast('❌ أدخل عدد نقاط صحيح', false); return; }
     const note = document.getElementById('addNote_'+sid).value.trim();
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     const s = findStudentById(sid);
     if(s){
         if(!s.pointsLog) s.pointsLog = [];
         s.points = (s.points||0) + amt;
-        s.pointsLog.push({type:'add', pts:amt, note, date:ds});
-        // تحديث مركز للنقاط فقط
+        s.pointsLog.push({type:'add', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
         renderPointsStudentList();
         showToast(`✅ تمت إضافة ${amt} نقطة لـ ${s.name}`, true);
@@ -1309,13 +1356,12 @@ window.doRemovePointsInline = async function(sid) {
     if(!amt || amt<=0){ showToast('❌ أدخل عدد نقاط صحيح', false); return; }
     const note = document.getElementById('remNote_'+sid).value.trim();
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     const s = findStudentById(sid);
     if(s){
         if(!s.pointsLog) s.pointsLog = [];
         s.points = (s.points||0) - amt;
-        s.pointsLog.push({type:'remove', pts:amt, note, date:ds});
-        // تحديث مركز للنقاط فقط
+        s.pointsLog.push({type:'remove', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
         renderPointsStudentList();
         showToast(`✅ تم خصم ${amt} نقطة من ${s.name}`, true);
@@ -1332,7 +1378,6 @@ window.deletePointLog = async function(sid, idx) {
     const isAddLog = ['add', 'wird', 'bonus'].includes(entry.type);
     s.points = isAddLog ? Math.max(0,(s.points||0)-entry.pts) : (s.points||0)+entry.pts;
     s.pointsLog.splice(idx, 1);
-    // تحديث مركز للنقاط فقط
     await updateStudentPointsInFirebase(sid, s);
     renderPointsLog();
     showToast('✅ تم حذف السجل وتحديث النقاط', true);
@@ -1341,7 +1386,38 @@ window.deletePointLog = async function(sid, idx) {
 window.openPointsLog=function(sid,sname){ currentLogStudentId=sid; document.getElementById('pointsLogTitle').innerHTML=`<i class="fas fa-history"></i> سجل النقاط: ${sname}`; renderPointsLog(); document.getElementById('modalPointsLog').style.display='flex'; };
 window.closePointsLogModal=function(){ document.getElementById('modalPointsLog').style.display='none'; currentLogStudentId=null; renderPointsStudentList(); };
 function renderPointsLog(){ if(!currentLogStudentId) return; const s=findStudentById(currentLogStudentId); const log=s?.pointsLog||[]; const el=document.getElementById('pointsLogContent'); if(!log.length){ el.innerHTML='<div style="text-align:center;color:#aaa;padding:2rem;font-size:1rem;">لا توجد سجلات بعد</div>'; return; } let html=`<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="color:#888;font-size:0.85rem;">إجمالي النقاط</div><div style="font-size:2.2rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`; const reversed=[...log].reverse(); reversed.forEach((entry,revIdx)=>{ const realIdx=log.length-1-revIdx; const isAdd=['add', 'wird', 'bonus'].includes(entry.type); const col=isAdd?'#28a745':'#dc3545'; const icon=isAdd?'➕':'➖'; const bg=isAdd?'#f0fff4':'#fff5f5'; const bd=isAdd?'#c3e6cb':'#f5c6cb'; let typeLabel=''; if(entry.type==='wird') typeLabel=' (الورد اليومي)'; else if(entry.type==='bonus') typeLabel=' (مكافأة أسبوعية)'; html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;"><span style="font-size:1rem;">${icon}</span><span style="font-weight:700;color:${col};min-width:45px;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;font-size:0.95rem;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:0.78rem;white-space:nowrap;">${entry.date||''}</span><button onclick="deletePointLog('${currentLogStudentId}',${realIdx})" class="button small danger" style="padding:3px 8px;"><i class="fas fa-trash"></i></button></div>`; }); el.innerHTML=html; }
-function renderPointsStudentList(){ const search=document.getElementById('pointsSearchInput').value.trim().toLowerCase(); const filter=document.getElementById('pointsGroupFilter').value; const cont=document.getElementById('pointsStudentList'); cont.innerHTML=''; const all=[]; let idx=1; data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); }); for(const {student:s,group:g,sticker:st,idx:studentIdx} of all){ const pts=s.points||0; const logCnt=s.pointsLog?.length||0; const sid=s.id; const card=document.createElement('div'); card.className='student-points-card'; card.innerHTML=`
+
+// ===== أرشيف معدل النقاط الشهري (لمراقبة سير الطالب طيلة السنة) =====
+let currentArchiveStudentId = null;
+window.openMonthlyArchive = function(sid, sname){
+    currentArchiveStudentId = sid;
+    document.getElementById('monthlyArchiveTitle').innerHTML = `<i class="fas fa-calendar-alt"></i> أرشيف معدل النقاط: ${escapeHtml(sname)}`;
+    renderMonthlyArchive();
+    document.getElementById('modalMonthlyArchive').style.display = 'flex';
+};
+window.closeMonthlyArchiveModal = function(){
+    document.getElementById('modalMonthlyArchive').style.display = 'none';
+    currentArchiveStudentId = null;
+};
+function renderMonthlyArchive(){
+    if(!currentArchiveStudentId) return;
+    const s = findStudentById(currentArchiveStudentId);
+    const el = document.getElementById('monthlyArchiveContent');
+    const months = getStudentMonthlyArchive(s);
+    if(!months.length){ el.innerHTML='<div style="text-align:center;color:#aaa;padding:2rem;font-size:1rem;">لا يوجد سجل شهري بعد</div>'; return; }
+    const now = getSecureDate();
+    let html = '';
+    months.forEach(m=>{
+        const isCurrent = (m.year===now.getFullYear() && m.month===now.getMonth());
+        const col = m.total>0 ? '#28a745' : (m.total<0 ? '#dc3545' : '#888');
+        html += `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:${isCurrent?'#f5f3ff':'#f8f9fa'};border:1px solid ${isCurrent?'#d8d0f5':'#e9ecef'};border-radius:10px;margin-bottom:8px;">
+            <span style="font-weight:700;color:#444;">${ARABIC_MONTH_NAMES[m.month]} ${m.year}${isCurrent?' <span style="color:#6c5ce7;font-size:0.78rem;">(الشهر الحالي)</span>':''}</span>
+            <span style="font-weight:900;font-size:1.15rem;color:${col};">${m.total>0?'+':''}${m.total}</span>
+        </div>`;
+    });
+    el.innerHTML = html;
+}
+function renderPointsStudentList(){ const search=document.getElementById('pointsSearchInput').value.trim().toLowerCase(); const filter=document.getElementById('pointsGroupFilter').value; const cont=document.getElementById('pointsStudentList'); cont.innerHTML=''; const all=[]; let idx=1; data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); }); for(const {student:s,group:g,sticker:st,idx:studentIdx} of all){ const pts=s.points||0; const monthlyPts=calcCurrentMonthlyPoints(s); const monthlyColor = monthlyPts>0 ? '#28a745' : (monthlyPts<0 ? '#dc3545' : '#888'); const logCnt=s.pointsLog?.length||0; const sid=s.id; const card=document.createElement('div'); card.className='student-points-card'; card.innerHTML=`
         <div class="student-info-section">
             <div class="student-name-large">${studentIdx}. ${escapeHtml(s.name)}</div>
             <div class="student-group-sticker">${escapeHtml(g.name)} / ${escapeHtml(st.title)}</div>
@@ -1362,8 +1438,13 @@ function renderPointsStudentList(){ const search=document.getElementById('points
         </div>
         <div class="points-summary-section">
             <div class="points-total">⭐ ${pts}</div>
+            <div class="monthly-points-box" title="معدل النقاط لهذا الشهر، يتصفر تلقائياً أول كل شهر">
+                <span class="monthly-points-label">📅 معدل الشهر</span>
+                <span class="monthly-points-value" id="monthly_pts_${sid}" style="color:${monthlyColor};">${monthlyPts>0?'+':''}${monthlyPts}</span>
+            </div>
             <div style="display:flex; gap:5px; flex-wrap:wrap; align-items:center;">
                 <button onclick="openPointsLog('${sid}','${escapeHtml(s.name)}')" class="points-log-btn"><i class="fas fa-history"></i> السجل (${logCnt})</button>
+                <button onclick="openMonthlyArchive('${sid}','${escapeHtml(s.name)}')" class="points-log-btn" style="background:#8e6dd6;"><i class="fas fa-calendar-alt"></i> أرشيف الشهور</button>
                 ${pointsReasons.length > 0 ? `
                 <select class="points-log-btn" style="background:#fff; color:#333; border:1px solid #ccc; max-width:130px; font-weight:normal; font-size:0.75rem;" onchange="applyQuickReason('${sid}', this)">
                     <option value="">⚡ إجراء سريع...</option>
@@ -1475,14 +1556,14 @@ window.markWirdComplete = async function(studentId){
         const pointsToAdd = currentPointsValue;
         student.points=(student.points||0)+pointsToAdd;
         if(!student.pointsLog) student.pointsLog=[];
-        const dateStr=now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
-        student.pointsLog.push({type:'wird',pts:pointsToAdd,note:`إكمال الورد اليومي (${todayStr})`,date:dateStr});
+        const dateStr = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+        student.pointsLog.push({type:'wird',pts:pointsToAdd,note:`إكمال الورد اليومي (${todayStr})`,date:dateStr, ts: now.getTime()});
         student.completedWirdDays.push(todayStr);
         const todayDate=new Date(todayStr); const currentDayOfWeek=todayDate.getDay();
         let weekStart=new Date(todayDate); weekStart.setDate(todayDate.getDate()-currentDayOfWeek);
         const weekDates=[]; for(let i=0;i<7;i++){ const d=new Date(weekStart); d.setDate(weekStart.getDate()+i); weekDates.push(getDateString(d)); }
         const allCompleted=weekDates.every(date=>student.completedWirdDays.includes(date));
-        if(allCompleted){ const weekKey=`${weekDates[0]}_to_${weekDates[6]}`; if(!student.weeklyBonusGiven) student.weeklyBonusGiven=[]; if(!student.weeklyBonusGiven.includes(weekKey)){ student.points+=currentBonusValue; student.pointsLog.push({type:'bonus',pts:currentBonusValue,note:`مكافأة إكمال الأسبوع الكامل (${weekKey})`,date:dateStr}); student.weeklyBonusGiven.push(weekKey); showToast(`🎉 مكافأة إكمال الأسبوع الكامل: +${currentBonusValue} نقطة`, true); } }
+        if(allCompleted){ const weekKey=`${weekDates[0]}_to_${weekDates[6]}`; if(!student.weeklyBonusGiven) student.weeklyBonusGiven=[]; if(!student.weeklyBonusGiven.includes(weekKey)){ student.points+=currentBonusValue; student.pointsLog.push({type:'bonus',pts:currentBonusValue,note:`مكافأة إكمال الأسبوع الكامل (${weekKey})`,date:dateStr, ts: now.getTime()}); student.weeklyBonusGiven.push(weekKey); showToast(`🎉 مكافأة إكمال الأسبوع الكامل: +${currentBonusValue} نقطة`, true); } }
         let targetGroupIndex = -1, targetStickerIndex = -1, targetStudentIndex = -1;
         for(let gi=0; gi<data.length; gi++){ for(let si=0; si<data[gi].stickers.length; si++){ const sti = data[gi].stickers[si].students.findIndex(s => s.id === studentId); if(sti !== -1){ targetGroupIndex = gi; targetStickerIndex = si; targetStudentIndex = sti; break; } } if(targetStudentIndex !== -1) break; }
         if(targetStudentIndex !== -1) {
@@ -1557,7 +1638,6 @@ window.openStudentProfile = async function(studentId, noPush = false){
     } else {
         wirdButtonHtml=`<div style="background: #e8f5e9; color: #2e7d32; padding: 0.75rem; border-radius: 8px; margin-top: 1rem; text-align: center;">✅ تم تسجيل إنجاز الورد اليوم بالفعل! (+${pointsPerWird} نقطة)</div>`;
     }
-    // إضافة pushState إذا لم يكن noPush
     if (!noPush) {
         history.pushState({ modal: 'studentProfile', studentId: studentId }, '', '#studentProfile');
     }
@@ -1576,7 +1656,6 @@ window.openStudentProfile = async function(studentId, noPush = false){
 function renderHomework(hw){ const types=[{key:'recitation',title:'واجب التلاوة',icon:'fas fa-book-reader'},{key:'memorization',title:'واجب الحفظ',icon:'fas fa-brain'},{key:'review',title:'واجب المراجعة',icon:'fas fa-redo'}]; const items=types.map(t=>hw[t.key]?`<div class="homework-item"><div class="homework-item-header"><i class="${t.icon}"></i><span>${t.title}</span></div><div class="homework-item-content">${escapeHtml(hw[t.key])}</div></div>`:'').join(''); return items||'<div class="homework-item" style="text-align:center;color:#666;grid-column:1/-1;">لا توجد واجبات حتى الآن</div>'; }
 function renderCertificates(certs,studentId){ if(!certs?.length) return '<div style="text-align:center;color:#666;grid-column:1/-1;padding:2rem;">لا توجد شهادات حتى الآن</div>'; return certs.map(c=>`<div class="certificate-card"><img src="${escapeHtml(c.imageUrl)}" alt="${escapeHtml(c.title)}" onclick="viewCertificateImage('${escapeHtml(c.imageUrl)}')"><div class="certificate-overlay">${escapeHtml(c.title)}</div>${role==='admin'?`<div style="position:absolute;top:10px;left:10px;display:flex;gap:5px;"><button onclick="deleteCertificate('${studentId}','${c.id}')" style="background:rgba(220,53,69,0.9);color:white;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px);"><i class="fas fa-trash"></i></button></div>`:''}</div>`).join(''); }
 window.closeStudentProfile = function(){
-    // إغلاق المودال مباشرة ثم العودة للخلف
     studentProfileModal.style.display = 'none';
     _restoreFontGroupsForCurrentSection();
     history.back();
@@ -1593,7 +1672,6 @@ window.closeAddCertificateModal=function(studentId){ const tmp=document.getEleme
 window.deleteCertificate=async function(studentId,certId){ if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; } if(!confirm('حذف هذه الشهادة؟')) return; try{ const profile=studentProfiles[studentId]; if(profile?.certificates){ profile.certificates=profile.certificates.filter(c=>c.id!==certId); await writeStudentProfileToFirebase(studentId,profile); const container=document.getElementById(`certificatesContainer-${studentId}`); if(container) container.innerHTML=renderCertificates(profile.certificates,studentId); showToast('✅ تم حذف الشهادة بنجاح', true); } } catch(e){ showToast('❌ حدث خطأ أثناء حذف الشهادة', false); } };
 window.downloadImage=async function(url){ try{ const res=await fetch(url,{mode:'cors'}); if(!res.ok) throw new Error(); const blob=await res.blob(); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=url.split('/').pop()||'image.jpg'; a.click(); URL.revokeObjectURL(a.href); } catch(e){ alert('فشل تحميل الصورة'); } };
 window.viewCertificateImage = function(url){
-    // إضافة pushState
     history.pushState({ modal: 'certificate' }, '', '#certificate');
     const modalHtml = `<div style="position:fixed;inset:0;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;z-index:10000;display:flex;"><div style="background:transparent;max-width:90%;max-height:90%;position:relative;"><div style="position:absolute;top:10px;left:10px;display:flex;gap:10px;"><button onclick="closeImageModal()" style="background:rgba(0,0,0,0.5);color:white;border:none;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;"><i class="fas fa-times"></i></button><button onclick="downloadImage('${escapeHtml(url)}')" style="background:var(--accent);color:white;border:none;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;"><i class="fas fa-download"></i></button></div><img src="${escapeHtml(url)}" alt="صورة الشهادة" style="width:100%;height:auto;border-radius:5px;"></div></div>`;
     const tmp = document.createElement('div');
@@ -1604,8 +1682,6 @@ window.viewCertificateImage = function(url){
 window.closeImageModal = function(){
     const tmp = document.getElementById('tempImageModal');
     if (tmp) tmp.remove();
-    // لا نستدعي history.back() هنا لأننا نريد أن يقوم popstate بإزالة العنصر ثم بعدها يتم التعامل مع المودال الأب.
-    // لكننا أزلنا العنصر، ثم نستدعي history.back() لإرجاع الحالة إلى ما قبل الصورة.
     history.back();
 };
 
@@ -1639,7 +1715,6 @@ btnDeleteMessage.addEventListener('click',async()=>{ if(role!=='admin'){ alert('
 function renderMessagesControls(){ messagesControls.style.display=(role==='admin')?'flex':'none'; }
 
 // ================= دوال التبويبات والخط =================
-// خريطة كل مجموعة أزرار تحكم بالخط: المعرّفات (Headers + Buttons) التابعة لها
 const FONT_CONTROL_GROUPS = {
     grades:   ['gradesFontSectionHeader','btnZoomIn','btnZoomOut','btnZoomReset'],
     groups:   ['groupFontSectionHeader','btnZoomGroupIn','btnZoomGroupOut','btnZoomGroupReset'],
@@ -1648,7 +1723,6 @@ const FONT_CONTROL_GROUPS = {
     survey:   ['surveyFontSectionHeader','btnSurveyZoomIn','btnSurveyZoomOut','btnSurveyZoomReset'],
     home:     ['homeFontSectionHeader','btnHomeZoomIn','btnHomeZoomOut','btnHomeZoomReset']
 };
-// تعرض فقط مجموعات الأزرار المطلوبة (يمكن تمرير مفتاح واحد أو مصفوفة مفاتيح)، وتخفي باقي كل المجموعات
 function _setActiveFontGroups(activeKeys){
     const active = Array.isArray(activeKeys) ? activeKeys : (activeKeys ? [activeKeys] : []);
     Object.keys(FONT_CONTROL_GROUPS).forEach(key => {
@@ -1659,7 +1733,6 @@ function _setActiveFontGroups(activeKeys){
         });
     });
 }
-// تحدد القسم المعروض حالياً وتعرض مجموعة أزرار الخط المطابقة له (تُستخدم بعد إغلاق المودالات)
 function _restoreFontGroupsForCurrentSection(){
     if (homeScreen.style.display !== 'none') { _setActiveFontGroups('home'); return; }
     if (mainContentArea.style.display !== 'none') { _setActiveFontGroups(['grades','groups']); return; }
@@ -1928,11 +2001,9 @@ window.deleteUser=async(uid)=>{ if(!confirm('حذف بيانات هذا المس
 window.deleteUserAuth=(uid)=>{ window.open('https://console.firebase.google.com/project/quran2-eafc8/authentication/users', '_blank'); showToast('📌 افتح التبويب الجديد واحذف المستخدم يدوياً', true); };
 
 // ================= دوال الاختبارات والمسابقات =================
-// بيانات مؤقتة للمحرر
-let _examCoverImages = []; // روابط الصور المرفوعة للمسابقة
-let _examOptionRows = []; // خيارات الاختيار المتعدد المؤقتة
+let _examCoverImages = [];
+let _examOptionRows = [];
 
-// تحميل وحفظ الاختبارات من Firebase
 async function loadExamsFromFirebase() {
     try {
         const snap = await get(ref(db, 'exams'));
@@ -1958,7 +2029,6 @@ function saveExamsToFirebase() {
     localStorage.setItem('exams_local', JSON.stringify(exams));
 }
 
-// === دوال بناء خيارات الاختيار المتعدد ===
 window.toggleExamQType = function() {
     const type = document.getElementById('examQType').value;
     const wrapper = document.getElementById('examQOptionsWrapper');
@@ -2003,11 +2073,9 @@ window.addExamOptionRow = function() {
     renderExamOptionRows();
 };
 
-// === معالجة صور المسابقة ===
 window.handleExamCoverImages = async function(input) {
     const files = Array.from(input.files);
     if (!files.length) return;
-    const origHtml = document.getElementById('examCoverImagesPreview').innerHTML;
     for (const file of files) {
         try {
             showToast('⏳ جاري رفع الصورة...', true);
@@ -2040,11 +2108,10 @@ window.removeExamCoverImage = function(i) {
     renderExamCoverImagesPreview();
 };
 
-// عرض قائمة الاختبارات
 function renderExamsList() {
     const container = document.getElementById('examsContainer');
     if (!container) return;
-    _examFontSize = 16; // إعادة حجم الخط للأصل (المتغير معرّف أسفل)
+    _examFontSize = 16;
     if (exams.length === 0) {
         container.innerHTML = `
             <div style="text-align:center;padding:3rem 1rem;color:#888;">
@@ -2070,7 +2137,6 @@ function renderExamsList() {
         const isOpen = exam.status !== 'closed';
         const submissionsCount = exam.submissions ? exam.submissions.length : 0;
         const questionsCount = exam.questions ? exam.questions.length : 0;
-        // صور الغلاف
         let coverHtml = '';
         if (exam.coverImages && exam.coverImages.length) {
             if (exam.coverImages.length === 1) {
@@ -2079,17 +2145,13 @@ function renderExamsList() {
                 coverHtml = `<div class="exam-cover-images">${exam.coverImages.map(u=>`<img src="${escapeHtml(u)}" class="exam-cover-img-multi" onclick="window.open('${escapeHtml(u)}','_blank')" alt="صورة">`).join('')}</div>`;
             }
         }
-        // فحص هل أجرى طالب من هذا الجهاز الاختبار
         const deviceKey = 'exam_done_' + exam.id;
-        const alreadyDoneDevice = localStorage.getItem(deviceKey); // اسم آخر من أجرى الاختبار
-        // تحديد ما يظهر لزر الحل
+        const alreadyDoneDevice = localStorage.getItem(deviceKey);
         let examActionHtml = '';
         if (isOpen && role !== 'admin') {
             if (!alreadyDoneDevice) {
-                // لم يحل أحد من هذا الجهاز بعد
                 examActionHtml = `<button class="button" onclick="startExam('${exam.id}')"><i class="fas fa-play"></i> حل الاختبار</button>`;
             } else {
-                // حل شخص من هذا الجهاز → نفس الزر مع ملاحظة للأخ
                 examActionHtml = `
                     <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:0.5rem 0.8rem;margin-bottom:0.5rem;font-size:0.85rem;">
                         ✅ أجرى الاختبار من هذا الجهاز: <strong>${escapeHtml(alreadyDoneDevice)}</strong> — إذا كنت أخاه يمكنك الحل
@@ -2098,6 +2160,8 @@ function renderExamsList() {
                 `;
             }
         }
+        // عرض التاريخ ميلادي
+        const createdDate = exam.createdAt ? new Date(exam.createdAt).toLocaleDateString('en-GB') : '';
         html += `
             <div class="exam-card">
                 ${coverHtml}
@@ -2118,7 +2182,7 @@ function renderExamsList() {
                 <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.5rem 0;color:#666;font-size:0.85rem;">
                     <span><i class="fas fa-question-circle"></i> ${questionsCount} سؤال</span>
                     ${role==='admin' ? `<span><i class="fas fa-users"></i> ${submissionsCount} مشاركة</span>` : ''}
-                    <span><i class="fas fa-calendar"></i> ${exam.createdAt ? new Date(exam.createdAt).toLocaleDateString('ar-SA') : ''}</span>
+                    <span><i class="fas fa-calendar"></i> ${createdDate}</span>
                 </div>
                 ${isOpen && role !== 'admin' ? examActionHtml : ''}
                 ${!isOpen && role !== 'admin' ? `<div style="color:#dc3545;font-weight:600;">الاختبار مغلق حالياً</div>` : ''}
@@ -2128,7 +2192,6 @@ function renderExamsList() {
     container.innerHTML = html;
 }
 
-// فتح محرر الاختبار (إنشاء أو تعديل)
 window.openExamEditor = function(examId = null) {
     if (role !== 'admin') { showToast('❌ صلاحيات المدير فقط', false); return; }
     const modal = document.getElementById('modalExamEditor');
@@ -2181,7 +2244,6 @@ window.closeExamEditor = function() {
     _examOptionRows = [];
 };
 
-// عرض الأسئلة في المحرر
 function renderExamQuestions(questions) {
     const list = document.getElementById('examQuestionsList');
     if (!list) return;
@@ -2211,7 +2273,6 @@ function renderExamQuestions(questions) {
     list.innerHTML = html;
 }
 
-// إضافة سؤال للمحرر
 document.getElementById('examAddQuestionBtn').addEventListener('click', function() {
     const text = document.getElementById('examQText').value.trim();
     const type = document.getElementById('examQType').value;
@@ -2219,7 +2280,6 @@ document.getElementById('examAddQuestionBtn').addEventListener('click', function
     if (!text) { showToast('❌ أدخل نص السؤال', false); return; }
     let options = [];
     if (type === 'multiple') {
-        // جمع الخيارات من UI
         _examOptionRows.forEach((opt, i) => {
             const inputEl = document.querySelector(`#optrow_${i} .exam-option-text`);
             if (inputEl) opt.text = inputEl.value.trim();
@@ -2248,7 +2308,6 @@ document.getElementById('examAddQuestionBtn').addEventListener('click', function
     renderExamOptionRows();
 });
 
-// تعديل سؤال
 window.editExamQuestion = function(index) {
     const exam = currentExamId ? exams.find(e => e.id === currentExamId) : null;
     const questions = exam ? exam.questions : (window._tempExamQuestions || []);
@@ -2271,7 +2330,6 @@ window.editExamQuestion = function(index) {
     btn.style.background = '#ff9800';
 };
 
-// حذف سؤال
 window.removeExamQuestion = function(index) {
     if (!confirm('حذف هذا السؤال؟')) return;
     const exam = currentExamId ? exams.find(e => e.id === currentExamId) : null;
@@ -2284,7 +2342,6 @@ window.removeExamQuestion = function(index) {
     }
 };
 
-// حفظ الاختبار
 document.getElementById('examSaveBtn').addEventListener('click', function() {
     const title = document.getElementById('examTitleInput').value.trim();
     const description = document.getElementById('examDescInput').value.trim();
@@ -2311,7 +2368,6 @@ document.getElementById('examSaveBtn').addEventListener('click', function() {
     renderExamsList();
 });
 
-// حذف اختبار
 window.deleteExam = function(examId) {
     if (role !== 'admin') return;
     if (!confirm('هل أنت متأكد من حذف هذا الاختبار؟')) return;
@@ -2321,7 +2377,6 @@ window.deleteExam = function(examId) {
     showToast('✅ تم حذف الاختبار', true);
 };
 
-// تبديل حالة الاختبار (فتح/إغلاق)
 window.toggleExamStatus = function(examId) {
     if (role !== 'admin') return;
     const exam = exams.find(e => e.id === examId);
@@ -2332,20 +2387,13 @@ window.toggleExamStatus = function(examId) {
     showToast(`✅ تم ${exam.status === 'open' ? 'فتح' : 'إغلاق'} الاختبار`, true);
 };
 
-// بدء حل الاختبار (لغير المدير)
 window.startExam = function(examId) {
     const exam = exams.find(e => e.id === examId);
     if (!exam) { showToast('❌ الاختبار غير موجود', false); return; }
     if (exam.status === 'closed') { showToast('❌ الاختبار مغلق حالياً', false); return; }
-    // فحص التكرار من نفس الهاتف
     const deviceKey = 'exam_done_' + exam.id;
     const alreadyDone = localStorage.getItem(deviceKey);
-    if (alreadyDone) {
-        const siblingKey = alreadyDone;
-        // الأخوة مسموح لهم: لا نمنعهم هنا - سيتم فحص الاسم لاحقاً
-    }
     const container = document.getElementById('examsContainer');
-    // صور الغلاف
     let coverHtml = '';
     if (exam.coverImages && exam.coverImages.length) {
         if (exam.coverImages.length === 1) {
@@ -2354,7 +2402,6 @@ window.startExam = function(examId) {
             coverHtml = `<div class="exam-cover-images" style="margin-bottom:1rem;">${exam.coverImages.map(u=>`<img src="${escapeHtml(u)}" class="exam-cover-img-multi" alt="صورة">`).join('')}</div>`;
         }
     }
-    // قائمة الطلاب
     let studentOpts = '<option value="">-- اختر اسمك من القائمة --</option>';
     const byGroup = {};
     data.forEach(g => g.stickers.forEach(st => st.students.forEach(s => {
@@ -2378,7 +2425,6 @@ window.startExam = function(examId) {
             </div>
             <div class="exam-desc" style="white-space:pre-wrap;">${escapeHtml(exam.description || '')}</div>
             ${exam.links ? `<div class="exam-links">🔗 روابط: ${exam.links.split(',').map(link => `<a href="${link.trim()}" target="_blank">${link.trim()}</a>`).join(' | ')}</div>` : ''}
-            <!-- اختيار اسم الطالب (إلزامي) -->
             <div style="background:#f0fdf4;border:2px solid #4CAF50;border-radius:8px;padding:0.8rem;margin:1rem 0;">
                 <label style="font-weight:700;color:#2e7d32;display:block;margin-bottom:0.4rem;"><i class="fas fa-user-check"></i> اختر اسمك من القائمة (إلزامي):</label>
                 <select id="examStudentSelect" style="width:100%;padding:0.6rem;border:2px solid #4CAF50;border-radius:6px;font-size:1rem;" required>
@@ -2413,15 +2459,12 @@ window.startExam = function(examId) {
         </div>
     `;
     container.innerHTML = html;
-    // تخزين مرجع الاختبار للإرسال
     window._currentSolvingExamId = examId;
 };
 
-// إرسال إجابات الاختبار
 window.submitExamAnswers = async function(examId) {
     const exam = exams.find(e => e.id === examId);
     if (!exam) return;
-    // التحقق من اختيار الاسم
     const studentSelectEl = document.getElementById('examStudentSelect');
     const studentVal = studentSelectEl ? studentSelectEl.value : '';
     if (!studentVal) {
@@ -2431,11 +2474,9 @@ window.submitExamAnswers = async function(examId) {
         return;
     }
     const [studentId, studentName] = studentVal.split('__');
-    // فحص التكرار من نفس الهاتف (مع السماح للأخوة فقط)
     const deviceKey = 'exam_done_' + exam.id;
     const prevDone = localStorage.getItem(deviceKey);
     if (prevDone) {
-        // الأخوة يشتركون في آخر كلمة من الاسم (اسم العائلة/الجد)
         const prevFamily = prevDone.trim().split(' ').pop();
         const curFamily = studentName.trim().split(' ').pop();
         if (prevFamily !== curFamily) {
@@ -2451,12 +2492,10 @@ window.submitExamAnswers = async function(examId) {
             return;
         }
     }
-    // التحقق من عدم إجراء نفس الطالب للاختبار مسبقاً
     if (exam.submissions && exam.submissions.some(s => s.studentId === studentId)) {
         showToast('⚠️ لقد أجريت هذا الاختبار مسبقاً', false);
         return;
     }
-    // جمع الإجابات
     const answers = [];
     let hasEssay = false;
     for (let idx = 0; idx < exam.questions.length; idx++) {
@@ -2478,13 +2517,11 @@ window.submitExamAnswers = async function(examId) {
             hasEssay = true;
         }
     }
-    // حساب نتيجة الأسئلة الموضوعية
     let autoScore = 0, autoMax = 0;
     answers.forEach(a => { if (a.type === 'multiple') { autoMax += a.points; if (a.isCorrect) autoScore += a.points; } });
     const hasEssayQs = answers.some(a => a.type === 'essay');
     const totalMax = exam.questions.reduce((s,q) => s + (q.points||10), 0);
     let finalScore = hasEssayQs ? null : (autoMax > 0 ? Math.round((autoScore/autoMax)*100) : 0);
-    // حفظ
     const submission = {
         studentId, studentName,
         answers, score: finalScore, totalMax,
@@ -2495,14 +2532,11 @@ window.submitExamAnswers = async function(examId) {
     if (!exam.submissions) exam.submissions = [];
     exam.submissions.push(submission);
     saveExamsToFirebase();
-    // حفظ في localStorage (منع التكرار)
     localStorage.setItem(deviceKey, studentName);
-    // عرض النتيجة
     const resultArea = document.getElementById('examResultArea');
     document.querySelector('#examSolveFormWrapper')?.querySelectorAll('input,textarea,select,button').forEach(el => el.disabled = true);
     document.querySelector('.button.gold[onclick*="submitExam"]')?.remove();
     if (exam.showResults && !hasEssayQs && autoMax > 0) {
-        // MCQ فقط + المدير أذن بالنتيجة → أظهرها فوراً
         const pct = Math.round((autoScore/autoMax)*100);
         const barColor = pct>=80?'#4CAF50':pct>=60?'#FF9800':'#F44336';
         resultArea.innerHTML = `<div class="exam-result" style="margin-top:1rem;">
@@ -2513,7 +2547,6 @@ window.submitExamAnswers = async function(examId) {
             <div style="margin-top:0.75rem;background:rgba(255,255,255,0.7);border-radius:8px;padding:0.5rem;"><div style="height:8px;background:#ddd;border-radius:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${barColor};border-radius:4px;"></div></div></div>
         </div>`;
     } else if (exam.showResults && hasEssayQs && autoMax > 0) {
-        // مختلط: أظهر MCQ وأعلم بالمقالي
         const pct = Math.round((autoScore/autoMax)*100);
         resultArea.innerHTML = `<div class="exam-result" style="margin-top:1rem;">
             <div class="score">${autoScore} / ${autoMax} (اختيار متعدد)</div>
@@ -2526,15 +2559,13 @@ window.submitExamAnswers = async function(examId) {
     renderExamsList();
 };
 
-// تكبير/تصغير خط الاختبار
-var _examFontSize = 16; // الحجم الأصلي
+var _examFontSize = 16;
 window.changeExamFont = function(delta) {
     if (delta === 0) {
         _examFontSize = 16;
     } else {
         _examFontSize = Math.max(6, Math.min(64, _examFontSize + delta));
     }
-    // تطبيق على كل محتوى قسم الاختبارات
     const container = document.getElementById('examsContainer');
     if (!container) return;
     container.style.fontSize = _examFontSize + 'px';
@@ -2543,7 +2574,6 @@ window.changeExamFont = function(delta) {
     });
 };
 
-// معاينة الصورة في الإجابة المقالية
 window.previewEssayImage = function(input, idx) {
     const file = input.files[0];
     if (!file) return;
@@ -2555,7 +2585,6 @@ window.previewEssayImage = function(input, idx) {
     reader.readAsDataURL(file);
 };
 
-// عرض نتائج الاختبار للمدير
 window.viewExamResults = function(examId) {
     if (role !== 'admin') return;
     const exam = exams.find(e => e.id === examId);
@@ -2571,7 +2600,7 @@ window.viewExamResults = function(examId) {
     html += `<table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
         <thead><tr><th>#</th><th>الطالب</th><th>التاريخ</th><th>النتيجة</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>`;
     exam.submissions.forEach((sub, idx) => {
-        const date = new Date(sub.submittedAt).toLocaleString('ar-SA');
+        const date = new Date(sub.submittedAt).toLocaleString('en-GB'); // ميلادي
         const totalMax = sub.totalMax || exam.questions.reduce((s,q)=>s+(q.points||10),0);
         const scoreDisplay = sub.score !== null ? `${sub.autoScore||0}/${sub.autoMax||totalMax} (${sub.score}%)` : 'جاري التصحيح';
         const graded = sub.graded ? '✅ مصحح' : '⏳ ينتظر';
@@ -2597,7 +2626,6 @@ window.closeExamResults = function() {
     document.getElementById('modalExamResults').style.display = 'none';
 };
 
-// تصحيح الإجابات وتعديل النقاط
 window.gradeSubmission = function(examId, submissionIndex) {
     const exam = exams.find(e => e.id === examId);
     if (!exam || !exam.submissions || !exam.submissions[submissionIndex]) return;
@@ -2635,7 +2663,6 @@ window.gradeSubmission = function(examId, submissionIndex) {
             </div>`;
         }
     });
-    // إجمالي النقاط اليدوي
     html += `<div style="margin-top:1rem;background:#e3f2fd;padding:0.8rem;border-radius:8px;">
         <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
             <label style="font-weight:700;">إجمالي الدرجة النهائية (يدوي):</label>
@@ -2725,7 +2752,6 @@ window.autoCalculateTotal = function(examId, subIdx) {
     if (document.getElementById('modalExamResults').style.display === 'flex') viewExamResults(examId);
 };
 
-// ================= دالة ترحيل نقاط الاختبارات (معدلة للتحديث المركز) =================
 window.transferExamPointsToStudent = async function(examId, subIdx) {
     const exam = exams.find(e => e.id === examId); if(!exam) return;
     const sub = exam.submissions[subIdx]; if(!sub) return;
@@ -2738,10 +2764,9 @@ window.transferExamPointsToStudent = async function(examId, subIdx) {
     if (!confirm(`ترحيل ${earned} نقطة من أصل ${totalMax} لـ ${sub.studentName}؟\nسيتم إضافتها لسجل نقاط الطالب.`)) return;
     if (!student.pointsLog) student.pointsLog = [];
     const now = getSecureDate();
-    const ds = now.toLocaleDateString('ar-SA')+' '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
     student.points = (student.points||0) + earned;
-    student.pointsLog.push({type:'add', pts:earned, note:`نتيجة اختبار: ${exam.title} (${earned}/${totalMax})`, date:ds});
-    // تحديث مركز للنقاط فقط باستخدام الدالة المساعدة
+    student.pointsLog.push({type:'add', pts:earned, note:`نتيجة اختبار: ${exam.title} (${earned}/${totalMax})`, date:ds, ts: now.getTime()});
     await updateStudentPointsInFirebase(studentId, student);
     render();
     showToast(`✅ تم ترحيل ${earned} نقطة لسجل ${sub.studentName}`, true);
@@ -2758,7 +2783,6 @@ window.deleteSubmission = function(examId, submissionIndex) {
 };
 
 // ================= قسم هدايات =================
-// { items: [{type:'hidaya', title, body, imageUrl, id}, ...] }
 let visionData = { items: [] };
 
 async function loadVisionFromFirebase() {
@@ -2772,14 +2796,12 @@ async function saveVisionToFirebase() {
     try { await set(ref(db, 'vision'), visionData); showToast('✅ تم الحفظ', true); } catch(e) { showToast('❌ خطأ في الحفظ', false); }
 }
 
-// Realtime listener for vision
 onValue(ref(db,'vision'), (snap) => {
     if (snap.exists()) { visionData = snap.val() || {items:[]}; if (!visionData.items) visionData.items = []; }
     else visionData = {items:[]};
     if (document.getElementById('visionSection')?.style.display !== 'none') renderVisionSection();
 });
 
-// Realtime listener for exams
 onValue(ref(db,'exams'), (snap) => {
     exams = snap.exists() ? (snap.val() || []) : [];
     localStorage.setItem('exams_local', JSON.stringify(exams));
@@ -2846,7 +2868,6 @@ window.handleInstructionsPdfUpload = async function(input) {
     const statusEl = document.getElementById('instructionsUploadStatus');
     statusEl.innerHTML = `<div class="instructions-loading"><i class="fas fa-spinner"></i><span>جاري تحميل مكتبة PDF...</span></div>`;
 
-    // تحميل pdf.js ديناميكياً
     if (!window.pdfjsLib) {
         await new Promise((res, rej) => {
             const s = document.createElement('script');
@@ -2874,7 +2895,6 @@ window.handleInstructionsPdfUpload = async function(input) {
         await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
         const base64 = canvas.toDataURL('image/jpeg', 0.88).split(',')[1];
 
-        // رفع لـ ImgBB
         const form = new FormData();
         form.append('image', base64);
         const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, { method:'POST', body: form });
@@ -2883,7 +2903,6 @@ window.handleInstructionsPdfUpload = async function(input) {
         uploadedUrls.push(json.data.url);
     }
 
-    // حفظ في Firebase
     instructionsData = { pages: uploadedUrls, updatedAt: new Date().toISOString() };
     localStorage.setItem('instructions_local', JSON.stringify(instructionsData));
     try {
@@ -2906,7 +2925,6 @@ window.clearInstructionsPages = async function() {
 };
 
 async function getImgBBKey() {
-    // استخدام نفس المفتاح المعرّف في النظام
     if (typeof IMGBB_API_KEY !== 'undefined' && IMGBB_API_KEY) return IMGBB_API_KEY;
     try {
         const snap = await get(ref(db, 'settings/imgbbApiKey'));
@@ -2914,7 +2932,6 @@ async function getImgBBKey() {
     } catch { return null; }
 }
 
-// تحميل بيانات التعليمات من Firebase
 let instructionsData = JSON.parse(localStorage.getItem('instructions_local')) || { pages: [] };
 onValue(ref(db, 'instructions'), snap => {
     instructionsData = snap.exists() ? snap.val() : { pages: [] };
@@ -2962,7 +2979,6 @@ function renderVisionSection() {
     cont.innerHTML = html;
 }
 
-// مودال إضافة هداية جديدة
 window.openAddHidayaModal = function(editIdx = -1) {
     const isEdit = editIdx >= 0;
     const existing = isEdit ? visionData.items[editIdx] : null;
@@ -3127,7 +3143,6 @@ function setupHomeworkNavigation(){ document.addEventListener('keydown',(e)=>{ i
 onValue(ref(db,'visitors'),(snap)=>{ const v=snap.val()||{}; updateVisitorsUI(v.count||0,v.lastReset||null); });
 btnResetVisitors.addEventListener('click',resetVisitors);
 
-// تحديث البيانات فوراً عند أي تغيير
 onValue(ref(db,'groups'), (snap) => {
     if (!isInitialized) return;
     if (snap.exists()) { data = snap.val(); localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
@@ -3152,20 +3167,15 @@ onValue(ref(db,'settings/pointsReasons'), (snap) => {
 // ========= مستمع popstate للتعامل مع زر الرجوع =========
 window.addEventListener('popstate', function(event) {
     const state = event.state || {};
-    // 1. إذا كانت صورة الشهادة مفتوحة، نغلقها
     const certModal = document.getElementById('tempImageModal');
     if (certModal) {
         certModal.remove();
-        // نمنع أي إجراء آخر في هذه الخطوة
         return;
     }
-    // 2. إذا كان ملف الطالب مفتوحاً
     const profileModal = document.getElementById('studentProfileModal');
     if (profileModal && profileModal.style.display === 'flex') {
-        // إذا كانت الحالة لا تحوي studentProfile، نغلق المودال
         if (state.modal !== 'studentProfile') {
             profileModal.style.display = 'none';
-            // بعد إغلاقه، إذا كانت الحالة تحوي section ننتقل له
             switch (state.section) {
                 case 'grades': showSection('grades', true); break;
                 case 'homework': showSection('homework', true); break;
@@ -3176,15 +3186,12 @@ window.addEventListener('popstate', function(event) {
             }
             return;
         }
-        // إذا كانت الحالة تحوي studentProfile، نبقى (لا نغلق)
         return;
     }
-    // 3. إذا كانت الحالة تحوي studentProfile ولم يكن المودال مفتوحاً، نفتحه
     if (state.modal === 'studentProfile' && state.studentId) {
-        openStudentProfile(state.studentId, true); // noPush
+        openStudentProfile(state.studentId, true);
         return;
     }
-    // 4. إذا كانت الحالة تحوي section، نوجهها لدالتها الصحيحة عبر switch
     if (state.section) {
         switch (state.section) {
             case 'grades': showSection('grades', true); break;
@@ -3199,7 +3206,6 @@ window.addEventListener('popstate', function(event) {
     }
 });
 
-// ========= حماية الشاشة من التحديث الفوري أثناء كتابة المشرف للبيانات =========
 document.addEventListener('focusin', (e) => {
     const t = e.target?.tagName;
     if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || e.target?.isContentEditable) {
@@ -3219,7 +3225,6 @@ async function initializeAppData(){ showLoading(); try{ await optimizedFirebaseF
 function initUI(){ fillGrade(modalHifz,''); fillGrade(modalWard,''); fillGrade(modalAkhlak,''); startMessageRotation(); updateUIAfterAuth(); updateZoomButtonsLabels(); render(); setupHomeworkNavigation(); setupFontSizeControls(); showHomeScreen(); renderExamsList(); }
 initializeAppData();
 
-// ربط بعض الدوال للنافذة (للاستدعاء من HTML)
 window.markWirdComplete = markWirdComplete;
 window.openStudentProfile = openStudentProfile;
 window.closeStudentProfile = closeStudentProfile;

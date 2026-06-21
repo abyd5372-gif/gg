@@ -1200,13 +1200,26 @@ window.deleteHomeworkHistoryItem=async function(studentId,idx){ if(role!=='admin
 function findStudentById(sid){ for(const g of data) for(const st of g.stickers) for(const s of st.students) if(s.id===sid) return s; return null; }
 
 // ===== معدل النقاط الشهري =====
-// يحسب صافي النقاط (إضافة وخصم) لشهر وسنة معيّنين من سجل الطالب، بالاعتماد على الطابع الزمني الدقيق (ts)
+// يحاول استخراج تاريخ السجل: يفضّل الطابع الزمني الدقيق (ts)، وإن لم يوجد يحلّل حقل date النصي (dd/mm/yyyy) كحل احتياطي للسجلات القديمة
+function getEntryDate(entry){
+    if(typeof entry.ts === 'number') return new Date(entry.ts);
+    if(typeof entry.date === 'string'){
+        const m = entry.date.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/); // dd/mm/yyyy (en-GB)
+        if(m){
+            const day = parseInt(m[1],10), month = parseInt(m[2],10)-1, year = parseInt(m[3],10);
+            const d = new Date(year, month, day);
+            if(!isNaN(d.getTime())) return d;
+        }
+    }
+    return null; // لا يمكن تحديد تاريخ السجل
+}
+// يحسب صافي النقاط (إضافة وخصم) لشهر وسنة معيّنين من سجل الطالب
 function calcPointsForMonth(student, year, month){
     if(!student?.pointsLog) return 0;
     let total = 0;
     student.pointsLog.forEach(entry=>{
-        if(typeof entry.ts !== 'number') return; // السجلات القديمة بدون ts لا تُحسب لشهر محدد
-        const d = new Date(entry.ts);
+        const d = getEntryDate(entry);
+        if(!d) return; // سجل بلا أي تاريخ صالح (ts أو date) لا يمكن نسبته لشهر محدد
         if(d.getFullYear()===year && d.getMonth()===month){
             const isAdd = ['add','wird','bonus'].includes(entry.type);
             total += isAdd ? entry.pts : -entry.pts;
@@ -1224,8 +1237,8 @@ function getStudentMonthlyArchive(student){
     if(!student?.pointsLog) return [];
     const months = new Map(); // key: "YYYY-MM" -> {year, month, total}
     student.pointsLog.forEach(entry=>{
-        if(typeof entry.ts !== 'number') return;
-        const d = new Date(entry.ts);
+        const d = getEntryDate(entry);
+        if(!d) return;
         const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
         const isAdd = ['add','wird','bonus'].includes(entry.type);
         const val = isAdd ? entry.pts : -entry.pts;

@@ -179,6 +179,17 @@
         .grades-table td:nth-child(2) { font-weight: 700; }
         .grades-table select { font-size: 0.9em !important; padding: 0.2rem !important; }
         .history-btn { background: #f0f0f0; border: 1px solid #ddd; color: #555; border-radius: 50%; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; flex-shrink: 0; }
+        .seq-num-link { display: inline-flex; align-items: center; justify-content: center; }
+        .pending-badge { position: absolute; top: -0.5rem; left: -0.9rem; background: #dc3545; color: #fff; font-size: 0.65rem; font-weight: 800; min-width: 1.1rem; height: 1.1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0 0.2rem; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+        .activity-pick-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.625rem 0.875rem; border: 1.5px solid #e0e0e0; border-radius: 0.5rem; background: #fff; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: #333; margin-bottom: 0.5rem; transition: all .15s; }
+        .activity-pick-btn:hover { border-color: var(--accent); background: #f1fff3; }
+        .activity-pick-btn .ap-pts { color: #b8860b; font-weight: 800; }
+        .pending-item { display: flex; align-items: center; gap: 0.625rem; padding: 0.625rem 0.75rem; background: #fff8e1; border: 1px solid #f0e0a0; border-radius: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+        .pending-item .pi-date { font-weight: 700; color: #8a6d00; font-size: 0.85rem; white-space: nowrap; }
+        .pending-item .pi-date.is-today { color: #c0392b; }
+        .pending-item .pi-text { flex: 1; color: #333; font-size: 0.92rem; }
+        .pending-item .pi-pts { color: #28a745; font-weight: 800; white-space: nowrap; }
+        .activities-crud-row { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 6px; }
         .history-btn:hover { background: #e0e0e0; color: #000; }
         .homework-modified { background-color: #fff9e6; border: 1px solid #ffd54f; }
         .history-list { max-height: 18.75rem; overflow-y: auto; text-align: right; }
@@ -439,9 +450,12 @@
 <div id="modalMessageBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:500px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 8px 0"><i class="fas fa-edit"></i> تعديل الرسالة الحالية</h3><div style="display:flex;flex-direction:column;gap:8px"><textarea id="modalMessageText" placeholder="نص الرسالة..." rows="4" style="width:100%;resize:vertical"></textarea><div style="display:flex;gap:8px;justify-content:flex-end"><button id="modalMessageCancel" class="button danger"><i class="fas fa-times"></i> إلغاء</button><button id="modalMessageSave" class="button"><i class="fas fa-save"></i> حفظ</button></div></div></div></div>
 <div id="modalMoveBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:420px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 8px 0"><i class="fas fa-exchange-alt"></i> نقل الطالب</h3><div style="display:flex;flex-direction:column;gap:8px"><div id="moveCurrentStudentInfo" style="padding:8px;background:#f5f5f5;border-radius:6px;border:1px solid #ddd"></div><div><label style="font-weight:600;display:block;margin-bottom:4px">المجموعة الهدف:</label><select id="modalTargetGroup" style="width:100%"></select></div><div><label style="font-weight:600;display:block;margin-bottom:4px">الستكر الهدف:</label><select id="modalTargetSticker" style="width:100%"></select></div><div style="display:flex;gap:8px;justify-content:flex-end"><button id="modalMoveCancel" class="button danger"><i class="fas fa-times"></i> إلغاء</button><button id="modalMoveSave" class="button" style="background:#9C27B0;"><i class="fas fa-exchange-alt"></i> نقل</button></div></div></div></div>
 <div id="modalHistoryBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:450px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 12px 0; color:var(--accent)"><i class="fas fa-history"></i> سجل التعديلات</h3><div id="historyContent" class="history-list"></div><div style="margin-top:12px;text-align:center"><button onclick="document.getElementById('modalHistoryBackdrop').style.display='none'" class="button small ghost">إغلاق</button></div></div></div>
+<div id="modalReportActivity" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:480px;max-height:85vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="reportActivityTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-clipboard-check"></i> تسجيل نشاط إضافي</h3><button onclick="closeReportActivityModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="reportActivityList"></div></div></div>
+<div id="modalTransferActivities" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:560px;max-height:85vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="transferActivitiesTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-hourglass-half"></i> الأنشطة الإضافية المعلقة</h3><button onclick="closeTransferActivitiesModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="transferActivitiesList"></div></div></div>
+<div id="modalCombinedRecord" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:97%;max-width:920px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="combinedRecordTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-folder-open"></i> سجل الطالب</h3><button onclick="closeCombinedRecordModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;min-width:280px;"><h4 style="margin:0 0 .5rem 0;color:#2E7D32;"><i class="fas fa-book"></i> سجل الواجبات</h4><div id="combinedHomeworkContent" class="history-list"></div></div><div style="flex:1;min-width:280px;border-right:1px solid #eee;padding-right:1rem;"><h4 style="margin:0 0 .5rem 0;color:#b8860b;"><i class="fas fa-star"></i> سجل النقاط</h4><div id="combinedPointsContent"></div></div></div></div></div>
 <div id="studentProfileModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div class="student-profile-modal"><div id="studentProfileContent"></div></div></div>
 <div id="memorizationModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div style="background:#fff;border-radius:10px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl"><div id="memorizationModalContent"></div></div></div>
-<div id="modalManagePoints" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;z-index:10001;padding:1rem;overflow-y:auto;"><div style="background:#fff;border-radius:14px;width:95%;max-width:1200px;margin:auto;direction:rtl;padding:1.5rem;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-star"></i> إدارة النقاط والإعدادات</h3><button onclick="closeManagePointsModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div class="points-tabs"><button class="points-tab-btn active" data-tab="points">💰 النقاط</button><button class="points-tab-btn" data-tab="settings">⚙️ إعدادات الورد</button><button class="points-tab-btn" data-tab="weekly">📊 كشف الورد الأسبوعي</button></div><div id="tabPoints" class="points-tab-content active"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;"><input id="pointsSearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="pointsGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div id="pointsStudentList" style="display:flex;flex-direction:column;gap:12px;"></div></div><div id="tabSettings" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">⚙️ إعدادات نقاط الورد اليومي</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;"><label>عدد النقاط لكل ورد مكتمل:</label><input type="number" id="pointsPerWirdInput" min="1" max="100" style="width:100%;"></div><div style="flex:1;"><label>مكافأة إكمال الأسبوع كاملاً (نقاط إضافية):</label><input type="number" id="weeklyBonusInput" min="0" max="100" style="width:100%;"></div><div style="display:flex;align-items:flex-end;"><button id="saveWirdPointsBtn" class="button gold">حفظ الإعدادات</button></div></div></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">📋 أسباب النقاط الجاهزة (الإجراءات السريعة)</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>السبب:</label><input type="text" id="newReasonText" placeholder="مثال: حفظ ممتاز" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:100px;"><label>النوع:</label><select id="newReasonType" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"><option value="add">إضافة ➕</option><option value="remove">خصم ➖</option></select></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newReasonPts" min="1" placeholder="مثال: 5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddReason" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditReason" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="reasonsList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div><div id="tabWeekly" class="points-tab-content"><div style="margin-bottom:1rem;"><div style="display:flex;gap:0.5rem;margin-bottom:1rem;"><button id="weekCurrentBtn" class="button small" onclick="loadWeeklyStatus('current')">الأسبوع الحالي</button><button id="weekPreviousBtn" class="button small ghost" onclick="loadWeeklyStatus('previous')">الأسبوع السابق</button></div><div id="weeklyStatusTable" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;"></div></div></div></div></div>
+<div id="modalManagePoints" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;z-index:10001;padding:1rem;overflow-y:auto;"><div style="background:#fff;border-radius:14px;width:95%;max-width:1200px;margin:auto;direction:rtl;padding:1.5rem;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-star"></i> إدارة النقاط والإعدادات</h3><button onclick="closeManagePointsModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div class="points-tabs"><button class="points-tab-btn active" data-tab="points">💰 النقاط</button><button class="points-tab-btn" data-tab="settings">⚙️ إعدادات الورد</button><button class="points-tab-btn" data-tab="weekly">📊 كشف الورد الأسبوعي</button><button class="points-tab-btn" data-tab="activities">🎯 الأنشطة الإضافية</button></div><div id="tabPoints" class="points-tab-content active"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;"><input id="pointsSearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="pointsGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div id="pointsStudentList" style="display:flex;flex-direction:column;gap:12px;"></div></div><div id="tabSettings" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">⚙️ إعدادات نقاط الورد اليومي</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;"><label>عدد النقاط لكل ورد مكتمل:</label><input type="number" id="pointsPerWirdInput" min="1" max="100" style="width:100%;"></div><div style="flex:1;"><label>مكافأة إكمال الأسبوع كاملاً (نقاط إضافية):</label><input type="number" id="weeklyBonusInput" min="0" max="100" style="width:100%;"></div><div style="display:flex;align-items:flex-end;"><button id="saveWirdPointsBtn" class="button gold">حفظ الإعدادات</button></div></div></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">📋 أسباب النقاط الجاهزة (الإجراءات السريعة)</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>السبب:</label><input type="text" id="newReasonText" placeholder="مثال: حفظ ممتاز" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:100px;"><label>النوع:</label><select id="newReasonType" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"><option value="add">إضافة ➕</option><option value="remove">خصم ➖</option></select></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newReasonPts" min="1" placeholder="مثال: 5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddReason" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditReason" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="reasonsList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div><div id="tabWeekly" class="points-tab-content"><div style="margin-bottom:1rem;"><div style="display:flex;gap:0.5rem;margin-bottom:1rem;"><button id="weekCurrentBtn" class="button small" onclick="loadWeeklyStatus('current')">الأسبوع الحالي</button><button id="weekPreviousBtn" class="button small ghost" onclick="loadWeeklyStatus('previous')">الأسبوع السابق</button></div><div id="weeklyStatusTable" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;"></div></div></div><div id="tabActivities" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">🎯 تعريف الأنشطة الإضافية وقيمة نقاطها</h4><p style="color:#777;font-size:0.85rem;margin:0 0 1rem 0;">هذه الأنشطة تظهر للمشرف عند الضغط على رقم الطالب في جدول التقييم، ليسجل ما أنجزه الطالب. النقاط لا تُضاف تلقائياً، بل تبقى "قيد الانتظار" حتى يوافق المدير عليها من نفس الزر.</p><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>اسم النشاط:</label><input type="text" id="newActivityText" placeholder="مثال: ترتيب المصاحف" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newActivityPts" min="1" placeholder="مثال: 3" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddActivity" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditActivity" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="activitiesList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div></div></div>
 <div id="modalPointsLog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="pointsLogTitle" style="color:var(--accent);margin:0;"><i class="fas fa-history"></i> سجل النقاط</h3><button onclick="closePointsLogModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="pointsLogContent"></div></div></div>
 <div id="modalMonthlyArchive" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="monthlyArchiveTitle" style="color:#6c5ce7;margin:0;"><i class="fas fa-calendar-alt"></i> أرشيف معدل النقاط الشهري</h3><button onclick="closeMonthlyArchiveModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="monthlyArchiveContent"></div></div></div>
 <div id="modalManageUsers" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:10000;padding:1rem;"><div style="background:#fff;border-radius:12px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-users-cog"></i> إدارة المستخدمين</h3><button onclick="closeManageUsersModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="margin-bottom:1rem;padding:1rem;background:#f8f9fa;border-radius:8px;"><h4>إضافة مستخدم جديد</h4><div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;"><input type="email" id="newUserEmail" placeholder="البريد الإلكتروني" style="width:100%;"><input type="password" id="newUserPass" placeholder="كلمة المرور" style="width:100%;"><select id="newUserRole" style="width:auto;"><option value="admin">مدير عام</option><option value="manager">مشرف مجموعة</option></select></div><div id="managerGroupSelector" style="margin-top:8px;display:none;"><label>المجموعة:</label><select id="newUserGroupIndex" style="width:100%;"></select></div><button id="btnAddUser" class="button gold" style="margin-top:8px;"><i class="fas fa-user-plus"></i> إضافة</button></div><div><h4>المستخدمون الحاليون</h4><div id="usersList" style="max-height:400px;overflow-y:auto;"></div></div></div></div>
@@ -596,6 +610,12 @@ let data = [], messages = [], cumHistory = {}, homeworkData = {}, studentProfile
 let pointsPerWird = 10, weeklyBonusPoints = 20;
 let pointsReasons = [];
 let editingReasonIndex = -1;
+let extraActivities = [];
+let editingActivityIndex = -1;
+let pendingActivities = {};
+let currentReportStudentId = null, currentReportStudentName = null;
+let currentTransferStudentId = null, currentTransferStudentName = null;
+let currentCombinedRecordStudentId = null;
 let renderTimeout = null, messageIndex = 0, messageTimer = null;
 let currentLogStudentId = null, currentMoveData = null, currentEdit = null;
 let isInitialized = false;
@@ -1092,8 +1112,22 @@ function render(){
             table.appendChild(thead); const tbody=document.createElement('tbody');
             st.students.forEach((s,sti)=>{
                 const tr=document.createElement('tr'); if(s.attendance==='absent_excused') tr.classList.add('att-excused'); if(s.attendance==='absent_unexcused') tr.classList.add('att-unexcused');
-                tr.innerHTML=`<td>${sti+1}</td>`; const sid=s.id;
-                const nameTd=document.createElement('td'); nameTd.style.textAlign='right'; const link=document.createElement('a'); link.href='javascript:void(0)'; link.className='student-name-link'; link.innerHTML=escapeHtml(s.name); link.onclick=()=>openStudentProfile(s.id); nameTd.appendChild(link); tr.appendChild(nameTd);
+                const sid=s.id;
+                const numTd=document.createElement('td'); numTd.id=`numcell_${sid}`;
+                if(currentView==='grades' && role==='admin'){
+                    const pendCount=(pendingActivities[sid] && Object.keys(pendingActivities[sid]).length) || 0;
+                    numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="position:relative;font-weight:700;color:var(--accent);text-decoration:underline;" title="عرض الأنشطة الإضافية المعلقة">${sti+1}${pendCount>0?`<span class="pending-badge">${pendCount}</span>`:''}</a>`;
+                    numTd.querySelector('a').onclick=()=>openTransferActivitiesModal(sid, s.name);
+                } else if(currentView==='grades' && role==='manager' && canEditGroup(gi)){
+                    numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="font-weight:700;color:var(--accent);text-decoration:underline;" title="تسجيل نشاط إضافي للطالب">${sti+1}</a>`;
+                    numTd.querySelector('a').onclick=()=>openReportActivityModal(sid, s.name);
+                } else {
+                    numTd.textContent=sti+1;
+                }
+                tr.appendChild(numTd);
+                const nameTd=document.createElement('td'); nameTd.style.textAlign='right'; const link=document.createElement('a'); link.href='javascript:void(0)'; link.className='student-name-link'; link.innerHTML=escapeHtml(s.name); link.onclick=()=>openStudentProfile(s.id); nameTd.appendChild(link);
+                if(role==='admin'||role==='manager'){ const recBtn=document.createElement('button'); recBtn.className='button small ghost'; recBtn.style.cssText='margin-right:6px;padding:2px 7px;font-size:0.75rem;'; recBtn.title='سجل الواجبات والنقاط'; recBtn.innerHTML='<i class="fas fa-folder-open"></i>'; recBtn.onclick=()=>openCombinedRecordModal(sid); nameTd.appendChild(recBtn); }
+                tr.appendChild(nameTd);
                 if(currentView==='grades'){
                     const attTd=document.createElement('td'); if(canEditGroup(gi)){ const sel=document.createElement('select'); [['present','حاضر'],['absent_excused','غائب بعذر'],['absent_unexcused','غائب بغير عذر']].forEach(o=>{const opt=document.createElement('option');opt.value=o[0];opt.text=o[1];sel.appendChild(opt);}); sel.value=s.attendance||'present'; sel.onchange=(e)=>setAttendance(gi,si,sti,e.target.value); attTd.appendChild(sel); } else { attTd.textContent=s.attendance==='present'?'حاضر':(s.attendance==='absent_excused'?'غائب بعذر':'غائب بغير عذر'); } tr.appendChild(attTd);
                     const gradeCell=(field,val)=>{ const td=document.createElement('td'); if(canEditGroup(gi)){ const sel=document.createElement('select'); if(s.attendance==='absent_unexcused'){ sel.innerHTML='<option value="0">0</option>'; sel.disabled=true; } else{ const empty=document.createElement('option'); empty.value=''; empty.text='-'; sel.appendChild(empty); for(let v=10;v>=1;v--){const o=document.createElement('option');o.value=String(v);o.text=String(v);sel.appendChild(o);} sel.disabled=s.attendance!=='present'; } sel.onchange=(e)=>setGrade(gi,si,sti,field,e.target.value); sel.value=val||''; td.appendChild(sel); } else { td.textContent=(s.attendance==='absent_unexcused')?'0':(val||'-'); } return td; };
@@ -1473,7 +1507,7 @@ btnResetPoints.addEventListener('click',resetAllPoints);
 async function saveWirdPointsSettings(){ if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; } const newPoints=parseInt(pointsPerWirdInput.value); const newBonus=parseInt(weeklyBonusInput.value); if(isNaN(newPoints)||newPoints<1){ showToast('❌ عدد النقاط غير صالح', false); return; } if(isNaN(newBonus)||newBonus<0){ showToast('❌ مكافأة الأسبوع غير صالحة', false); return; } pointsPerWird=newPoints; weeklyBonusPoints=newBonus; try { await set(ref(db, 'settings/wirdPoints'), { pointsPerWird, weeklyBonusPoints }); showToast(`✅ تم حفظ الإعدادات: ${pointsPerWird} نقطة لكل ورد, مكافأة أسبوعية ${weeklyBonusPoints} نقطة`, true); } catch(err){ console.error(err); showToast('❌ فشل حفظ الإعدادات في Firebase', false); return; } localStorage.setItem('wirdPointsSettings', JSON.stringify({ pointsPerWird, weeklyBonusPoints })); pointsPerWirdInput.value=pointsPerWird; weeklyBonusInput.value=weeklyBonusPoints; }
 document.getElementById('saveWirdPointsBtn')?.addEventListener('click',saveWirdPointsSettings);
 async function loadWirdPointsSettingsIntoModal(){ try { const snap=await get(ref(db,'settings/wirdPoints')); if(snap.exists()){ const wp=snap.val(); pointsPerWird=wp.pointsPerWird||10; weeklyBonusPoints=wp.weeklyBonusPoints||20; } else { pointsPerWird=pointsPerWird||10; weeklyBonusPoints=weeklyBonusPoints||20; } pointsPerWirdInput.value=pointsPerWird; weeklyBonusInput.value=weeklyBonusPoints; } catch(e){ console.warn(e); pointsPerWirdInput.value=pointsPerWird||10; weeklyBonusInput.value=weeklyBonusPoints||20; } }
-btnManagePoints.addEventListener('click',async()=>{ if(role!=='admin'){ showToast('❌ المدير فقط', false); return; } await loadWirdPointsSettingsIntoModal(); resetReasonForm(); renderReasonsList(); const filter=document.getElementById('pointsGroupFilter'); filter.innerHTML='<option value="">جميع المجموعات</option>'; data.forEach(g=>{ const opt=document.createElement('option'); opt.value=g.name; opt.textContent=g.name; filter.appendChild(opt); }); document.getElementById('pointsSearchInput').value=''; renderPointsStudentList(); loadWeeklyStatus('current'); document.querySelectorAll('.points-tab-btn').forEach(btn=>{ btn.addEventListener('click',function(){ const tab=this.getAttribute('data-tab'); document.querySelectorAll('.points-tab-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.points-tab-content').forEach(c=>c.classList.remove('active')); document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('active'); }); }); document.getElementById('modalManagePoints').style.display='flex'; });
+btnManagePoints.addEventListener('click',async()=>{ if(role!=='admin'){ showToast('❌ المدير فقط', false); return; } await loadWirdPointsSettingsIntoModal(); resetReasonForm(); renderReasonsList(); resetActivityForm(); renderActivitiesList(); const filter=document.getElementById('pointsGroupFilter'); filter.innerHTML='<option value="">جميع المجموعات</option>'; data.forEach(g=>{ const opt=document.createElement('option'); opt.value=g.name; opt.textContent=g.name; filter.appendChild(opt); }); document.getElementById('pointsSearchInput').value=''; renderPointsStudentList(); loadWeeklyStatus('current'); document.querySelectorAll('.points-tab-btn').forEach(btn=>{ btn.addEventListener('click',function(){ const tab=this.getAttribute('data-tab'); document.querySelectorAll('.points-tab-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.points-tab-content').forEach(c=>c.classList.remove('active')); document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('active'); }); }); document.getElementById('modalManagePoints').style.display='flex'; });
 window.closeManagePointsModal=function(){ document.getElementById('modalManagePoints').style.display='none'; resetReasonForm(); };
 document.getElementById('pointsSearchInput').addEventListener('input',renderPointsStudentList);
 document.getElementById('pointsGroupFilter').addEventListener('change',renderPointsStudentList);
@@ -1544,6 +1578,235 @@ window.deleteReason = async function(idx) {
     else if (editingReasonIndex > idx) editingReasonIndex--; 
     try { await set(ref(db, 'settings/pointsReasons'), pointsReasons); renderReasonsList(); renderPointsStudentList(); render(); showToast('✅ تم حذف السبب', true); } catch(e) { showToast('❌ خطأ في الحذف', false); }
 };
+
+// ================= دوال إدارة الأنشطة الإضافية (تعريف الأنشطة) =================
+function resetActivityForm() {
+    editingActivityIndex = -1;
+    document.getElementById('newActivityText').value = '';
+    document.getElementById('newActivityPts').value = '';
+    const btnAdd = document.getElementById('btnAddActivity');
+    if (btnAdd) { btnAdd.innerHTML = '<i class="fas fa-plus"></i> إضافة'; btnAdd.style.background = '#28a745'; }
+    const btnCancel = document.getElementById('btnCancelEditActivity');
+    if (btnCancel) btnCancel.style.display = 'none';
+}
+document.getElementById('btnCancelEditActivity')?.addEventListener('click', resetActivityForm);
+window.renderActivitiesList = function() {
+    const list = document.getElementById('activitiesList');
+    if(!list) return;
+    if(extraActivities.length === 0) {
+        list.innerHTML = '<div style="color:#888;font-size:0.9rem;text-align:center;padding:10px;">لا توجد أنشطة إضافية معرّفة بعد.</div>';
+        return;
+    }
+    let html = '';
+    extraActivities.forEach((a, idx) => {
+        html += `<div class="activities-crud-row">
+            <div><span style="font-weight:bold;color:#b8860b;margin-left:8px;">⭐ ${a.pts}</span><span>${escapeHtml(a.text)}</span></div>
+            <div>
+                <button onclick="editActivity(${idx})" class="button small" style="background:#2196F3;margin-left:5px;" title="تعديل"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteActivity(${idx})" class="button small danger" title="حذف"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>`;
+    });
+    list.innerHTML = html;
+}
+window.editActivity = function(idx) {
+    editingActivityIndex = idx;
+    const a = extraActivities[idx];
+    document.getElementById('newActivityText').value = a.text;
+    document.getElementById('newActivityPts').value = a.pts;
+    const btnAdd = document.getElementById('btnAddActivity');
+    btnAdd.innerHTML = '<i class="fas fa-save"></i> حفظ التعديل';
+    btnAdd.style.background = '#ff9800';
+    document.getElementById('btnCancelEditActivity').style.display = 'inline-flex';
+};
+document.getElementById('btnAddActivity')?.addEventListener('click', async () => {
+    const text = document.getElementById('newActivityText').value.trim();
+    const pts = parseInt(document.getElementById('newActivityPts').value);
+    if(!text || isNaN(pts) || pts <= 0) { showToast('❌ الرجاء إدخال اسم النشاط وعدد نقاط صحيح', false); return; }
+    const isEditing = editingActivityIndex > -1;
+    if (isEditing) { extraActivities[editingActivityIndex] = {...extraActivities[editingActivityIndex], text, pts}; }
+    else { extraActivities.push({id: generateUniqueId(), text, pts}); }
+    try { await set(ref(db, 'settings/extraActivities'), extraActivities); resetActivityForm(); renderActivitiesList(); showToast(isEditing ? '✅ تم تعديل النشاط بنجاح' : '✅ تم إضافة النشاط بنجاح', true); } catch(e) { showToast('❌ خطأ في الحفظ', false); }
+});
+window.deleteActivity = async function(idx) {
+    if(!confirm('حذف هذا النشاط؟')) return;
+    extraActivities.splice(idx, 1);
+    if (editingActivityIndex === idx) resetActivityForm();
+    else if (editingActivityIndex > idx) editingActivityIndex--;
+    try { await set(ref(db, 'settings/extraActivities'), extraActivities); renderActivitiesList(); showToast('✅ تم حذف النشاط', true); } catch(e) { showToast('❌ خطأ في الحذف', false); }
+};
+
+// ================= دوال الإبلاغ عن نشاط إضافي (المشرف) =================
+window.openReportActivityModal = function(sid, sname) {
+    currentReportStudentId = sid; currentReportStudentName = sname;
+    document.getElementById('reportActivityTitle').innerHTML = `<i class="fas fa-clipboard-check"></i> تسجيل نشاط: ${escapeHtml(sname)}`;
+    renderReportActivityList();
+    document.getElementById('modalReportActivity').style.display = 'flex';
+};
+window.closeReportActivityModal = function() {
+    document.getElementById('modalReportActivity').style.display = 'none';
+    currentReportStudentId = null; currentReportStudentName = null;
+};
+function renderReportActivityList() {
+    const el = document.getElementById('reportActivityList');
+    if(!extraActivities.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا توجد أنشطة معرّفة من المدير حتى الآن.</div>'; return; }
+    let html = '<p style="color:#777;font-size:0.85rem;margin:0 0 .75rem 0;">اختر النشاط الذي أنجزه الطالب اليوم. سيُحفظ كـ"قيد الانتظار" حتى يوافق المدير عليه.</p>';
+    extraActivities.forEach(a => {
+        html += `<button class="activity-pick-btn" onclick="submitReportedActivity('${a.id}')"><span>${escapeHtml(a.text)}</span><span class="ap-pts">⭐ ${a.pts}</span></button>`;
+    });
+    el.innerHTML = html;
+}
+window.submitReportedActivity = async function(activityId) {
+    if(!currentReportStudentId) return;
+    const activity = extraActivities.find(a => a.id === activityId);
+    if(!activity) return;
+    const now = getSecureDate();
+    const entryId = generateUniqueId();
+    const entry = {
+        activityId: activity.id,
+        activityText: activity.text,
+        pts: activity.pts,
+        date: now.toLocaleDateString('en-GB', { calendar: 'gregory' }),
+        ts: now.getTime(),
+        reportedBy: currentUser?.email || 'مشرف'
+    };
+    try {
+        await set(ref(db, `pendingActivities/${currentReportStudentId}/${entryId}`), entry);
+        showToast(`✅ تم تسجيل "${activity.text}" قيد انتظار موافقة المدير`, true);
+        closeReportActivityModal();
+    } catch(e) { showToast('❌ خطأ في حفظ النشاط', false); }
+};
+
+// ================= دوال ترحيل النقاط للأنشطة المعلقة (المدير) =================
+function getSmartDateLabel(entryDateStr, entryTs) {
+    const now = getSecureDate();
+    const entryDate = new Date(entryTs);
+    const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const diffDays = Math.round((startOfDay(now) - startOfDay(entryDate)) / 86400000);
+    if (diffDays === 0) return { label: 'اليوم', isToday: true };
+    if (diffDays === 1) return { label: 'أمس', isToday: false };
+    return { label: entryDateStr, isToday: false };
+}
+window.openTransferActivitiesModal = function(sid, sname) {
+    currentTransferStudentId = sid; currentTransferStudentName = sname;
+    document.getElementById('transferActivitiesTitle').innerHTML = `<i class="fas fa-hourglass-half"></i> الأنشطة المعلقة: ${escapeHtml(sname)}`;
+    renderTransferActivitiesList();
+    document.getElementById('modalTransferActivities').style.display = 'flex';
+};
+window.closeTransferActivitiesModal = function() {
+    document.getElementById('modalTransferActivities').style.display = 'none';
+    currentTransferStudentId = null; currentTransferStudentName = null;
+};
+function renderTransferActivitiesList() {
+    if(!currentTransferStudentId) return;
+    const el = document.getElementById('transferActivitiesList');
+    const entries = pendingActivities[currentTransferStudentId] || {};
+    const ids = Object.keys(entries);
+    if(!ids.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا توجد أنشطة معلقة لهذا الطالب حالياً.</div>'; return; }
+    const sorted = ids.map(id => ({id, ...entries[id]})).sort((a,b) => (b.ts||0) - (a.ts||0));
+    let html = '';
+    sorted.forEach(entry => {
+        const dl = getSmartDateLabel(entry.date, entry.ts);
+        html += `<div class="pending-item">
+            <span class="pi-date ${dl.isToday ? 'is-today' : ''}">${dl.label}</span>
+            <span class="pi-text">${escapeHtml(entry.activityText)}</span>
+            <span class="pi-pts">⭐ ${entry.pts}</span>
+            <button class="button small" style="background:#28a745;" onclick="approveAndTransferActivity('${entry.id}')"><i class="fas fa-check"></i> ترحيل النقاط</button>
+            <button class="button small danger" onclick="rejectPendingActivity('${entry.id}')" title="رفض وحذف بدون ترحيل نقاط"><i class="fas fa-times"></i></button>
+        </div>`;
+    });
+    el.innerHTML = html;
+}
+window.approveAndTransferActivity = async function(entryId) {
+    if(!currentTransferStudentId) return;
+    const sid = currentTransferStudentId;
+    const entry = pendingActivities[sid]?.[entryId];
+    if(!entry) return;
+    const s = findStudentById(sid);
+    if(!s) { showToast('❌ لم يتم العثور على الطالب', false); return; }
+    const now = getSecureDate();
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+    if(!s.pointsLog) s.pointsLog = [];
+    s.points = (s.points||0) + entry.pts;
+    s.pointsLog.push({type:'add', pts: entry.pts, note: `نشاط إضافي: ${entry.activityText}`, date: ds, ts: now.getTime()});
+    try {
+        await updateStudentPointsInFirebase(sid, s);
+        await set(ref(db, `pendingActivities/${sid}/${entryId}`), null);
+        showToast(`✅ تم ترحيل ${entry.pts} نقطة لـ ${s.name}`, true);
+        renderTransferActivitiesList();
+        render();
+    } catch(e) { showToast('❌ خطأ أثناء الترحيل', false); }
+};
+window.rejectPendingActivity = async function(entryId) {
+    if(!currentTransferStudentId) return;
+    if(!confirm('حذف هذا الإبلاغ بدون ترحيل النقاط؟')) return;
+    try {
+        await set(ref(db, `pendingActivities/${currentTransferStudentId}/${entryId}`), null);
+        showToast('✅ تم حذف الإبلاغ', true);
+        renderTransferActivitiesList();
+    } catch(e) { showToast('❌ خطأ في الحذف', false); }
+};
+function renderPendingBadges() {
+    if(role!=='admin' || currentView!=='grades') return;
+    document.querySelectorAll('[id^="numcell_"]').forEach(td => {
+        const sid = td.id.replace('numcell_','');
+        const a = td.querySelector('a.seq-num-link');
+        if(!a) return;
+        const existing = a.querySelector('.pending-badge');
+        const count = (pendingActivities[sid] && Object.keys(pendingActivities[sid]).length) || 0;
+        if(count > 0 && !existing) { const badge=document.createElement('span'); badge.className='pending-badge'; badge.textContent=count; a.appendChild(badge); }
+        else if(count > 0 && existing) { existing.textContent = count; }
+        else if(count === 0 && existing) { existing.remove(); }
+    });
+}
+
+// ================= نافذة السجل المدمج (الواجبات + النقاط) =================
+window.openCombinedRecordModal = function(studentId) {
+    currentCombinedRecordStudentId = studentId;
+    const s = findStudentById(studentId);
+    document.getElementById('combinedRecordTitle').innerHTML = `<i class="fas fa-folder-open"></i> سجل الطالب: ${escapeHtml(s?.name||'')}`;
+    renderCombinedHomeworkContent(studentId);
+    renderCombinedPointsContent(studentId);
+    document.getElementById('modalCombinedRecord').style.display = 'flex';
+};
+window.closeCombinedRecordModal = function() {
+    document.getElementById('modalCombinedRecord').style.display = 'none';
+    currentCombinedRecordStudentId = null;
+};
+function renderCombinedHomeworkContent(studentId) {
+    const el = document.getElementById('combinedHomeworkContent');
+    const hist = homeworkData[studentId]?.history || [];
+    if(!hist.length) { el.innerHTML = '<div style="text-align:center;color:#999">لا يوجد سجل واجبات</div>'; return; }
+    const fn = {'recitation':'واجب التلاوة','memorization':'واجب الحفظ','review':'واجب المراجعة'};
+    let html = '';
+    [...hist].reverse().forEach((item) => {
+        const realIdx = hist.indexOf(item);
+        const date = new Date(item.timestamp).toLocaleString('en-GB', { calendar: 'gregory' });
+        const field = fn[item.field] || item.field;
+        html += `<div class="history-item"><div class="history-info"><div class="history-date">${date} - ${field}</div><div class="history-val">${escapeHtml(item.value)}</div></div>${role==='admin'?`<button class="history-del-btn" onclick="deleteHomeworkHistoryItem('${studentId}', ${realIdx}); openCombinedRecordModal('${studentId}');"><i class="fas fa-trash-alt"></i></button>`:''}</div>`;
+    });
+    el.innerHTML = html;
+}
+function renderCombinedPointsContent(studentId) {
+    const el = document.getElementById('combinedPointsContent');
+    const s = findStudentById(studentId);
+    const log = s?.pointsLog || [];
+    if(!log.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا توجد سجلات نقاط بعد</div>'; return; }
+    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:10px;margin-bottom:12px;"><div style="color:#888;font-size:0.8rem;">إجمالي النقاط</div><div style="font-size:1.8rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`;
+    const reversed = [...log].reverse();
+    reversed.forEach((entry, revIdx) => {
+        const realIdx = log.length - 1 - revIdx;
+        const isAdd = ['add', 'wird', 'bonus'].includes(entry.type);
+        const col = isAdd ? '#28a745' : '#dc3545';
+        const icon = isAdd ? '➕' : '➖';
+        const bg = isAdd ? '#f0fff4' : '#fff5f5';
+        const bd = isAdd ? '#c3e6cb' : '#f5c6cb';
+        let typeLabel = '';
+        if(entry.type==='wird') typeLabel=' (الورد اليومي)'; else if(entry.type==='bonus') typeLabel=' (مكافأة أسبوعية)';
+        html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;font-size:0.9rem;"><span>${icon}</span><span style="font-weight:700;color:${col};min-width:40px;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:0.75rem;white-space:nowrap;">${entry.date||''}</span>${role==='admin'?`<button onclick="deletePointLog('${studentId}',${realIdx}); openCombinedRecordModal('${studentId}');" class="button small danger" style="padding:2px 6px;"><i class="fas fa-trash"></i></button>`:''}</div>`;
+    });
+    el.innerHTML = html;
+}
 
 // ================= دوال الورد اليومي والأسبوعي =================
 function getNormalizedNameParts(fullName){ const norm=fullName.trim().replace(/\s+/g,' '); let parts=norm.split(' '); parts=parts.map(p=>p.replace(/[.,;:!?]+$/,'').replace(/^[.,;:!?]+/,'').trim()).filter(p=>p.length>0); return parts; }
@@ -3118,10 +3381,10 @@ function hideLoading(){ loadingIndicator.style.display='none'; }
 async function optimizedFirebaseFetch() {
     showLoading();
     try {
-        const [groupsSnap, messagesSnap, cumSnap, homeworkSnap, settingsSnap, profilesSnap, wirdPointsSnap, examsSnap] = await Promise.all([
+        const [groupsSnap, messagesSnap, cumSnap, homeworkSnap, settingsSnap, profilesSnap, wirdPointsSnap, examsSnap, pendingActSnap] = await Promise.all([
             get(ref(db, 'groups')), get(ref(db, 'messages')), get(ref(db, 'cumulative')), get(ref(db, 'homework')),
             get(ref(db, 'settings')), get(ref(db, 'studentProfiles')), get(ref(db, 'settings/wirdPoints')),
-            get(ref(db, 'exams'))
+            get(ref(db, 'exams')), get(ref(db, 'pendingActivities'))
         ]);
         let localData = loadData(), localMessages = loadMessages(), localCum = loadCum(), localHomework = loadHomework();
         if (groupsSnap.exists()) data = groupsSnap.val(); else { data = localData; writeGroupsToFirebase(data); }
@@ -3134,6 +3397,7 @@ async function optimizedFirebaseFetch() {
         if (settingsSnap.exists()) { 
             const s = settingsSnap.val(); 
             if (s.pointsReasons) pointsReasons = s.pointsReasons;
+            if (s.extraActivities) extraActivities = s.extraActivities;
             if (s.homeworkFontSize) document.documentElement.style.setProperty('--homework-font-size', s.homeworkFontSize + 'px'); 
             if (s.gradesFontSize) document.documentElement.style.setProperty('--grades-font-size', s.gradesFontSize + 'px'); 
             if (s.groupFontSizes) { document.documentElement.style.setProperty('--group-name-size', s.groupFontSizes.groupNameSize + 'rem'); document.documentElement.style.setProperty('--sticker-name-size', s.groupFontSizes.stickerNameSize + 'rem'); } 
@@ -3142,6 +3406,7 @@ async function optimizedFirebaseFetch() {
             if (s.homeFontSize) document.documentElement.style.setProperty('--home-font-size', s.homeFontSize + 'rem');
         }
         if (examsSnap.exists()) { exams = examsSnap.val() || []; } else { exams = JSON.parse(localStorage.getItem('exams_local')) || []; }
+        pendingActivities = pendingActSnap.exists() ? (pendingActSnap.val() || {}) : {};
         normalizeData(); return true;
     } catch (error) {
         console.error(error); data = loadData(); messages = loadMessages(); cumHistory = loadCum(); homeworkData = loadHomework();
@@ -3175,6 +3440,16 @@ onValue(ref(db,'homework'), (snap) => {
 onValue(ref(db,'settings/pointsReasons'), (snap) => {
     if (!isInitialized) return;
     if (snap.exists()) pointsReasons = snap.val() || [];
+});
+onValue(ref(db,'settings/extraActivities'), (snap) => {
+    if (!isInitialized) return;
+    extraActivities = snap.exists() ? (snap.val() || []) : [];
+});
+onValue(ref(db,'pendingActivities'), (snap) => {
+    if (!isInitialized) return;
+    pendingActivities = snap.exists() ? (snap.val() || {}) : {};
+    renderPendingBadges();
+    if (document.getElementById('modalTransferActivities')?.style.display === 'flex') renderTransferActivitiesList();
 });
 
 // ========= مستمع popstate للتعامل مع زر الرجوع =========

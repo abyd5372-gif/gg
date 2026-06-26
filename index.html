@@ -3381,10 +3381,10 @@ function hideLoading(){ loadingIndicator.style.display='none'; }
 async function optimizedFirebaseFetch() {
     showLoading();
     try {
-        const [groupsSnap, messagesSnap, cumSnap, homeworkSnap, settingsSnap, profilesSnap, wirdPointsSnap, examsSnap, pendingActSnap] = await Promise.all([
+        const [groupsSnap, messagesSnap, cumSnap, homeworkSnap, settingsSnap, profilesSnap, wirdPointsSnap, examsSnap] = await Promise.all([
             get(ref(db, 'groups')), get(ref(db, 'messages')), get(ref(db, 'cumulative')), get(ref(db, 'homework')),
             get(ref(db, 'settings')), get(ref(db, 'studentProfiles')), get(ref(db, 'settings/wirdPoints')),
-            get(ref(db, 'exams')), get(ref(db, 'pendingActivities'))
+            get(ref(db, 'exams'))
         ]);
         let localData = loadData(), localMessages = loadMessages(), localCum = loadCum(), localHomework = loadHomework();
         if (groupsSnap.exists()) data = groupsSnap.val(); else { data = localData; writeGroupsToFirebase(data); }
@@ -3406,7 +3406,7 @@ async function optimizedFirebaseFetch() {
             if (s.homeFontSize) document.documentElement.style.setProperty('--home-font-size', s.homeFontSize + 'rem');
         }
         if (examsSnap.exists()) { exams = examsSnap.val() || []; } else { exams = JSON.parse(localStorage.getItem('exams_local')) || []; }
-        pendingActivities = pendingActSnap.exists() ? (pendingActSnap.val() || {}) : {};
+        try { const pendingActSnap = await get(ref(db, 'pendingActivities')); pendingActivities = pendingActSnap.exists() ? (pendingActSnap.val() || {}) : {}; } catch(e) { console.warn('تعذر جلب الأنشطة المعلقة', e); pendingActivities = pendingActivities || {}; }
         normalizeData(); return true;
     } catch (error) {
         console.error(error); data = loadData(); messages = loadMessages(); cumHistory = loadCum(); homeworkData = loadHomework();
@@ -3444,13 +3444,13 @@ onValue(ref(db,'settings/pointsReasons'), (snap) => {
 onValue(ref(db,'settings/extraActivities'), (snap) => {
     if (!isInitialized) return;
     extraActivities = snap.exists() ? (snap.val() || []) : [];
-});
+}, (err) => { console.warn('تعذر الاستماع لـ settings/extraActivities', err); });
 onValue(ref(db,'pendingActivities'), (snap) => {
     if (!isInitialized) return;
     pendingActivities = snap.exists() ? (snap.val() || {}) : {};
     renderPendingBadges();
     if (document.getElementById('modalTransferActivities')?.style.display === 'flex') renderTransferActivitiesList();
-});
+}, (err) => { console.warn('تعذر الاستماع لـ pendingActivities', err); });
 
 // ========= مستمع popstate للتعامل مع زر الرجوع =========
 window.addEventListener('popstate', function(event) {

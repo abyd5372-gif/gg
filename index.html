@@ -182,7 +182,9 @@
         .seq-num-link { display: inline-flex; align-items: center; justify-content: center; }
         .pending-badge { position: absolute; top: -0.5rem; left: -0.9rem; background: #dc3545; color: #fff; font-size: 0.65rem; font-weight: 800; min-width: 1.1rem; height: 1.1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0 0.2rem; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
         .activity-pick-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.625rem 0.875rem; border: 1.5px solid #e0e0e0; border-radius: 0.5rem; background: #fff; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: #333; margin-bottom: 0.5rem; transition: all .15s; }
-        .activity-pick-btn:hover { border-color: var(--accent); background: #f1fff3; }
+        .activity-pick-btn.activity-pick-done { background: #f0fff4; border-color: #c3e6cb; color: #28a745; cursor: not-allowed; opacity: 0.85; }
+        .activity-pick-btn.activity-pick-done:hover { border-color: #c3e6cb; background: #f0fff4; }
+        .activity-pick-btn:hover:not(.activity-pick-done) { border-color: var(--accent); background: #f1fff3; }
         .activity-pick-btn .ap-pts { color: #b8860b; font-weight: 800; }
         .pending-item { display: flex; align-items: center; gap: 0.625rem; padding: 0.625rem 0.75rem; background: #fff8e1; border: 1px solid #f0e0a0; border-radius: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
         .pending-item .pi-date { font-weight: 700; color: #8a6d00; font-size: 0.85rem; white-space: nowrap; }
@@ -615,6 +617,8 @@ let editingActivityIndex = -1;
 let pendingActivities = {};
 let currentReportStudentId = null, currentReportStudentName = null;
 let currentTransferStudentId = null, currentTransferStudentName = null;
+let reportActivityLiveUnsub = null;
+let transferActivitiesLiveUnsub = null;
 let currentCombinedRecordStudentId = null;
 let renderTimeout = null, messageIndex = 0, messageTimer = null;
 let currentLogStudentId = null, currentMoveData = null, currentEdit = null;
@@ -1145,7 +1149,7 @@ function render(){
         });
         groupsContainer.appendChild(gDiv);
     });
-    renderMessagesControls(); updateSaveButtonState();
+    renderMessagesControls(); updateSaveButtonState(); renderPendingBadges();
 }
 
 // ================= دوال الإدارة (مجموعات، ستكرات، طلاب) =================
@@ -1640,19 +1644,48 @@ window.deleteActivity = async function(idx) {
 window.openReportActivityModal = function(sid, sname) {
     currentReportStudentId = sid; currentReportStudentName = sname;
     document.getElementById('reportActivityTitle').innerHTML = `<i class="fas fa-clipboard-check"></i> تسجيل نشاط: ${escapeHtml(sname)}`;
-    renderReportActivityList();
+    document.getElementById('reportActivityList').innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;"><i class="fas fa-spinner fa-spin"></i> تحميل...</div>';
     document.getElementById('modalReportActivity').style.display = 'flex';
+    if (reportActivityLiveUnsub) { reportActivityLiveUnsub(); reportActivityLiveUnsub = null; }
+    reportActivityLiveUnsub = onValue(ref(db, `pendingActivities/${sid}`), (snap) => {
+        const val = snap.exists() ? snap.val() : null;
+        if (val) pendingActivities[sid] = val; else delete pendingActivities[sid];
+        renderReportActivityList();
+        renderPendingBadges();
+    }, (err) => { console.warn('تعذر تتبع الأنشطة المعلقة لهذا الطالب', err); });
 };
 window.closeReportActivityModal = function() {
     document.getElementById('modalReportActivity').style.display = 'none';
     currentReportStudentId = null; currentReportStudentName = null;
+    if (reportActivityLiveUnsub) { reportActivityLiveUnsub(); reportActivityLiveUnsub = null; }
 };
+function getTodayReportedActivityIds(sid) {
+    const today = getSecureDate().toLocaleDateString('en-GB', { calendar: 'gregory' });
+    const ids = new Set();
+    const entries = pendingActivities[sid] || {};
+    Object.values(entries).forEach(e => { if (e.date === today && e.activityId) ids.add(e.activityId); });
+    const s = findStudentById(sid);
+    (s?.pointsLog || []).forEach(log => {
+        if (!log.note || !log.note.startsWith('نشاط إضافي: ')) return;
+        if (!log.date || !log.date.startsWith(today)) return;
+        const text = log.note.replace('نشاط إضافي: ', '');
+        const match = extraActivities.find(a => a.text === text);
+        if (match) ids.add(match.id);
+    });
+    return ids;
+}
 function renderReportActivityList() {
     const el = document.getElementById('reportActivityList');
     if(!extraActivities.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا توجد أنشطة معرّفة من المدير حتى الآن.</div>'; return; }
+    const doneToday = currentReportStudentId ? getTodayReportedActivityIds(currentReportStudentId) : new Set();
     let html = '<p style="color:#777;font-size:0.85rem;margin:0 0 .75rem 0;">اختر النشاط الذي أنجزه الطالب اليوم. سيُحفظ كـ"قيد الانتظار" حتى يوافق المدير عليه.</p>';
     extraActivities.forEach(a => {
-        html += `<button class="activity-pick-btn" onclick="submitReportedActivity('${a.id}')"><span>${escapeHtml(a.text)}</span><span class="ap-pts">⭐ ${a.pts}</span></button>`;
+        const isDone = doneToday.has(a.id);
+        if (isDone) {
+            html += `<button class="activity-pick-btn activity-pick-done" disabled title="تم تسجيله اليوم، يمكن تسجيله مجدداً غداً"><span><i class="fas fa-check-circle" style="color:#28a745;margin-left:6px;"></i>${escapeHtml(a.text)}</span><span class="ap-pts">⭐ ${a.pts}</span></button>`;
+        } else {
+            html += `<button class="activity-pick-btn" onclick="submitReportedActivity('${a.id}')"><span>${escapeHtml(a.text)}</span><span class="ap-pts">⭐ ${a.pts}</span></button>`;
+        }
     });
     el.innerHTML = html;
 }
@@ -1673,7 +1706,6 @@ window.submitReportedActivity = async function(activityId) {
     try {
         await set(ref(db, `pendingActivities/${currentReportStudentId}/${entryId}`), entry);
         showToast(`✅ تم تسجيل "${activity.text}" قيد انتظار موافقة المدير`, true);
-        closeReportActivityModal();
     } catch(e) { showToast('❌ خطأ في حفظ النشاط', false); }
 };
 
@@ -1690,12 +1722,20 @@ function getSmartDateLabel(entryDateStr, entryTs) {
 window.openTransferActivitiesModal = function(sid, sname) {
     currentTransferStudentId = sid; currentTransferStudentName = sname;
     document.getElementById('transferActivitiesTitle').innerHTML = `<i class="fas fa-hourglass-half"></i> الأنشطة المعلقة: ${escapeHtml(sname)}`;
-    renderTransferActivitiesList();
+    document.getElementById('transferActivitiesList').innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;"><i class="fas fa-spinner fa-spin"></i> تحميل...</div>';
     document.getElementById('modalTransferActivities').style.display = 'flex';
+    if (transferActivitiesLiveUnsub) { transferActivitiesLiveUnsub(); transferActivitiesLiveUnsub = null; }
+    transferActivitiesLiveUnsub = onValue(ref(db, `pendingActivities/${sid}`), (snap) => {
+        const val = snap.exists() ? snap.val() : null;
+        if (val) pendingActivities[sid] = val; else delete pendingActivities[sid];
+        renderTransferActivitiesList();
+        renderPendingBadges();
+    }, (err) => { console.warn('تعذر تتبع الأنشطة المعلقة لهذا الطالب', err); });
 };
 window.closeTransferActivitiesModal = function() {
     document.getElementById('modalTransferActivities').style.display = 'none';
     currentTransferStudentId = null; currentTransferStudentName = null;
+    if (transferActivitiesLiveUnsub) { transferActivitiesLiveUnsub(); transferActivitiesLiveUnsub = null; }
 };
 function renderTransferActivitiesList() {
     if(!currentTransferStudentId) return;
@@ -2143,7 +2183,7 @@ function setupFontSizeControls(){
 }
 
 // ================= دوال المصادقة =================
-onAuthStateChanged(auth,async(user)=>{ if(user){ const userSnap=await get(ref(db,`users/${user.uid}`)); const ud=userSnap.val()||{}; currentUser={uid:user.uid,email:user.email,role:ud.role||'user',groupIndex:ud.groupIndex}; role=currentUser.role; updateUIAfterAuth(); showToast(`✅ مرحبًا ${user.email}`, true); } else { currentUser=null; role=null; updateUIAfterAuth(); } });
+onAuthStateChanged(auth,async(user)=>{ if(user){ const userSnap=await get(ref(db,`users/${user.uid}`)); const ud=userSnap.val()||{}; currentUser={uid:user.uid,email:user.email,role:ud.role||'user',groupIndex:ud.groupIndex}; role=currentUser.role; try{ const pendSnap=await get(ref(db,'pendingActivities')); pendingActivities=pendSnap.exists()?(pendSnap.val()||{}):{}; }catch(e){ console.warn('تعذر جلب الأنشطة المعلقة بعد تسجيل الدخول', e); } updateUIAfterAuth(); showToast(`✅ مرحبًا ${user.email}`, true); } else { currentUser=null; role=null; updateUIAfterAuth(); } });
 btnLogin.addEventListener('click',async()=>{ const email=loginEmail.value.trim(); const pass=loginPass.value.trim(); if(!email||!pass){ showToast('❌ يرجى إدخال البريد الإلكتروني وكلمة المرور', false); return; } try{ await signInWithEmailAndPassword(auth,email,pass); } catch(e){ showToast('❌ خطأ في تسجيل الدخول: '+e.message, false); } });
 btnLogout.addEventListener('click',async()=>{ await signOut(auth); window.location.reload(); });
 function updateUIAfterAuth(){ renderMessagesControls(); document.getElementById('cumulativeArea').style.display=(role==='admin')?'block':'none'; userInfo.style.display=role?'block':'none'; if(role==='admin') userInfo.textContent=`مدير عام: ${currentUser.email}`; else if(role==='manager') userInfo.textContent=`مشرف مجموعة: ${currentUser.email} - ${data[currentUser.groupIndex]?.name||''}`; else if(role) userInfo.textContent=`مستخدم: ${currentUser.email}`; document.getElementById('btnLogout').style.display=role?'inline-block':'none'; document.getElementById('btnLogin').style.display=role?'none':'inline-block'; loginEmail.value=''; loginPass.value=''; if(role==='admin'||role==='manager') normalizeData(); render(); renderVisitorsBoxForRole(role); }
@@ -3449,7 +3489,6 @@ onValue(ref(db,'pendingActivities'), (snap) => {
     if (!isInitialized) return;
     pendingActivities = snap.exists() ? (snap.val() || {}) : {};
     renderPendingBadges();
-    if (document.getElementById('modalTransferActivities')?.style.display === 'flex') renderTransferActivitiesList();
 }, (err) => { console.warn('تعذر الاستماع لـ pendingActivities', err); });
 
 // ========= مستمع popstate للتعامل مع زر الرجوع =========

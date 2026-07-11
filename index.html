@@ -194,11 +194,11 @@
         .activities-crud-row { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 6px; }
         .history-btn:hover { background: #e0e0e0; color: #000; }
         .homework-modified { background-color: #fff9e6; border: 1px solid #ffd54f; }
-        .history-list { max-height: 37.5rem; overflow-y: auto; text-align: right; flex:1; }
+        .history-list { max-height: 18.75rem; overflow-y: auto; text-align: right; }
         .history-item { padding: 0.625rem; border-bottom: 1px solid #eee; background: #fafafa; margin-bottom: 0.3125rem; border-radius: 0.375rem; display: flex; justify-content: space-between; align-items: center; }
         .history-info { flex: 1; }
-        .history-date { font-size: 1.6rem; color: #888; margin-bottom: 0.25rem; }
-        .history-val { font-weight: 600; color: #333; font-size: 1.6rem; }
+        .history-date { font-size: 0.95rem; color: #888; margin-bottom: 0.25rem; }
+        .history-val { font-weight: 600; color: #333; font-size: 1.05rem; }
         .history-del-btn { background: #ffecec; color: #dc3545; border: none; width: 2rem; height: 2rem; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-right: 0.5rem; transition: all 0.2s; }
         .history-del-btn:hover { background: #dc3545; color: white; }
         .student-name-link { color: var(--accent); text-decoration: none; font-weight: 700; display: inline-block; padding: 0.25rem 0.5rem; border-radius: 0.25rem; transition: all 0.2s ease; }
@@ -213,17 +213,17 @@
         .dropdown-header:first-child { border-top: none; border-radius: 8px 8px 0 0; }
         .student-profile-modal { width: 95% !important; max-width: 1200px !important; height: 90vh !important; overflow-y: auto !important; background: white !important; border-radius: 12px !important; padding: 0 !important; margin: 1rem !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .student-profile-header { background: linear-gradient(135deg, var(--accent) 0%, #004d00 100%); color: white; padding: 1.5rem; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .student-profile-header h2 { margin: 0; font-size: 3.6rem; display: flex; align-items: center; gap: 10px; }
+        .student-profile-header h2 { margin: 0; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
         .student-profile-close { background: white !important; color: var(--accent) !important; border: none; padding: 0.5rem 1.5rem !important; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1rem; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
         .student-profile-close:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .student-profile-content { padding: 1.5rem; background: #f8f9fa; min-height: 400px; }
         .profile-section { background: white; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .profile-section h3 { color: var(--accent); margin: 0 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid var(--gold); font-size: 2.6rem; display: flex; align-items: center; gap: 10px; }
+        .profile-section h3 { color: var(--accent); margin: 0 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid var(--gold); font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
         .grades-horizontal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; }
         .grade-box { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; padding: 1rem; text-align: center; border: 1px solid #dee2e6; transition: transform 0.3s ease; }
         .grade-box:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .grade-title { font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
-        .grade-value { font-size: 3.6rem; font-weight: 800; color: #111; margin-bottom: 0.5rem; }
+        .grade-title { font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; font-weight: 600; }
+        .grade-value { font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 0.5rem; }
         .grade-rating { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
         .certificates-scroll { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; max-height: 350px; overflow-y: auto; padding: 1rem; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0; }
         .certificate-card { position: relative; height: 220px; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: all 0.3s ease; }
@@ -234,17 +234,17 @@
         .student-avatar { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; color: white; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .student-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .info-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem 0; }
-        .info-icon { color: var(--accent); font-size: 2.2rem; width: 24px; }
-        .info-text { font-size: 1.9rem; color: #444; }
-        .info-value { font-weight: 600; color: #111; }
+        .info-icon { color: var(--accent); font-size: 1.1rem; width: 24px; }
+        .info-text { font-size: 1.15rem; color: #444; }
+        .info-value { font-weight: 700; color: #111; font-size: 1.15rem; }
         .homework-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
         .homework-item { background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 10px; padding: 1.2rem; border-right: 4px solid var(--accent); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
-        .homework-item-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; color: var(--accent); font-weight: 600; font-size: 2.2rem; }
-        .homework-item-content { color: #444; line-height: 1.6; white-space: pre-wrap; max-height: 150px; overflow-y: auto; padding: 0.5rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid #eee; font-size: 2rem; }
+        .homework-item-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; color: var(--accent); font-weight: 600; font-size: 1.2rem; }
+        .homework-item-content { color: #444; line-height: 1.7; white-space: pre-wrap; max-height: 150px; overflow-y: auto; padding: 0.5rem; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid #eee; font-size: 1.1rem; }
         .wird-container { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px; padding: 1.5rem; border: 3px solid #4CAF50; margin: 1rem 0; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .wird-title { color: #2E7D32; font-weight: bold; font-size: 2.4rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; padding-bottom: 0.5rem; border-bottom: 2px dashed rgba(46, 125, 50, 0.2); }
-        .wird-text { font-size: 3rem; font-weight: 800; color: #111; line-height: 1.6; background: rgba(255,255,255,0.9); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border: 2px dashed #4CAF50; min-height: 80px; display: flex; align-items: center; justify-content: center; }
-        .wird-stats { font-size: 1.9rem; color: #555; background: rgba(255,255,255,0.7); padding: 0.8rem 1.2rem; border-radius: 8px; border-top: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .wird-title { color: #2E7D32; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; padding-bottom: 0.5rem; border-bottom: 2px dashed rgba(46, 125, 50, 0.2); }
+        .wird-text { font-size: 1.5rem; font-weight: 800; color: #111; line-height: 1.6; background: rgba(255,255,255,0.9); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border: 2px dashed #4CAF50; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .wird-stats { font-size: 1.1rem; color: #555; background: rgba(255,255,255,0.7); padding: 0.8rem 1.2rem; border-radius: 8px; border-top: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .wird-pages-count { background: linear-gradient(135deg, #fff3e0 0%, #ffecb3 100%); padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; color: #e65100; display: inline-block; margin-top: 0.5rem; }
         .memorization-close-btn { background: #6c757d !important; color: white !important; border: none !important; padding: 0.5rem 1rem !important; border-radius: 5px !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 0.5rem !important; font-size: 0.9rem !important; transition: all 0.3s ease !important; }
         .memorization-close-btn:hover { background: #5a6268 !important; transform: scale(1.05) !important; }
@@ -264,28 +264,27 @@
         .wird-day-number { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.25rem; }
         .wird-day-label { font-size: 0.9rem; opacity: 0.8; }
         .points-tabs { display: flex; gap: 0.5rem; border-bottom: 2px solid #e0e0e0; margin-bottom: 1.5rem; padding: 0 0.5rem; }
-        .points-tab-btn { background: transparent; border: none; padding: 0.6rem 1.2rem; font-size: 1rem; font-weight: 600; color: #666; cursor: pointer; transition: all 0.2s; border-radius: 8px 8px 0 0; margin-bottom: -2px; }
+        .points-tab-btn { background: transparent; border: none; padding: 0.6rem 1.2rem; font-size: 1.05rem; font-weight: 600; color: #666; cursor: pointer; transition: all 0.2s; border-radius: 8px 8px 0 0; margin-bottom: -2px; }
         .points-tab-btn.active { color: var(--accent); border-bottom: 3px solid var(--accent); background: #f0f9f0; }
         .points-tab-content { display: none; }
         .points-tab-content.active { display: block; }
-        #tabSettings input, #tabSettings select, #tabSettings label, #tabSettings h4, #tabSettings p,
-        #tabActivities input, #tabActivities select, #tabActivities label, #tabActivities h4, #tabActivities p,
-        #tabWeekly input, #tabWeekly select { font-size: 2rem !important; }
-        #tabSettings input[type="checkbox"] { width: 28px !important; height: 28px !important; }
+        .points-tab-content label { font-size: 1.05rem; }
+        .points-tab-content h4 { font-size: 1.2rem; }
+        .points-tab-content input[type="text"], .points-tab-content input[type="number"], .points-tab-content select, .points-tab-content textarea { font-size: 1.05rem !important; }
         .student-points-card { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
         .student-info-section { flex: 2; min-width: 180px; }
-        .student-name-large { font-size: 1rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
-        .student-group-sticker { font-size: 0.75rem; color: #888; }
+        .student-name-large { font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+        .student-group-sticker { font-size: 0.9rem; color: #888; }
         .points-actions-section { flex: 4; display: flex; flex-direction: column; gap: 8px; min-width: 260px; }
         .points-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .points-icon { width: 28px; font-weight: 700; font-size: 1.1rem; }
-        .points-input-note { flex: 2; min-width: 140px; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem; }
-        .points-input-amount { width: 100px; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem; text-align: center; }
-        .points-btn-add { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
-        .points-btn-remove { background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+        .points-input-note { flex: 2; min-width: 140px; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        .points-input-amount { width: 100px; padding: 6px 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; text-align: center; }
+        .points-btn-add { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
+        .points-btn-remove { background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
         .points-summary-section { flex: 1; min-width: 120px; text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
         .points-total { font-size: 1.5rem; font-weight: 900; color: #D4AF37; line-height: 1; }
-        .points-log-btn { background: #6c757d; color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        .points-log-btn { background: #6c757d; color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
         .transfer-points-box { display:flex; align-items:center; gap:6px; background:#eef7ff; border:1px solid #bcd9f5; border-radius:8px; padding:3px 10px; font-size:0.8rem; }
         .transfer-points-label { color:#1565C0; font-weight:600; }
         .transfer-points-value { font-weight:900; font-size:0.95rem; }
@@ -294,9 +293,9 @@
         .lifetime-points-value { font-weight:900; font-size:0.95rem; }
         .ms-student-card { background:#f8f9fa; border:1px solid #eee; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; cursor:pointer; transition:background .15s; }
         .ms-student-card:hover { background:#f0f9f0; }
-        .ms-student-name { font-weight:700; color:#333; }
-        .ms-student-meta { color:#888; font-size:0.8rem; }
-        .ms-total-badge { background:linear-gradient(135deg,#fff8e1,#fffde7); border:1px solid #D4AF37; color:#9c7a00; font-weight:900; border-radius:8px; padding:4px 10px; font-size:0.85rem; white-space:nowrap; }
+        .ms-student-name { font-weight:700; color:#333; font-size:1.1rem; }
+        .ms-student-meta { color:#888; font-size:0.9rem; }
+        .ms-total-badge { background:linear-gradient(135deg,#fff8e1,#fffde7); border:1px solid #D4AF37; color:#9c7a00; font-weight:900; border-radius:8px; padding:4px 10px; font-size:0.95rem; white-space:nowrap; }
         .ms-rank-badge { background:#6c5ce7; color:#fff; font-weight:900; border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; flex-shrink:0; }
         .ms-month-row { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; margin-bottom:6px; }
         .ms-month-name { font-weight:700; color:#444; }
@@ -472,11 +471,11 @@
 <div id="modalHistoryBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:450px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 12px 0; color:var(--accent)"><i class="fas fa-history"></i> سجل التعديلات</h3><div id="historyContent" class="history-list"></div><div style="margin-top:12px;text-align:center"><button onclick="document.getElementById('modalHistoryBackdrop').style.display='none'" class="button small ghost">إغلاق</button></div></div></div>
 <div id="modalReportActivity" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:480px;max-height:85vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="reportActivityTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-clipboard-check"></i> تسجيل نشاط إضافي</h3><button onclick="closeReportActivityModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="reportActivityList"></div></div></div>
 <div id="modalTransferActivities" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:560px;max-height:85vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="transferActivitiesTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-hourglass-half"></i> الأنشطة الإضافية المعلقة</h3><button onclick="closeTransferActivitiesModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="transferActivitiesList"></div></div></div>
-<div id="modalCombinedRecord" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:97%;max-width:920px;max-height:82vh;display:flex;flex-direction:column;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-shrink:0;"><h3 id="combinedRecordTitle" style="color:var(--accent);margin:0;font-size:2.1rem;"><i class="fas fa-folder-open"></i> سجل الطالب</h3><button onclick="closeCombinedRecordModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="display:flex;gap:1rem;flex-wrap:wrap;flex:1;overflow:hidden;"><div style="flex:1;min-width:280px;display:flex;flex-direction:column;"><h4 style="margin:0 0 .5rem 0;color:#2E7D32;font-size:1.9rem;flex-shrink:0;"><i class="fas fa-book"></i> سجل الواجبات</h4><div id="combinedHomeworkContent" class="history-list"></div></div><div style="flex:1;min-width:280px;border-right:1px solid #eee;padding-right:1rem;display:flex;flex-direction:column;"><h4 style="margin:0 0 .5rem 0;color:#b8860b;font-size:1.9rem;flex-shrink:0;"><i class="fas fa-star"></i> سجل النقاط</h4><div id="combinedPointsContent" class="history-list"></div></div></div></div></div>
+<div id="modalCombinedRecord" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:97%;max-width:920px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="combinedRecordTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-folder-open"></i> سجل الطالب</h3><button onclick="closeCombinedRecordModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;min-width:280px;"><h4 style="margin:0 0 .5rem 0;color:#2E7D32;"><i class="fas fa-book"></i> سجل الواجبات</h4><div id="combinedHomeworkContent" class="history-list"></div></div><div style="flex:1;min-width:280px;border-right:1px solid #eee;padding-right:1rem;"><h4 style="margin:0 0 .5rem 0;color:#b8860b;"><i class="fas fa-star"></i> سجل النقاط</h4><div id="combinedPointsContent" class="history-list"></div></div></div></div></div>
 <div id="studentProfileModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div class="student-profile-modal"><div id="studentProfileContent"></div></div></div>
 <div id="memorizationModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div style="background:#fff;border-radius:10px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl"><div id="memorizationModalContent"></div></div></div>
-<div id="modalManagePoints" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;z-index:10001;padding:1rem;overflow-y:auto;"><div style="background:#fff;border-radius:14px;width:95%;max-width:1200px;margin:auto;direction:rtl;padding:1.5rem;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-star"></i> إدارة النقاط والإعدادات</h3><button onclick="closeManagePointsModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div class="points-tabs"><button class="points-tab-btn active" data-tab="points">💰 النقاط</button><button class="points-tab-btn" data-tab="transfer">🔁 ترحيل النقاط</button><button class="points-tab-btn" data-tab="settings">⚙️ إعدادات الورد</button><button class="points-tab-btn" data-tab="weekly">📊 كشف الورد الأسبوعي</button><button class="points-tab-btn" data-tab="activities">🎯 الأنشطة الإضافية</button></div><div id="tabPoints" class="points-tab-content active"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;"><input id="pointsSearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="pointsGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div id="pointsStudentList" style="display:flex;flex-direction:column;gap:12px;"></div></div><div id="tabTransfer" class="points-tab-content"><div style="background:#eef7ff;border:1px solid #bcd9f5;border-radius:10px;padding:1rem;margin-bottom:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap;gap:8px;"><h4 style="margin:0;">🔁 ترحيل نقاط الطلاب</h4><div style="display:flex;gap:8px;flex-wrap:wrap;"><button id="btnMigratePointsNow" class="button" style="background:#1565C0;"><i class="fas fa-share-square"></i> ترحيل النقاط الآن</button><button id="btnExportTransferLog" class="button" style="background:#2e7d32;"><i class="fas fa-file-excel"></i> تصدير Excel</button><button id="btnResetMonthlyArchive" class="button danger small"><i class="fas fa-eraser"></i> تصفير سجل الترحيل</button></div></div><p style="color:#777;font-size:0.85rem;margin:0;">عند الضغط على "ترحيل النقاط الآن" يتم تسجيل نقاط كل طالب الحالية (منذ آخر ترحيل) في سجل دائم مع تاريخ اليوم وإجمالي نقاطه مدى الحياة، بدون تصفير نقاطه الحالية. بعدها يمكنك تصفير النقاط من زر "تصفير النقاط" لبدء فترة جديدة. سجل الترحيل لا يتأثر بتصفير النقاط العادي، وله زر تصفير خاص به.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1rem;"><input id="monthlySearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="monthlyGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1rem;background:#fff8e1;border:1px solid #f0dfa0;border-radius:8px;padding:8px 10px;"><span style="color:#b8860b;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-sort-amount-down"></i> ترتيب الطلاب:</span><select id="monthlySortMode" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;"><option value="none">📋 الترتيب الافتراضي</option><option value="lifetime">🏆 الأعلى نقاطاً طوال السنة (مدى الحياة)</option></select></div><div id="monthlyStudentList" style="display:flex;flex-direction:column;gap:10px;"></div></div><div id="tabSettings" class="points-tab-content"><div style="background:#fff3e0;border:1px solid #ffcc80;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 0.6rem 0;">👁 خصوصية النقاط عن الزوار</h4><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.95rem;"><input type="checkbox" id="hidePointsFromVisitorsToggle" style="width:18px;height:18px;"> إخفاء نقاط الطلاب عن الزوار (غير المسجلين دخول)</label></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">⚙️ إعدادات نقاط الورد اليومي</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;"><label>عدد النقاط لكل ورد مكتمل:</label><input type="number" id="pointsPerWirdInput" min="1" max="100" style="width:100%;"></div><div style="flex:1;"><label>مكافأة إكمال الأسبوع كاملاً (نقاط إضافية):</label><input type="number" id="weeklyBonusInput" min="0" max="100" style="width:100%;"></div><div style="display:flex;align-items:flex-end;"><button id="saveWirdPointsBtn" class="button gold">حفظ الإعدادات</button></div></div></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">📋 أسباب النقاط الجاهزة (الإجراءات السريعة)</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>السبب:</label><input type="text" id="newReasonText" placeholder="مثال: حفظ ممتاز" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:100px;"><label>النوع:</label><select id="newReasonType" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"><option value="add">إضافة ➕</option><option value="remove">خصم ➖</option></select></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newReasonPts" min="1" placeholder="مثال: 5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddReason" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditReason" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="reasonsList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div><div id="tabWeekly" class="points-tab-content"><div style="margin-bottom:1rem;"><div style="display:flex;gap:0.5rem;margin-bottom:1rem;"><button id="weekCurrentBtn" class="button small" onclick="loadWeeklyStatus('current')">الأسبوع الحالي</button><button id="weekPreviousBtn" class="button small ghost" onclick="loadWeeklyStatus('previous')">الأسبوع السابق</button></div><div id="weeklyStatusTable" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;"></div></div></div><div id="tabActivities" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">🎯 تعريف الأنشطة الإضافية وقيمة نقاطها</h4><p style="color:#777;font-size:0.85rem;margin:0 0 1rem 0;">هذه الأنشطة تظهر للمشرف عند الضغط على رقم الطالب في جدول التقييم، ليسجل ما أنجزه الطالب. النقاط لا تُضاف تلقائياً، بل تبقى "قيد الانتظار" حتى يوافق المدير عليها من نفس الزر.</p><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>اسم النشاط:</label><input type="text" id="newActivityText" placeholder="مثال: ترتيب المصاحف" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newActivityPts" min="1" placeholder="مثال: 3" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddActivity" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditActivity" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="activitiesList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div></div></div>
-<div id="modalPointsLog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-shrink:0;"><h3 id="pointsLogTitle" style="color:var(--accent);margin:0;"><i class="fas fa-history"></i> سجل النقاط</h3><button onclick="closePointsLogModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="pointsLogContent" style="overflow-y:auto;flex:1;"></div></div></div>
+<div id="modalManagePoints" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;z-index:10001;padding:1rem;overflow-y:auto;"><div style="background:#fff;border-radius:14px;width:95%;max-width:1200px;margin:auto;direction:rtl;padding:1.5rem;position:relative;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-star"></i> إدارة النقاط والإعدادات</h3><button onclick="closeManagePointsModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div class="points-tabs"><button class="points-tab-btn active" data-tab="points">💰 النقاط</button><button class="points-tab-btn" data-tab="transfer">🔁 ترحيل النقاط</button><button class="points-tab-btn" data-tab="settings">⚙️ إعدادات الورد</button><button class="points-tab-btn" data-tab="weekly">📊 كشف الورد الأسبوعي</button><button class="points-tab-btn" data-tab="activities">🎯 الأنشطة الإضافية</button></div><div id="tabPoints" class="points-tab-content active"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem;"><input id="pointsSearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="pointsGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div id="pointsStudentList" style="display:flex;flex-direction:column;gap:12px;"></div></div><div id="tabTransfer" class="points-tab-content"><div style="background:#eef7ff;border:1px solid #bcd9f5;border-radius:10px;padding:1rem;margin-bottom:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap;gap:8px;"><h4 style="margin:0;">🔁 ترحيل نقاط الطلاب</h4><div style="display:flex;gap:8px;flex-wrap:wrap;"><button id="btnMigratePointsNow" class="button" style="background:#1565C0;"><i class="fas fa-share-square"></i> ترحيل النقاط الآن</button><button id="btnExportTransferLog" class="button small" style="background:#2E7D32;"><i class="fas fa-file-excel"></i> تصدير Excel</button><button id="btnResetMonthlyArchive" class="button danger small"><i class="fas fa-eraser"></i> تصفير سجل الترحيل</button></div></div><p style="color:#777;font-size:0.85rem;margin:0;">عند الضغط على "ترحيل النقاط الآن" يتم تسجيل نقاط كل طالب الحالية (منذ آخر ترحيل) في سجل دائم مع تاريخ اليوم وإجمالي نقاطه مدى الحياة، بدون تصفير نقاطه الحالية. بعدها يمكنك تصفير النقاط من زر "تصفير النقاط" لبدء فترة جديدة. سجل الترحيل لا يتأثر بتصفير النقاط العادي، وله زر تصفير خاص به.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1rem;"><input id="monthlySearchInput" type="text" placeholder="🔍 بحث باسم الطالب..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;direction:rtl;"><select id="monthlyGroupFilter" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.95rem;"><option value="">جميع المجموعات</option></select></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:1rem;background:#fff8e1;border:1px solid #f0dfa0;border-radius:8px;padding:8px 10px;"><span style="color:#b8860b;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-sort-amount-down"></i> ترتيب الطلاب:</span><select id="monthlySortMode" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;"><option value="none">📋 الترتيب الافتراضي</option><option value="lifetime">🏆 الأعلى نقاطاً طوال السنة (مدى الحياة)</option></select></div><div id="monthlyStudentList" style="display:flex;flex-direction:column;gap:10px;"></div></div><div id="tabSettings" class="points-tab-content"><div style="background:#fff3e0;border:1px solid #ffcc80;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 0.6rem 0;">👁 خصوصية النقاط عن الزوار</h4><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.95rem;"><input type="checkbox" id="hidePointsFromVisitorsToggle" style="width:18px;height:18px;"> إخفاء نقاط الطلاب عن الزوار (غير المسجلين دخول)</label></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">⚙️ إعدادات نقاط الورد اليومي</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;"><label>عدد النقاط لكل ورد مكتمل:</label><input type="number" id="pointsPerWirdInput" min="1" max="100" style="width:100%;"></div><div style="flex:1;"><label>مكافأة إكمال الأسبوع كاملاً (نقاط إضافية):</label><input type="number" id="weeklyBonusInput" min="0" max="100" style="width:100%;"></div><div style="display:flex;align-items:flex-end;"><button id="saveWirdPointsBtn" class="button gold">حفظ الإعدادات</button></div></div></div><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">📋 أسباب النقاط الجاهزة (الإجراءات السريعة)</h4><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>السبب:</label><input type="text" id="newReasonText" placeholder="مثال: حفظ ممتاز" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:100px;"><label>النوع:</label><select id="newReasonType" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"><option value="add">إضافة ➕</option><option value="remove">خصم ➖</option></select></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newReasonPts" min="1" placeholder="مثال: 5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddReason" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditReason" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="reasonsList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div><div id="tabWeekly" class="points-tab-content"><div style="margin-bottom:1rem;"><div style="display:flex;gap:0.5rem;margin-bottom:1rem;"><button id="weekCurrentBtn" class="button small" onclick="loadWeeklyStatus('current')">الأسبوع الحالي</button><button id="weekPreviousBtn" class="button small ghost" onclick="loadWeeklyStatus('previous')">الأسبوع السابق</button></div><div id="weeklyStatusTable" style="overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;"></div></div></div><div id="tabActivities" class="points-tab-content"><div style="background:#f8f9fa;padding:1rem;border-radius:10px;margin-bottom:1rem;"><h4 style="margin:0 0 1rem 0;">🎯 تعريف الأنشطة الإضافية وقيمة نقاطها</h4><p style="color:#777;font-size:0.85rem;margin:0 0 1rem 0;">هذه الأنشطة تظهر للمشرف عند الضغط على رقم الطالب في جدول التقييم، ليسجل ما أنجزه الطالب. النقاط لا تُضاف تلقائياً، بل تبقى "قيد الانتظار" حتى يوافق المدير عليها من نفس الزر.</p><div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;"><div style="flex:2;min-width:150px;"><label>اسم النشاط:</label><input type="text" id="newActivityText" placeholder="مثال: ترتيب المصاحف" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="flex:1;min-width:80px;"><label>النقاط:</label><input type="number" id="newActivityPts" min="1" placeholder="مثال: 3" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;"></div><div style="display:flex;align-items:flex-end;gap:5px;"><button id="btnAddActivity" class="button" style="background:#28a745;height:38px;"><i class="fas fa-plus"></i> إضافة</button><button id="btnCancelEditActivity" class="button" style="background:#6c757d;height:38px;display:none;" title="إلغاء التعديل"><i class="fas fa-times"></i></button></div></div><div id="activitiesList" style="margin-top:1rem;display:grid;gap:8px;"></div></div></div></div></div>
+<div id="modalPointsLog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:70vh;display:flex;flex-direction:column;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-shrink:0;"><h3 id="pointsLogTitle" style="color:var(--accent);margin:0;font-size:1.15rem;"><i class="fas fa-history"></i> سجل النقاط</h3><button onclick="closePointsLogModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="pointsLogContent" style="overflow-y:auto;min-height:0;flex:1;"></div></div></div>
 <div id="modalMonthlyArchive" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);align-items:center;justify-content:center;z-index:10003;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:600px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="monthlyArchiveTitle" style="color:#1565C0;margin:0;"><i class="fas fa-share-square"></i> سجل ترحيل النقاط</h3><button onclick="closeMonthlyArchiveModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="monthlyArchiveContent"></div></div></div>
 <div id="modalManageUsers" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:10000;padding:1rem;"><div style="background:#fff;border-radius:12px;width:95%;max-width:900px;max-height:90vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 style="color:var(--accent);margin:0;"><i class="fas fa-users-cog"></i> إدارة المستخدمين</h3><button onclick="closeManageUsersModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="margin-bottom:1rem;padding:1rem;background:#f8f9fa;border-radius:8px;"><h4>إضافة مستخدم جديد</h4><div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;"><input type="email" id="newUserEmail" placeholder="البريد الإلكتروني" style="width:100%;"><input type="password" id="newUserPass" placeholder="كلمة المرور" style="width:100%;"><select id="newUserRole" style="width:auto;"><option value="admin">مدير عام</option><option value="manager">مشرف مجموعة</option></select></div><div id="managerGroupSelector" style="margin-top:8px;display:none;"><label>المجموعة:</label><select id="newUserGroupIndex" style="width:100%;"></select></div><button id="btnAddUser" class="button gold" style="margin-top:8px;"><i class="fas fa-user-plus"></i> إضافة</button></div><div><h4>المستخدمون الحاليون</h4><div id="usersList" style="max-height:400px;overflow-y:auto;"></div></div></div></div>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;" />
@@ -626,8 +625,7 @@ const defaultData = [
 ];
 const defaultMessages = ["مرحباً بكم في حلقات مسجد إبراهيم الحاج حسن", "القرآن الكريم نور القلوب وهداية الحياة", "خيركم من تعلم القرآن وعلمه"];
 
-let data = [], messages = [], cumHistory = {}, homeworkData = {}, studentProfiles = {}, currentUser = null, role = null, currentView = 'grades', homeworkModified = false, cumBackup = null;
-let homeworkPendingHistory = {};
+let data = [], messages = [], cumHistory = {}, homeworkData = {}, homeworkDataBaseline = {}, studentProfiles = {}, currentUser = null, role = null, currentView = 'grades', homeworkModified = false, cumBackup = null;
 let pointsPerWird = 10, weeklyBonusPoints = 20;
 let hidePointsFromVisitors = false;
 let pointsReasons = [];
@@ -675,7 +673,7 @@ function loadCumBackup() { try { const s = localStorage.getItem(CUM_BACKUP_KEY);
 function writeGroupsToFirebase(g) { if (!role) return; localStorage.setItem(STORAGE_KEY, JSON.stringify(g)); set(ref(db, 'groups'), g).catch(err => { console.error(err); }); }
 function writeMessagesToFirebase(m) { if (!role) return; const sanitized = m.map(msg => { if (typeof msg === 'string' && isImageURL(msg)) return { text: msg, type: 'image' }; if (typeof msg === 'string') return { text: msg, type: 'text' }; return msg; }); set(ref(db, 'messages'), sanitized).catch(err => { console.error(err); if (role) showToast('❌ حدث خطأ أثناء حفظ الرسالة', false); }); localStorage.setItem(MESSAGES_KEY, JSON.stringify(sanitized)); }
 function writeCumToFirebase(c) { if (!role) return; set(ref(db, 'cumulative'), c).catch(err => { console.error(err); if (role) showToast('❌ حدث خطأ أثناء حفظ التراكمي', false); }); localStorage.setItem(CUM_KEY, JSON.stringify(c)); }
-async function writeHomeworkToFirebase(h) { if (!role) return; try { Object.keys(homeworkPendingHistory).forEach(sid=>{ if(!h[sid]) h[sid]={history:[]}; if(!h[sid].history) h[sid].history=[]; const pending=homeworkPendingHistory[sid].slice().reverse(); h[sid].history=[...pending, ...h[sid].history].slice(0,10); }); homeworkPendingHistory={}; await set(ref(db, 'homework'), h); localStorage.setItem(HOMEWORK_KEY, JSON.stringify(h)); homeworkModified = false; updateSaveButtonState(); showToast('✅ تم حفظ الواجبات بنجاح', true); } catch(err) { console.error(err); showToast('❌ خطأ في حفظ الواجبات', false); } }
+async function writeHomeworkToFirebase(h) { if (!role) return; try { await set(ref(db, 'homework'), h); localStorage.setItem(HOMEWORK_KEY, JSON.stringify(h)); homeworkDataBaseline = JSON.parse(JSON.stringify(h)); homeworkModified = false; updateSaveButtonState(); showToast('✅ تم حفظ الواجبات بنجاح', true); } catch(err) { console.error(err); showToast('❌ خطأ في حفظ الواجبات', false); } }
 async function writeStudentProfileToFirebase(studentId, profileData) { if (!role) return; try { await set(ref(db, `studentProfiles/${studentId}`), profileData); studentProfiles[studentId] = profileData; localStorage.setItem('studentProfiles', JSON.stringify(studentProfiles)); } catch(err) { console.error(err); if (role) showToast('❌ خطأ في حفظ ملف الطالب', false); } }
 
 // ================= دوال الفورم المطور (مع ربط window) =================
@@ -1248,8 +1246,25 @@ modalMoveSave.addEventListener('click',async()=>{ if(!currentMoveData){ showToas
 modalMoveCancel.addEventListener('click',()=>{ modalMoveBackdrop.style.display='none'; currentMoveData=null; });
 
 // ================= دوال الواجبات =================
-function updateHomework(studentId,field,value){ if(role!=='admin') return; if(!homeworkData[studentId]) homeworkData[studentId]={history:[]}; const old=homeworkData[studentId][field]; if(old!==value && old && old.trim()!==''){ if(!homeworkPendingHistory[studentId]) homeworkPendingHistory[studentId]=[]; homeworkPendingHistory[studentId].push({field,value:old,timestamp:getSecureDate().toISOString()}); } homeworkData[studentId][field]=value; homeworkModified=true; updateSaveButtonState(); }
-btnSaveHomework.addEventListener('click',async()=>{ if(!homeworkModified) return; showLoading(); await writeHomeworkToFirebase(homeworkData); hideLoading(); });
+function updateHomework(studentId,field,value){ if(role!=='admin') return; if(!homeworkData[studentId]) homeworkData[studentId]={history:[]}; homeworkData[studentId][field]=value; homeworkModified=true; updateSaveButtonState(); }
+// يقارن الواجبات الحالية (غير المحفوظة) بآخر نسخة محفوظة فعلياً، ويسجل في السجل فقط التغييرات الحقيقية (متجاهلاً فروق المسافات) - يُستدعى عند الضغط على زر الحفظ فقط
+function commitHomeworkHistory(){
+    const fields=['recitation','memorization','review'];
+    Object.keys(homeworkData).forEach(studentId=>{
+        const cur=homeworkData[studentId]||{};
+        const base=homeworkDataBaseline[studentId]||{};
+        fields.forEach(field=>{
+            const oldVal=(base[field]||'').trim();
+            const newVal=(cur[field]||'').trim();
+            if(oldVal!==newVal && oldVal!==''){
+                if(!cur.history) cur.history=[];
+                cur.history.unshift({field,value:base[field]||'',timestamp:getSecureDate().toISOString()});
+                cur.history=cur.history.slice(0,10);
+            }
+        });
+    });
+}
+btnSaveHomework.addEventListener('click',async()=>{ if(!homeworkModified) return; showLoading(); commitHomeworkHistory(); await writeHomeworkToFirebase(homeworkData); hideLoading(); });
 window.viewHomeworkHistory=function(studentId){ if(!homeworkData[studentId]?.history?.length){ historyContent.innerHTML='<div style="text-align:center;color:#999">لا يوجد سجل تعديلات</div>'; } else { let html=''; const fn={'recitation':'واجب التلاوة','memorization':'واجب الحفظ','review':'واجب المراجعة'}; homeworkData[studentId].history.forEach((item,idx)=>{ const date = new Date(item.timestamp).toLocaleString('en-GB'); // ميلادي
                 const field=fn[item.field]||item.field; html+=`<div class="history-item"><div class="history-info"><div class="history-date">${date} - ${field}</div><div class="history-val">${escapeHtml(item.value)}</div></div>`; if(role==='admin') html+=`<button class="history-del-btn" onclick="deleteHomeworkHistoryItem('${studentId}', ${idx})"><i class="fas fa-trash-alt"></i></button>`; html+=`</div>`; }); historyContent.innerHTML=html; } modalHistoryBackdrop.style.display='flex'; };
 window.deleteHomeworkHistoryItem=async function(studentId,idx){ if(role!=='admin') return; if(!confirm('حذف هذا السجل؟')) return; homeworkData[studentId].history.splice(idx,1); await set(ref(db,'homework/'+studentId),homeworkData[studentId]); viewHomeworkHistory(studentId); showToast('✅ تم حذف السجل', true); };
@@ -1266,11 +1281,22 @@ function getStudentTransferLog(studentId){
     if(!log || !Array.isArray(log)) return [];
     return [...log].sort((a,b)=> (b.ts||0)-(a.ts||0));
 }
-// إجمالي نقاط الطالب مدى الحياة = مجموع كل عمليات الترحيل المسجّلة له (يبدأ من صفر، ويعود صفر تلقائياً عند تصفير سجل الترحيل)
-function computeLifetimeTotal(studentId){
+// إجمالي نقاط الطالب "مدى الحياة" = مجموع كل عمليات الترحيل المسجلة له فقط (صفر قبل أول ترحيل، ويصفر تلقائياً عند تصفير سجل الترحيل)
+function getStudentLifetimeTotal(studentId){
     const log = pointsMigrationLog[studentId];
     if(!log || !Array.isArray(log)) return 0;
-    return log.reduce((sum, e) => sum + (e.points||0), 0);
+    return log.reduce((sum,e)=> sum + (e.points||0), 0);
+}
+// يحدّث إجمالي نقاط الطالب مدى الحياة (لا يتأثر بتصفير النقاط الدوري)، يُستدعى بعد كل عملية إضافة/خصم/ورد/مكافأة/نشاط/اختبار
+async function bumpLifetimePoints(studentId, delta){
+    if(!delta) return;
+    const s = findStudentById(studentId);
+    if(!s) return;
+    s.lifetimePoints = (s.lifetimePoints||0) + delta;
+    try{
+        const path = getStudentPath(studentId);
+        if(path) await update(ref(db), { [`${path}/lifetimePoints`]: s.lifetimePoints });
+    } catch(e){ console.error('خطأ في تحديث إجمالي النقاط مدى الحياة:', e); }
 }
 // ترحيل نقاط جميع الطلاب الحالية إلى سجل الترحيل الدائم (توثيق فقط، لا يصفّر النقاط الحالية)
 async function migratePointsNow(){
@@ -1286,10 +1312,11 @@ async function migratePointsNow(){
         const updates = {};
         withPoints.forEach(s=>{
             if(!pointsMigrationLog[s.id]) pointsMigrationLog[s.id] = [];
-            const oldTotal = computeLifetimeTotal(s.id);
-            const entry = { points: s.points||0, totalPoints: oldTotal + (s.points||0), date: ds, ts: now.getTime() };
+            const prevTotal = getStudentLifetimeTotal(s.id);
+            const newTotal = prevTotal + (s.points||0);
+            const entry = { points: s.points||0, totalPoints: newTotal, date: ds, ts: now.getTime() };
             pointsMigrationLog[s.id].push(entry);
-            updates[`monthlyPointsArchive/${s.id}`] = pointsMigrationLog[s.id];
+            updates[`pointsMigrationLog/${s.id}`] = pointsMigrationLog[s.id];
         });
         await update(ref(db), updates);
         showToast(`✅ تم ترحيل نقاط ${withPoints.length} طالب بنجاح`, true);
@@ -1339,10 +1366,12 @@ window.applyQuickReason = async function(sid, selectEl) {
         s.points = (s.points || 0) + amt;
         s.pointsLog.push({type: 'add', pts: amt, note: reason.text, date: ds, ts: now.getTime()});
         showToast(`✅ تمت إضافة ${amt} نقطة لـ ${s.name}`, true);
+        bumpLifetimePoints(sid, amt);
     } else {
         s.points = (s.points || 0) - amt;
         s.pointsLog.push({type: 'remove', pts: amt, note: reason.text, date: ds, ts: now.getTime()});
         showToast(`✅ تم خصم ${amt} نقطة من ${s.name}`, true);
+        bumpLifetimePoints(sid, -amt);
     }
     // تحديث مركز للنقاط فقط
     await updateStudentPointsInFirebase(sid, s);
@@ -1362,6 +1391,7 @@ window.inlineAddPts = async function(sid) {
         s.points = (s.points||0) + amt;
         s.pointsLog.push({type:'add', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
+        bumpLifetimePoints(sid, amt);
         const disp = document.getElementById('pts_display_'+sid);
         if(disp) disp.textContent='⭐ '+s.points;
         showToast(`✅ تمت إضافة ${amt} نقطة`, true);
@@ -1382,6 +1412,7 @@ window.inlineRemPts = async function(sid) {
         s.points = (s.points||0) - amt;
         s.pointsLog.push({type:'remove', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
+        bumpLifetimePoints(sid, -amt);
         const disp = document.getElementById('pts_display_'+sid);
         if(disp) disp.textContent='⭐ '+s.points;
         showToast(`✅ تم خصم ${amt} نقطة`, true);
@@ -1402,6 +1433,7 @@ window.doAddPointsInline = async function(sid) {
         s.points = (s.points||0) + amt;
         s.pointsLog.push({type:'add', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
+        bumpLifetimePoints(sid, amt);
         renderPointsStudentList();
         showToast(`✅ تمت إضافة ${amt} نقطة لـ ${s.name}`, true);
     }
@@ -1421,6 +1453,7 @@ window.doRemovePointsInline = async function(sid) {
         s.points = (s.points||0) - amt;
         s.pointsLog.push({type:'remove', pts:amt, note, date:ds, ts: now.getTime()});
         await updateStudentPointsInFirebase(sid, s);
+        bumpLifetimePoints(sid, -amt);
         renderPointsStudentList();
         showToast(`✅ تم خصم ${amt} نقطة من ${s.name}`, true);
     }
@@ -1437,17 +1470,17 @@ window.deletePointLog = async function(sid, idx) {
     s.points = isAddLog ? Math.max(0,(s.points||0)-entry.pts) : (s.points||0)+entry.pts;
     s.pointsLog.splice(idx, 1);
     await updateStudentPointsInFirebase(sid, s);
+    bumpLifetimePoints(sid, isAddLog ? -entry.pts : entry.pts);
     renderPointsLog();
     showToast('✅ تم حذف السجل وتحديث النقاط', true);
 }
 
 window.openPointsLog=function(sid,sname){ currentLogStudentId=sid; document.getElementById('pointsLogTitle').innerHTML=`<i class="fas fa-history"></i> سجل النقاط: ${sname}`; renderPointsLog(); document.getElementById('modalPointsLog').style.display='flex'; };
 window.closePointsLogModal=function(){ document.getElementById('modalPointsLog').style.display='none'; currentLogStudentId=null; renderPointsStudentList(); };
-function renderPointsLog(){ if(!currentLogStudentId) return; const s=findStudentById(currentLogStudentId); const log=s?.pointsLog||[]; const el=document.getElementById('pointsLogContent'); if(!log.length){ el.innerHTML='<div style="text-align:center;color:#aaa;padding:2rem;font-size:2rem;">لا توجد سجلات بعد</div>'; return; } let html=`<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="color:#888;font-size:1.7rem;">إجمالي النقاط</div><div style="font-size:4.4rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`; const reversed=[...log].reverse(); reversed.forEach((entry,revIdx)=>{ const realIdx=log.length-1-revIdx; const isAdd=['add', 'wird', 'bonus'].includes(entry.type); const col=isAdd?'#28a745':'#dc3545'; const icon=isAdd?'➕':'➖'; const bg=isAdd?'#f0fff4':'#fff5f5'; const bd=isAdd?'#c3e6cb':'#f5c6cb'; let typeLabel=''; if(entry.type==='wird') typeLabel=' (الورد اليومي)'; else if(entry.type==='bonus') typeLabel=' (مكافأة أسبوعية)'; html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;"><span style="font-size:2rem;">${icon}</span><span style="font-weight:700;color:${col};min-width:45px;font-size:2rem;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;font-size:1.9rem;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:1.56rem;white-space:nowrap;">${entry.date||''}</span><button onclick="deletePointLog('${currentLogStudentId}',${realIdx})" class="button small danger" style="padding:3px 8px;"><i class="fas fa-trash"></i></button></div>`; }); el.innerHTML=html; }
+function renderPointsLog(){ if(!currentLogStudentId) return; const s=findStudentById(currentLogStudentId); const log=s?.pointsLog||[]; const el=document.getElementById('pointsLogContent'); if(!log.length){ el.innerHTML='<div style="text-align:center;color:#aaa;padding:2rem;font-size:1rem;">لا توجد سجلات بعد</div>'; return; } let html=`<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="color:#888;font-size:0.85rem;">إجمالي النقاط</div><div style="font-size:2.2rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`; const reversed=[...log].reverse(); reversed.forEach((entry,revIdx)=>{ const realIdx=log.length-1-revIdx; const isAdd=['add', 'wird', 'bonus'].includes(entry.type); const col=isAdd?'#28a745':'#dc3545'; const icon=isAdd?'➕':'➖'; const bg=isAdd?'#f0fff4':'#fff5f5'; const bd=isAdd?'#c3e6cb':'#f5c6cb'; let typeLabel=''; if(entry.type==='wird') typeLabel=' (الورد اليومي)'; else if(entry.type==='bonus') typeLabel=' (مكافأة أسبوعية)'; html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;"><span style="font-size:1.15rem;">${icon}</span><span style="font-weight:700;color:${col};min-width:45px;font-size:1.1rem;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;font-size:1.05rem;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:0.9rem;white-space:nowrap;">${entry.date||''}</span><button onclick="deletePointLog('${currentLogStudentId}',${realIdx})" class="button small danger" style="padding:3px 8px;"><i class="fas fa-trash"></i></button></div>`; }); el.innerHTML=html; }
 
 // ===== أرشيف معدل النقاط الشهري (لمراقبة سير الطالب طيلة السنة) =====
 let currentArchiveStudentId = null;
-let currentProfileStudentId = null;
 window.openMonthlyArchive = function(sid, sname){
     currentArchiveStudentId = sid;
     document.getElementById('monthlyArchiveTitle').innerHTML = `<i class="fas fa-share-square"></i> سجل ترحيل النقاط: ${escapeHtml(sname)}`;
@@ -1463,7 +1496,7 @@ function renderMonthlyArchive(){
     const s = findStudentById(currentArchiveStudentId);
     const el = document.getElementById('monthlyArchiveContent');
     const entries = getStudentTransferLog(currentArchiveStudentId);
-    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="color:#888;font-size:0.85rem;">إجمالي نقاط الطالب مدى الحياة</div><div style="font-size:2.2rem;font-weight:900;color:#D4AF37;">🏆 ${computeLifetimeTotal(currentArchiveStudentId)}</div></div>`;
+    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:12px;margin-bottom:14px;"><div style="color:#888;font-size:0.85rem;">إجمالي نقاط الطالب مدى الحياة</div><div style="font-size:2.2rem;font-weight:900;color:#D4AF37;">🏆 ${getStudentLifetimeTotal(currentArchiveStudentId)}</div></div>`;
     if(!entries.length){ html += '<div style="text-align:center;color:#aaa;padding:2rem;font-size:1rem;">لا يوجد سجل ترحيل بعد لهذا الطالب</div>'; el.innerHTML = html; return; }
     entries.forEach(entry=>{
         const col = entry.points>0 ? '#28a745' : (entry.points<0 ? '#dc3545' : '#888');
@@ -1475,7 +1508,7 @@ function renderMonthlyArchive(){
     });
     el.innerHTML = html;
 }
-function renderPointsStudentList(){ const search=document.getElementById('pointsSearchInput').value.trim().toLowerCase(); const filter=document.getElementById('pointsGroupFilter').value; const cont=document.getElementById('pointsStudentList'); cont.innerHTML=''; const all=[]; let idx=1; data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); }); for(const {student:s,group:g,sticker:st,idx:studentIdx} of all){ const pts=s.points||0; const lifetimePts=computeLifetimeTotal(s.id); const logCnt=s.pointsLog?.length||0; const sid=s.id; const card=document.createElement('div'); card.className='student-points-card'; card.innerHTML=`
+function renderPointsStudentList(){ const search=document.getElementById('pointsSearchInput').value.trim().toLowerCase(); const filter=document.getElementById('pointsGroupFilter').value; const cont=document.getElementById('pointsStudentList'); cont.innerHTML=''; const all=[]; let idx=1; data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); }); for(const {student:s,group:g,sticker:st,idx:studentIdx} of all){ const pts=s.points||0; const logCnt=s.pointsLog?.length||0; const sid=s.id; const card=document.createElement('div'); card.className='student-points-card'; card.innerHTML=`
         <div class="student-info-section">
             <div class="student-name-large">${studentIdx}. ${escapeHtml(s.name)}</div>
             <div class="student-group-sticker">${escapeHtml(g.name)} / ${escapeHtml(st.title)}</div>
@@ -1520,7 +1553,7 @@ function renderMonthlyStudentList(){
     data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s, group:g}); }); }); });
 
     if(sortMode === 'lifetime'){
-        all.sort((a,b)=> computeLifetimeTotal(b.student.id) - computeLifetimeTotal(a.student.id));
+        all.sort((a,b)=> getStudentLifetimeTotal(b.student.id) - getStudentLifetimeTotal(a.student.id));
     }
 
     all.forEach(({student:s, group:g}, index)=>{
@@ -1529,7 +1562,7 @@ function renderMonthlyStudentList(){
         card.onclick = ()=> openMonthlyArchive(s.id, s.name);
         const entriesCount = getStudentTransferLog(s.id).length;
         const rankHtml = sortMode!=='none' ? `<div class="ms-rank-badge">#${index+1}</div>` : '';
-        const badgeHtml = `<div class="ms-total-badge">⭐ الحالية: ${s.points||0} &nbsp;|&nbsp; 🏆 مدى الحياة: ${computeLifetimeTotal(s.id)}</div>`;
+        const badgeHtml = `<div class="ms-total-badge">⭐ الحالية: ${s.points||0} &nbsp;|&nbsp; 🏆 مدى الحياة: ${getStudentLifetimeTotal(s.id)}</div>`;
         card.innerHTML = `<div style="display:flex;align-items:center;gap:10px;">${rankHtml}<div><div class="ms-student-name">${escapeHtml(s.name)}</div><div class="ms-student-meta">${escapeHtml(g.name)} • ${entriesCount} عملية ترحيل مسجّلة</div></div></div>${badgeHtml}`;
         cont.appendChild(card);
     });
@@ -1546,7 +1579,7 @@ async function resetMonthlyArchive(){
     if(!confirm('⚠️ تحذير: سيتم حذف كامل سجل الترحيل لجميع الطلاب بشكل نهائي (لن يتأثر إجمالي نقاط الطلاب الحالي ولا نقاطهم مدى الحياة). هل أنت متأكد؟')) return;
     showLoading();
     try{
-        await set(ref(db, 'monthlyPointsArchive'), null);
+        await set(ref(db, 'pointsMigrationLog'), null);
         pointsMigrationLog = {};
         showToast('✅ تم تصفير سجل الترحيل بنجاح', true);
         renderMonthlyStudentList();
@@ -1555,37 +1588,35 @@ async function resetMonthlyArchive(){
 }
 document.getElementById('btnResetMonthlyArchive')?.addEventListener('click', resetMonthlyArchive);
 
-// تصدير سجل الترحيل الكامل لكل الطلاب كملف إكسل (CSV)
+// تصدير سجل ترحيل النقاط لكل الطلاب إلى ملف إكسل: كل طالب وأمامه كل عمليات الترحيل المسجلة له
 function exportTransferLogToExcel(){
     if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; }
     const rows = [];
-    let maxEntries = 0;
-    data.forEach(g=> g.stickers.forEach(st=> st.students.forEach(s=>{
-        const log = getStudentTransferLog(s.id).slice().sort((a,b)=>(a.ts||0)-(b.ts||0));
-        maxEntries = Math.max(maxEntries, log.length);
-        rows.push({ name: s.name, group: g.name, log, total: computeLifetimeTotal(s.id) });
+    let maxOps = 0;
+    const perStudent = [];
+    data.forEach(g=>g.stickers.forEach(st=>st.students.forEach(s=>{
+        const log = [...(pointsMigrationLog[s.id]||[])].sort((a,b)=>(a.ts||0)-(b.ts||0));
+        maxOps = Math.max(maxOps, log.length);
+        perStudent.push({name:s.name, group:g.name, log, total:getStudentLifetimeTotal(s.id)});
     })));
-    if(!rows.length){ showToast('⚠️ لا يوجد بيانات لتصديرها', false); return; }
-    const clean = t => String(t||'').replace(/,/g,' ').replace(/\n/g,' ').trim();
-    let header = 'اسم الطالب,المجموعة';
-    for(let i=1;i<=maxEntries;i++){ header += `,تاريخ الترحيل ${i},نقاط الترحيل ${i}`; }
-    header += ',الإجمالي الكلي مدى الحياة\n';
-    let csv = '\uFEFF' + header;
-    rows.forEach(r=>{
-        let line = `${clean(r.name)},${clean(r.group)}`;
-        for(let i=0;i<maxEntries;i++){
-            const e = r.log[i];
-            line += e ? `,${clean(e.date)},${e.points}` : ',,';
+    if(!perStudent.length){ showToast('⚠️ لا يوجد طلاب', false); return; }
+    const header = ['اسم الطالب','المجموعة'];
+    for(let i=1;i<=maxOps;i++) header.push(`ترحيل ${i}`);
+    header.push('الإجمالي الكلي (مدى الحياة)');
+    rows.push(header);
+    perStudent.forEach(p=>{
+        const row = [p.name, p.group];
+        for(let i=0;i<maxOps;i++){
+            const e = p.log[i];
+            row.push(e ? `${e.date||''}: ${e.points>0?'+':''}${e.points}` : '');
         }
-        line += `,${r.total}\n`;
-        csv += line;
+        row.push(p.total);
+        rows.push(row);
     });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `سجل_ترحيل_النقاط_${getSecureDate().toISOString().slice(0,10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'سجل الترحيل');
+    XLSX.writeFile(wb, `سجل_ترحيل_النقاط_${getSecureDate().toISOString().slice(0,10)}.xlsx`);
     showToast('✅ تم تصدير سجل الترحيل بنجاح', true);
 }
 document.getElementById('btnExportTransferLog')?.addEventListener('click', exportTransferLogToExcel);
@@ -1596,7 +1627,9 @@ btnResetPoints.addEventListener('click',resetAllPoints);
 
 async function saveWirdPointsSettings(){ if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; } const newPoints=parseInt(pointsPerWirdInput.value); const newBonus=parseInt(weeklyBonusInput.value); if(isNaN(newPoints)||newPoints<1){ showToast('❌ عدد النقاط غير صالح', false); return; } if(isNaN(newBonus)||newBonus<0){ showToast('❌ مكافأة الأسبوع غير صالحة', false); return; } pointsPerWird=newPoints; weeklyBonusPoints=newBonus; try { await set(ref(db, 'settings/wirdPoints'), { pointsPerWird, weeklyBonusPoints }); showToast(`✅ تم حفظ الإعدادات: ${pointsPerWird} نقطة لكل ورد, مكافأة أسبوعية ${weeklyBonusPoints} نقطة`, true); } catch(err){ console.error(err); showToast('❌ فشل حفظ الإعدادات في Firebase', false); return; } localStorage.setItem('wirdPointsSettings', JSON.stringify({ pointsPerWird, weeklyBonusPoints })); pointsPerWirdInput.value=pointsPerWird; weeklyBonusInput.value=weeklyBonusPoints; }
 
-async function loadWirdPointsSettingsIntoModal(){ try { const snap=await get(ref(db,'settings/wirdPoints')); if(snap.exists()){ const wp=snap.val(); pointsPerWird=wp.pointsPerWird||10; weeklyBonusPoints=wp.weeklyBonusPoints||20; } else { pointsPerWird=pointsPerWird||10; weeklyBonusPoints=weeklyBonusPoints||20; } pointsPerWirdInput.value=pointsPerWird; weeklyBonusInput.value=weeklyBonusPoints; } catch(e){ console.warn(e); pointsPerWirdInput.value=pointsPerWird||10; weeklyBonusInput.value=weeklyBonusPoints||20; } const toggle=document.getElementById('hidePointsFromVisitorsToggle'); if(toggle) toggle.checked=!!hidePointsFromVisitors; }
+// يضيف مهلة زمنية قصوى لأي Promise حتى لا تُعلّق الواجهة إذا تعطل الاتصال بـ Firebase
+function withTimeout(promise, ms=4000){ return Promise.race([promise, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]); }
+async function loadWirdPointsSettingsIntoModal(){ try { const snap=await withTimeout(get(ref(db,'settings/wirdPoints'))); if(snap.exists()){ const wp=snap.val(); pointsPerWird=wp.pointsPerWird||10; weeklyBonusPoints=wp.weeklyBonusPoints||20; } else { pointsPerWird=pointsPerWird||10; weeklyBonusPoints=weeklyBonusPoints||20; } pointsPerWirdInput.value=pointsPerWird; weeklyBonusInput.value=weeklyBonusPoints; } catch(e){ console.warn(e); pointsPerWirdInput.value=pointsPerWird||10; weeklyBonusInput.value=weeklyBonusPoints||20; } const toggle=document.getElementById('hidePointsFromVisitorsToggle'); if(toggle) toggle.checked=!!hidePointsFromVisitors; }
 
 // ===== إخفاء نقاط الطلاب عن الزوار (غير المسجلين دخول) =====
 async function toggleHidePointsFromVisitors(checked){
@@ -1610,25 +1643,27 @@ async function toggleHidePointsFromVisitors(checked){
 }
 document.getElementById('hidePointsFromVisitorsToggle')?.addEventListener('change', function(){ toggleHidePointsFromVisitors(this.checked); });
 
-document.querySelectorAll('.points-tab-btn').forEach(btn=>{ btn.addEventListener('click',function(){ const tab=this.getAttribute('data-tab'); document.querySelectorAll('.points-tab-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.points-tab-content').forEach(c=>c.classList.remove('active')); document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('active'); if(tab==='transfer') renderMonthlyStudentList(); if(tab==='weekly') loadWeeklyStatus('current'); }); });
+let _pointsTabListenersBound = false;
 btnManagePoints.addEventListener('click',async()=>{
     if(role!=='admin'){ showToast('❌ المدير فقط', false); return; }
+    // نفتح النافذة فوراً حتى لا تعلّق الواجهة بانتظار الشبكة، ثم نملأ بياناتها
     document.getElementById('modalManagePoints').style.display='flex';
-    showLoading();
-    try{
-        await loadWirdPointsSettingsIntoModal();
-        resetReasonForm(); renderReasonsList(); resetActivityForm(); renderActivitiesList();
-        const filter=document.getElementById('pointsGroupFilter'); filter.innerHTML='<option value="">جميع المجموعات</option>';
-        const monthlyFilter=document.getElementById('monthlyGroupFilter'); monthlyFilter.innerHTML='<option value="">جميع المجموعات</option>';
-        data.forEach(g=>{ const opt=document.createElement('option'); opt.value=g.name; opt.textContent=g.name; filter.appendChild(opt); const opt2=document.createElement('option'); opt2.value=g.name; opt2.textContent=g.name; monthlyFilter.appendChild(opt2); });
-        document.getElementById('pointsSearchInput').value='';
-        renderPointsStudentList();
-        document.getElementById('monthlySearchInput').value='';
-        populateMonthlySortSelects();
-        renderMonthlyStudentList();
-        loadWeeklyStatus('current');
-    } catch(e){ console.error('خطأ أثناء فتح نافذة إدارة النقاط:', e); showToast('❌ حدث خطأ أثناء تحميل بيانات النافذة (حاول مجدداً)', false); }
-    finally{ hideLoading(); }
+    resetReasonForm(); renderReasonsList(); resetActivityForm(); renderActivitiesList();
+    const filter=document.getElementById('pointsGroupFilter'); filter.innerHTML='<option value="">جميع المجموعات</option>';
+    const monthlyFilter=document.getElementById('monthlyGroupFilter'); monthlyFilter.innerHTML='<option value="">جميع المجموعات</option>';
+    data.forEach(g=>{ const opt=document.createElement('option'); opt.value=g.name; opt.textContent=g.name; filter.appendChild(opt); const opt2=document.createElement('option'); opt2.value=g.name; opt2.textContent=g.name; monthlyFilter.appendChild(opt2); });
+    document.getElementById('pointsSearchInput').value='';
+    renderPointsStudentList();
+    document.getElementById('monthlySearchInput').value='';
+    populateMonthlySortSelects();
+    renderMonthlyStudentList();
+    loadWeeklyStatus('current');
+    if(!_pointsTabListenersBound){
+        _pointsTabListenersBound = true;
+        document.querySelectorAll('.points-tab-btn').forEach(btn=>{ btn.addEventListener('click',function(){ const tab=this.getAttribute('data-tab'); document.querySelectorAll('.points-tab-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.points-tab-content').forEach(c=>c.classList.remove('active')); document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('active'); if(tab==='transfer') renderMonthlyStudentList(); }); });
+    }
+    // تحميل إعدادات الورد بشكل غير معطّل للواجهة (لن يعلّق فتح النافذة حتى لو تأخرت الشبكة)
+    loadWirdPointsSettingsIntoModal().catch(e=>console.warn(e));
 });
 window.closeManagePointsModal=function(){ document.getElementById('modalManagePoints').style.display='none'; resetReasonForm(); };
 document.getElementById('pointsSearchInput').addEventListener('input',renderPointsStudentList);
@@ -1897,6 +1932,7 @@ window.approveAndTransferActivity = async function(entryId) {
     s.pointsLog.push({type:'add', pts: entry.pts, note: `نشاط إضافي: ${entry.activityText}`, date: ds, ts: now.getTime()});
     try {
         await updateStudentPointsInFirebase(sid, s);
+        bumpLifetimePoints(sid, entry.pts);
         await update(ref(db, `pendingActivities/${sid}/${entryId}`), { approved: true, approvedTs: now.getTime() });
         showToast(`✅ تم ترحيل ${entry.pts} نقطة لـ ${s.name}`, true);
         renderTransferActivitiesList();
@@ -1958,7 +1994,7 @@ function renderCombinedPointsContent(studentId) {
     const s = findStudentById(studentId);
     const log = s?.pointsLog || [];
     if(!log.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا توجد سجلات نقاط بعد</div>'; return; }
-    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:10px;margin-bottom:12px;"><div style="color:#888;font-size:1.6rem;">إجمالي النقاط</div><div style="font-size:3.6rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`;
+    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:10px;padding:10px;margin-bottom:12px;"><div style="color:#888;font-size:0.9rem;">إجمالي النقاط</div><div style="font-size:1.8rem;font-weight:900;color:#D4AF37;">⭐ ${s?.points||0}</div></div>`;
     const reversed = [...log].reverse();
     reversed.forEach((entry, revIdx) => {
         const realIdx = log.length - 1 - revIdx;
@@ -1969,7 +2005,7 @@ function renderCombinedPointsContent(studentId) {
         const bd = isAdd ? '#c3e6cb' : '#f5c6cb';
         let typeLabel = '';
         if(entry.type==='wird') typeLabel=' (الورد اليومي)'; else if(entry.type==='bonus') typeLabel=' (مكافأة أسبوعية)';
-        html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;font-size:1.8rem;"><span>${icon}</span><span style="font-weight:700;color:${col};min-width:40px;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:1.5rem;white-space:nowrap;">${entry.date||''}</span>${role==='admin'?`<button onclick="deletePointLog('${studentId}',${realIdx}); openCombinedRecordModal('${studentId}');" class="button small danger" style="padding:2px 6px;"><i class="fas fa-trash"></i></button>`:''}</div>`;
+        html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:${bg};border:1px solid ${bd};border-radius:8px;margin-bottom:6px;flex-wrap:wrap;font-size:1.05rem;"><span>${icon}</span><span style="font-weight:700;color:${col};min-width:40px;">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;">${escapeHtml(entry.note||'—')}${typeLabel}</span><span style="color:#999;font-size:0.9rem;white-space:nowrap;">${entry.date||''}</span>${role==='admin'?`<button onclick="deletePointLog('${studentId}',${realIdx}); openCombinedRecordModal('${studentId}');" class="button small danger" style="padding:2px 6px;"><i class="fas fa-trash"></i></button>`:''}</div>`;
     });
     el.innerHTML = html;
 }
@@ -2017,6 +2053,7 @@ window.markWirdComplete = async function(studentId){
             updates[`${basePath}/completedWirdDays`] = student.completedWirdDays;
             if(student.weeklyBonusGiven) { updates[`${basePath}/weeklyBonusGiven`] = student.weeklyBonusGiven; }
             await update(ref(db), updates).catch(err => { console.error(err); showToast('❌ حدث خطأ أثناء حفظ النقاط في الخادم', false); });
+            bumpLifetimePoints(studentId, monthlyDelta);
         }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         render();
@@ -2036,9 +2073,9 @@ window.loadWeeklyStatus = async function(weekType){
     const currentSunday=new Date(today); currentSunday.setDate(today.getDate()-today.getDay());
     let weekStart; if(weekType==='current') weekStart=new Date(currentSunday); else { weekStart=new Date(currentSunday); weekStart.setDate(currentSunday.getDate()-7); }
     const weekDays=[]; for(let i=0;i<7;i++){ const d=new Date(weekStart); d.setDate(weekStart.getDate()+i); weekDays.push({date:d,dateStr:getDateString(d),dayName:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][i]}); }
-    let html=`<table style="width:100%;border-collapse:collapse;font-size:1.7rem;"><thead><tr><th style="min-width:260px;white-space:nowrap;">الطالب</th>${weekDays.map(d=>`<th>${d.dayName}<br><small>${d.date.getDate()}/${d.date.getMonth()+1}</small></th>`).join('')}</thead><tbody>`;
+    let html=`<table style="width:100%;border-collapse:collapse;font-size:1.05rem;"><thead><tr><th style="min-width:180px;width:220px;padding:8px;">الطالب</th>${weekDays.map(d=>`<th style="padding:8px;">${d.dayName}<br><small>${d.date.getDate()}/${d.date.getMonth()+1}</small></th>`).join('')}</thead><tbody>`;
     const allStudents=[]; data.forEach(g=>{ g.stickers.forEach(st=>{ st.students.forEach(s=>allStudents.push(s)); }); }); allStudents.sort((a,b)=>a.name.localeCompare(b.name));
-    for(const s of allStudents){ const completedDays=s.completedWirdDays||[]; html+=`<tr><td style="text-align:right;min-width:260px;white-space:nowrap;">${escapeHtml(s.name)}</td>`; weekDays.forEach(day=>{ const isCompleted=completedDays.includes(day.dateStr); html+=`<td style="text-align:center;${isCompleted?'background:#e8f5e9;color:#2e7d32;':'background:#ffebee;color:#c62828;'}">${isCompleted?'✅':'❌'}</td>`; }); html+=`</tr>`; }
+    for(const s of allStudents){ const completedDays=s.completedWirdDays||[]; html+=`<tr><td style="text-align:right;font-size:1.15rem;font-weight:700;padding:8px;min-width:180px;">${escapeHtml(s.name)}</td>`; weekDays.forEach(day=>{ const isCompleted=completedDays.includes(day.dateStr); html+=`<td style="text-align:center;padding:8px;font-size:1.2rem;${isCompleted?'background:#e8f5e9;color:#2e7d32;':'background:#ffebee;color:#c62828;'}">${isCompleted?'✅':'❌'}</td>`; }); html+=`</tr>`; }
     html+=`</tbody></table>`; if(allStudents.length===0) html='<div style="text-align:center;padding:2rem;">لا يوجد طلاب</div>';
     document.getElementById('weeklyStatusTable').innerHTML=html;
 };
@@ -2062,7 +2099,6 @@ function calculateDailyWird(profile, studentId){
 }
 function getSurahLabel(page,surahIdx){ if(!surahIdx){ let surahs=QURAN_DATA.filter(q=>page>=q.s&&page<=q.e); return surahs.map(s=>s.n).join("، "); } else{ const s=QURAN_DATA.find(q=>q.i===surahIdx); return s?s.n:`ص${page}`; } }
 window.openStudentProfile = async function(studentId, noPush = false){
-    currentProfileStudentId = studentId;
     let student=null, group=null, sticker=null;
     for(let gi=0;gi<data.length;gi++){ const g=data[gi]; for(let si=0;si<g.stickers.length;si++){ const st=g.stickers[si]; const s=st.students.find(s=>s.id===studentId); if(s){ student=s; group=g; sticker=st; break; } } if(student) break; }
     if(!student){ showToast('❌ لم يتم العثور على بيانات الطالب', false); return; }
@@ -2089,7 +2125,7 @@ window.openStudentProfile = async function(studentId, noPush = false){
     studentProfileContent.innerHTML=`
         <div class="student-profile-header"><h2><i class="fas fa-user-graduate"></i> الصفحة الشخصية للطالب</h2><button class="student-profile-close" onclick="closeStudentProfile()"><i class="fas fa-times"></i> إغلاق</button></div>
         <div class="student-profile-content">
-            <div class="profile-section"><div class="student-basic-info"><div class="student-avatar"><i class="fas fa-user"></i></div><div class="student-details"><h2 style="color:var(--accent);margin:0 0 1rem 0;font-size:3.6rem;grid-column:1/-1;">${escapeHtml(student.name)}</h2><div class="info-item"><div class="info-icon"><i class="fas fa-users"></i></div><div class="info-text">المجموعة: <span class="info-value">${escapeHtml(group.name)}</span></div></div><div class="info-item"><div class="info-icon"><i class="fas fa-sticky-note"></i></div><div class="info-text">الستكر: <span class="info-value">${escapeHtml(sticker.title)}</span></div></div><div class="info-item"><div class="info-icon"><i class="fas fa-calendar-alt"></i></div><div class="info-text">تاريخ الانضمام: <span class="info-value">${escapeHtml(profile.joinDate)}</span></div></div>${(!role && hidePointsFromVisitors) ? '' : `<div class="info-item"><div class="info-icon"><i class="fas fa-chart-line"></i></div><div class="info-text">النقاط: <span class="info-value" style="color:#D4AF37;font-weight:900;">⭐ ${studentTotalPoints}</span></div></div>`}</div></div></div>
+            <div class="profile-section"><div class="student-basic-info"><div class="student-avatar"><i class="fas fa-user"></i></div><div class="student-details"><h2 style="color:var(--accent);margin:0 0 1rem 0;font-size:1.8rem;grid-column:1/-1;">${escapeHtml(student.name)}</h2><div class="info-item"><div class="info-icon"><i class="fas fa-users"></i></div><div class="info-text">المجموعة: <span class="info-value">${escapeHtml(group.name)}</span></div></div><div class="info-item"><div class="info-icon"><i class="fas fa-sticky-note"></i></div><div class="info-text">الستكر: <span class="info-value">${escapeHtml(sticker.title)}</span></div></div><div class="info-item"><div class="info-icon"><i class="fas fa-calendar-alt"></i></div><div class="info-text">تاريخ الانضمام: <span class="info-value">${escapeHtml(profile.joinDate)}</span></div></div>${(!role && hidePointsFromVisitors)?'':`<div class="info-item"><div class="info-icon"><i class="fas fa-chart-line"></i></div><div class="info-text">النقاط: <span class="info-value" style="color:#D4AF37;font-weight:900;">⭐ ${studentTotalPoints}</span></div></div>`}</div></div></div>
             <div class="profile-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3><i class="fas fa-book-quran"></i> الورد اليومي</h3>${role==='admin'?`<button onclick="openEditMemorizationModal('${studentId}')" style="background:var(--accent);color:white;border:none;padding:0.5rem 1rem;border-radius:5px;cursor:pointer;display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;"><i class="fas fa-edit"></i> تعديل المحفوظ</button>`:''}</div><div class="wird-container"><div class="wird-title"><i class="fas fa-calendar-day"></i> ورد اليوم</div><div class="wird-text">${escapeHtml(wirdData.displayText)}</div><div class="wird-stats"><div>${escapeHtml(wirdData.statsText)}</div>${wirdData.isRestDay?'':`<div class="wird-pages-count">${wirdData.todayPages.length} صفحة اليوم</div>`}</div>${wirdButtonHtml}</div></div>
             <div class="profile-section"><h3><i class="fas fa-tasks"></i> الواجبات الحالية</h3><div class="homework-items">${renderHomework(hw)}</div></div>
             <div class="profile-section"><h3><i class="fas fa-chart-bar"></i> التقديرات</h3><div class="grades-horizontal"><div class="grade-box"><div class="grade-title">الحفظ</div><div class="grade-value">${student.gradeHifz||'-'}</div><span class="badge ${getCumulativeLabel(student.gradeHifz).cls} grade-rating">${getCumulativeLabel(student.gradeHifz).text}</span></div><div class="grade-box"><div class="grade-title">الورد</div><div class="grade-value">${student.gradeWard||'-'}</div><span class="badge ${getCumulativeLabel(student.gradeWard).cls} grade-rating">${getCumulativeLabel(student.gradeWard).text}</span></div><div class="grade-box"><div class="grade-title">الأخلاق</div><div class="grade-value">${student.gradeAkhlak||'-'}</div><span class="badge ${getCumulativeLabel(student.gradeAkhlak).cls} grade-rating">${getCumulativeLabel(student.gradeAkhlak).text}</span></div><div class="grade-box" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-color:#2196F3;"><div class="grade-title">المعدل</div><div class="grade-value">${student.gradeHifz&&student.gradeWard&&student.gradeAkhlak?Math.round(((parseFloat(student.gradeHifz||0)+parseFloat(student.gradeWard||0)+parseFloat(student.gradeAkhlak||0))/3)*100)/100:'-'}</div><span class="badge ${ratingClass} grade-rating">${escapeHtml(rating)}</span></div></div></div>
@@ -2101,7 +2137,6 @@ function renderHomework(hw){ const types=[{key:'recitation',title:'واجب ال
 function renderCertificates(certs,studentId){ if(!certs?.length) return '<div style="text-align:center;color:#666;grid-column:1/-1;padding:2rem;">لا توجد شهادات حتى الآن</div>'; return certs.map(c=>`<div class="certificate-card"><img src="${escapeHtml(c.imageUrl)}" alt="${escapeHtml(c.title)}" onclick="viewCertificateImage('${escapeHtml(c.imageUrl)}')"><div class="certificate-overlay">${escapeHtml(c.title)}</div>${role==='admin'?`<div style="position:absolute;top:10px;left:10px;display:flex;gap:5px;"><button onclick="deleteCertificate('${studentId}','${c.id}')" style="background:rgba(220,53,69,0.9);color:white;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px);"><i class="fas fa-trash"></i></button></div>`:''}</div>`).join(''); }
 window.closeStudentProfile = function(){
     studentProfileModal.style.display = 'none';
-    currentProfileStudentId = null;
     _restoreFontGroupsForCurrentSection();
     history.back();
 };
@@ -2320,7 +2355,7 @@ function renderVisitorsBoxForRole(r){ const box=document.getElementById('visitor
 
 // ================= دوال النسخ الاحتياطي =================
 // يجلب نسخة كاملة وحرفية من كل بيانات النظام في قاعدة البيانات (الطلاب، الإعدادات، الاختبارات، التسجيلات، الهدايا، الرسائل، التعليمات، سجل الترحيل...الخ)
-const FULL_BACKUP_KEYS = ['groups','cumulative','homework','studentProfiles','settings','exams','instructions','messages','monthlyPointsArchive','pendingActivities','surveyQuestions','surveyResponses','surveySettings','users','vision','visitors'];
+const FULL_BACKUP_KEYS = ['groups','cumulative','homework','studentProfiles','settings','exams','instructions','messages','pointsMigrationLog','pendingActivities','surveyQuestions','surveyResponses','surveySettings','users','vision','visitors'];
 async function gatherFullBackup(){
     const snaps = await Promise.all(FULL_BACKUP_KEYS.map(k => get(ref(db, k))));
     const backup = { timestamp: new Date().toISOString() };
@@ -2430,7 +2465,7 @@ if (btnRestoreBackup && restoreFileInput) {
                 cumHistory = backupData.cumulative || {};
                 homeworkData = backupData.homework || {};
                 studentProfiles = backupData.studentProfiles || {};
-                pointsMigrationLog = backupData.monthlyPointsArchive || {};
+                pointsMigrationLog = backupData.pointsMigrationLog || {};
                 pendingActivities = backupData.pendingActivities || {};
                 exams = backupData.exams || [];
                 normalizeData();
@@ -3225,6 +3260,7 @@ window.transferExamPointsToStudent = async function(examId, subIdx) {
     student.points = (student.points||0) + earned;
     student.pointsLog.push({type:'add', pts:earned, note:`نتيجة اختبار: ${exam.title} (${earned}/${totalMax})`, date:ds, ts: now.getTime()});
     await updateStudentPointsInFirebase(studentId, student);
+    bumpLifetimePoints(studentId, earned);
     render();
     showToast(`✅ تم ترحيل ${earned} نقطة لسجل ${sub.studentName}`, true);
     if (document.getElementById('modalExamResults').style.display === 'flex') viewExamResults(examId);
@@ -3550,6 +3586,7 @@ function normalizeData() {
                 student.count = student.count || 0;
                 if (!student.completedWirdDays) student.completedWirdDays = [];
                 if (student.points === undefined) student.points = 0;
+                if (student.lifetimePoints === undefined) { student.lifetimePoints = student.points || 0; needsUpdate = true; }
                 if (!student.pointsLog) student.pointsLog = [];
                 if (!student.weeklyBonusGiven) student.weeklyBonusGiven = [];
             });
@@ -3572,6 +3609,7 @@ async function optimizedFirebaseFetch() {
         if (messagesSnap.exists()) { let msgs = messagesSnap.val(); messages = msgs.map(msg => { if (typeof msg === 'string') { if (isImageURL(msg)) return { text: msg, type: 'image' }; return { text: msg, type: 'text' }; } return msg; }); } else { messages = localMessages; writeMessagesToFirebase(messages); }
         if (cumSnap.exists()) cumHistory = cumSnap.val(); else { cumHistory = localCum; writeCumToFirebase(cumHistory); }
         if (homeworkSnap.exists()) homeworkData = homeworkSnap.val(); else { homeworkData = localHomework; localStorage.setItem(HOMEWORK_KEY, JSON.stringify(homeworkData)); }
+        homeworkDataBaseline = JSON.parse(JSON.stringify(homeworkData));
         if (profilesSnap.exists()) studentProfiles = profilesSnap.val(); else { studentProfiles = {}; localStorage.setItem('studentProfiles', JSON.stringify(studentProfiles)); }
         if (wirdPointsSnap.exists()) { const wp = wirdPointsSnap.val(); pointsPerWird = wp.pointsPerWird || 10; weeklyBonusPoints = wp.weeklyBonusPoints || 20; }
         else { try { const localWP = JSON.parse(localStorage.getItem('wirdPointsSettings')); if (localWP) { pointsPerWird = localWP.pointsPerWird || 10; weeklyBonusPoints = localWP.weeklyBonusPoints || 20; } } catch(e) {} }
@@ -3607,22 +3645,17 @@ onValue(ref(db,'groups'), (snap) => {
     if (!isInitialized) return;
     if (snap.exists()) { data = snap.val(); localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
     if (document.getElementById('mainContentArea')?.style.display !== 'none') debouncedRender();
-    if (studentProfileModal.style.display === 'flex' && currentProfileStudentId) openStudentProfile(currentProfileStudentId, true);
-    if (document.getElementById('modalCombinedRecord')?.style.display === 'flex' && currentCombinedRecordStudentId) renderCombinedPointsContent(currentCombinedRecordStudentId);
-    if (document.getElementById('modalPointsLog')?.style.display === 'flex' && currentLogStudentId) renderPointsLog();
-    const modalManagePoints = document.getElementById('modalManagePoints');
-    if (modalManagePoints?.style.display === 'flex') {
-        if (document.getElementById('tabPoints')?.classList.contains('active')) renderPointsStudentList();
-        if (document.getElementById('tabTransfer')?.classList.contains('active')) renderMonthlyStudentList();
-        if (document.getElementById('tabWeekly')?.classList.contains('active')) loadWeeklyStatus('current');
+    // تحديث فوري لنافذة إدارة النقاط إن كانت مفتوحة (بدون الحاجة لتحديث الصفحة)
+    if(document.getElementById('modalManagePoints')?.style.display === 'flex'){
+        const activeTab = document.querySelector('.points-tab-btn.active')?.getAttribute('data-tab');
+        if(activeTab==='points') renderPointsStudentList();
+        else if(activeTab==='transfer') renderMonthlyStudentList();
+        else if(activeTab==='weekly') loadWeeklyStatus(document.getElementById('weekPreviousBtn')?.classList.contains('gold') ? 'previous':'current');
     }
+    // تحديث فوري لنافذة الملف الشخصي للطالب إن كانت مفتوحة
+    if(studentProfileModal?.style.display === 'flex' && history.state?.modal==='studentProfile' && history.state?.studentId){ openStudentProfile(history.state.studentId, true); }
 });
-onValue(ref(db,'studentProfiles'), (snap) => {
-    if (!isInitialized) return;
-    if (snap.exists()) { studentProfiles = snap.val() || {}; localStorage.setItem('studentProfiles', JSON.stringify(studentProfiles)); }
-    if (studentProfileModal.style.display === 'flex' && currentProfileStudentId) openStudentProfile(currentProfileStudentId, true);
-});
-onValue(ref(db,'monthlyPointsArchive'), (snap) => {
+onValue(ref(db,'pointsMigrationLog'), (snap) => {
     pointsMigrationLog = snap.exists() ? (snap.val()||{}) : {};
     const tabTransfer = document.getElementById('tabTransfer');
     if(tabTransfer && tabTransfer.classList.contains('active')) renderMonthlyStudentList();
@@ -3641,20 +3674,16 @@ onValue(ref(db,'messages'), (snap) => {
 });
 onValue(ref(db,'homework'), (snap) => {
     if (!isInitialized) return;
-    if (snap.exists()) { homeworkData = snap.val(); localStorage.setItem(HOMEWORK_KEY, JSON.stringify(homeworkData)); }
+    if (snap.exists() && !homeworkModified) { homeworkData = snap.val(); homeworkDataBaseline = JSON.parse(JSON.stringify(homeworkData)); localStorage.setItem(HOMEWORK_KEY, JSON.stringify(homeworkData)); }
     if (document.getElementById('mainContentArea')?.style.display !== 'none' && currentView==='homework') debouncedRender();
-    if (studentProfileModal.style.display === 'flex' && currentProfileStudentId) openStudentProfile(currentProfileStudentId, true);
-    if (document.getElementById('modalCombinedRecord')?.style.display === 'flex' && currentCombinedRecordStudentId) renderCombinedHomeworkContent(currentCombinedRecordStudentId);
 });
 onValue(ref(db,'settings/pointsReasons'), (snap) => {
     if (!isInitialized) return;
     if (snap.exists()) pointsReasons = snap.val() || [];
-    if (document.getElementById('modalManagePoints')?.style.display === 'flex') { renderReasonsList(); renderPointsStudentList(); }
 });
 onValue(ref(db,'settings/extraActivities'), (snap) => {
     if (!isInitialized) return;
     extraActivities = snap.exists() ? (snap.val() || []) : [];
-    if (document.getElementById('modalManagePoints')?.style.display === 'flex') renderActivitiesList();
 }, (err) => { console.warn('تعذر الاستماع لـ settings/extraActivities', err); });
 onValue(ref(db,'pendingActivities'), (snap) => {
     if (!isInitialized) return;

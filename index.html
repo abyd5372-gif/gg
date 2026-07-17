@@ -1137,13 +1137,14 @@ function render(){
                 const tr=document.createElement('tr'); if(s.attendance==='absent_excused') tr.classList.add('att-excused'); if(s.attendance==='absent_unexcused') tr.classList.add('att-unexcused');
                 const sid=s.id;
                 const numTd=document.createElement('td'); numTd.id=`numcell_${sid}`;
+                // للمدير: الرقم التسلسلي مع إشعار بعدد الإنجازات (غير المعتمدة) - نضغط عليه لفتح نافذة الإنجازات
                 if(currentView==='grades' && role==='admin'){
-                    const pendCount=getPendingCount(sid);
-                    numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="position:relative;font-weight:700;color:var(--accent);text-decoration:underline;" title="عرض الأنشطة الإضافية المعلقة">${sti+1}${pendCount>0?`<span class="pending-badge">${pendCount}</span>`:''}</a>`;
-                    numTd.querySelector('a').onclick=()=>openTransferActivitiesModal(sid, s.name);
+                    const achCount = getAchievementCount(sid);
+                    numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="position:relative;font-weight:700;color:var(--accent);text-decoration:underline;" title="عرض إنجازات الطالب">${sti+1}${achCount>0?`<span class="pending-badge">${achCount}</span>`:''}</a>`;
+                    numTd.querySelector('a').onclick=()=>openAchievementsModal(sid, s.name);
                 } else if(currentView==='grades' && role==='manager' && canEditGroup(gi)){
-                    numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="font-weight:700;color:var(--accent);text-decoration:underline;" title="تسجيل نشاط إضافي للطالب">${sti+1}</a>`;
-                    numTd.querySelector('a').onclick=()=>openReportActivityModal(sid, s.name);
+                    // للمشرف: زر تسجيل الإنجاز بدلاً من تعديل الطالب (نفس خانة الإجراءات)
+                    // سنضعه في خانة الإجراءات، وليس هنا.
                 } else {
                     numTd.textContent=sti+1;
                 }
@@ -1158,7 +1159,24 @@ function render(){
                     tr.appendChild(gradeCell('hifz',s.gradeHifz)); tr.appendChild(gradeCell('ward',s.gradeWard)); tr.appendChild(gradeCell('akhlak',s.gradeAkhlak));
                     const notesTd=document.createElement('td'); notesTd.className='notes'; if(s.attendance==='present'){ const nh=noteForHifz(s.gradeHifz), nw=noteForWard(s.gradeWard); if(nh||nw){ notesTd.innerHTML=(nh?`<div>${escapeHtml(nh)}</div>`:''); if(nh&&nw) notesTd.innerHTML+=`<div class="notes-separator"></div>`; notesTd.innerHTML+=(nw?`<div>${escapeHtml(nw)}</div>`:''); } } else if(s.attendance==='absent_unexcused') notesTd.innerHTML=''; tr.appendChild(notesTd);
                     const ptsTd=document.createElement('td'); ptsTd.innerHTML = (!role && hidePointsFromVisitors) ? `<div style="text-align:center;color:#aaa;font-size:0.85rem;">🔒</div>` : `<div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;"><span id="pts_display_${sid}" style="font-size:1.2rem;font-weight:900;color:#D4AF37;">⭐ ${s.points||0}</span></div>`; tr.appendChild(ptsTd);
-                    if(role==='admin'||(role==='manager'&&canEditGroup(gi))){ const actTd=document.createElement('td'); const eBtn=document.createElement('button'); eBtn.className='button small'; eBtn.innerHTML='<i class="fas fa-edit"></i> تعديل'; eBtn.onclick=()=>openEditModal(gi,si,sti); actTd.appendChild(eBtn); if(role==='admin'){ const mBtn=document.createElement('button'); mBtn.className='button small'; mBtn.style.background='#9C27B0'; mBtn.innerHTML='<i class="fas fa-exchange-alt"></i> نقل'; mBtn.onclick=()=>openMoveModal(gi,si,sti); actTd.appendChild(mBtn); const dBtn=document.createElement('button'); dBtn.className='button small danger'; dBtn.innerHTML='<i class="fas fa-trash"></i> حذف'; dBtn.onclick=()=>adminDeleteStudent(gi,si,sti); actTd.appendChild(dBtn); } tr.appendChild(actTd); }
+                    if(role==='admin'||(role==='manager'&&canEditGroup(gi))){
+                        const actTd=document.createElement('td');
+                        if(role==='manager' && canEditGroup(gi)){
+                            // للمشرف: زر تسجيل الإنجاز
+                            const achBtn=document.createElement('button');
+                            achBtn.className='button small';
+                            achBtn.style.background='#9C27B0';
+                            achBtn.innerHTML='<i class="fas fa-tasks"></i> تسجيل الإنجاز';
+                            achBtn.onclick=()=>openAchievementModal(sid, s.name);
+                            actTd.appendChild(achBtn);
+                        } else if(role==='admin'){
+                            // للمدير: تعديل وحذف ونقل
+                            const eBtn=document.createElement('button'); eBtn.className='button small'; eBtn.innerHTML='<i class="fas fa-edit"></i> تعديل'; eBtn.onclick=()=>openEditModal(gi,si,sti); actTd.appendChild(eBtn);
+                            const mBtn=document.createElement('button'); mBtn.className='button small'; mBtn.style.background='#9C27B0'; mBtn.innerHTML='<i class="fas fa-exchange-alt"></i> نقل'; mBtn.onclick=()=>openMoveModal(gi,si,sti); actTd.appendChild(mBtn);
+                            const dBtn=document.createElement('button'); dBtn.className='button small danger'; dBtn.innerHTML='<i class="fas fa-trash"></i> حذف'; dBtn.onclick=()=>adminDeleteStudent(gi,si,sti); actTd.appendChild(dBtn);
+                        }
+                        tr.appendChild(actTd);
+                    }
                 } else {
                     ['recitation','memorization','review'].forEach(field=>{ const td=document.createElement('td'); const wrapDiv=document.createElement('div'); wrapDiv.className='homework-cell-wrapper'; const div=document.createElement('div'); div.className=role==='admin'?'homework-editable':'homework-readonly'; div.textContent=homeworkData[s.id]?.[field]||''; if(role==='admin'){ div.contentEditable=true; div.onfocus=()=>div.classList.add('homework-modified'); div.onblur=()=>{ div.classList.remove('homework-modified'); updateHomework(s.id,field,div.textContent); }; wrapDiv.appendChild(div); const hist=document.createElement('div'); hist.className='history-btn'; hist.innerHTML='<i class="fas fa-history"></i>'; hist.title='سجل التعديلات'; hist.onclick=()=>window.viewHomeworkHistory(s.id); wrapDiv.appendChild(hist); } else { wrapDiv.appendChild(div); } td.appendChild(wrapDiv); tr.appendChild(td); });
                 }
@@ -1957,7 +1975,8 @@ function renderPendingBadges() {
         const a = td.querySelector('a.seq-num-link');
         if(!a) return;
         const existing = a.querySelector('.pending-badge');
-        const count = getPendingCount(sid);
+        // للمدير: عدد الإنجازات غير المعتمدة (من نظام الإنجازات الجديد)
+        const count = getAchievementCount(sid);
         if(count > 0 && !existing) { const badge=document.createElement('span'); badge.className='pending-badge'; badge.textContent=count; a.appendChild(badge); }
         else if(count > 0 && existing) { existing.textContent = count; }
         else if(count === 0 && existing) { existing.remove(); }
@@ -3767,7 +3786,302 @@ window.closeStudentProfile = closeStudentProfile;
 window.viewHomeworkHistory = viewHomeworkHistory;
 window.deleteHomeworkHistoryItem = deleteHomeworkHistoryItem;
 
-console.log("✅ النظام جاهز للعمل مع الاختبارات والمسابقات");
+// ================= نظام الإنجازات الجديد =================
+// هيكل الإنجاز: { id, studentId, tasks: [{description, status}], notes, date, ts }
+// المسار في Firebase: achievements/{studentId}/{achievementId}
+
+async function openAchievementModal(sid, sname) {
+    // نافذة تسجيل الإنجاز للمشرف
+    const modal = document.createElement('div');
+    modal.id = 'achievementModal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:10010;padding:1rem;overflow-y:auto;';
+    modal.innerHTML = `
+        <div style="background:#fff;border-radius:14px;padding:1.5rem;width:95%;max-width:600px;direction:rtl;max-height:90vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                <h3 style="color:var(--accent);margin:0;"><i class="fas fa-tasks"></i> تسجيل إنجاز: ${escapeHtml(sname)}</h3>
+                <button onclick="document.getElementById('achievementModal').remove()" class="button small ghost"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="achievementTasksContainer">
+                <div class="achievement-task-item" style="margin-bottom:0.5rem;background:#f8f9fa;border-radius:8px;padding:0.8rem;border:1px solid #e0e0e0;">
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+                        <input type="text" class="achievement-task-desc" placeholder="الواجب (اختياري إذا كان إعادة)" style="flex:2;min-width:150px;padding:0.4rem;border:1px solid #ccc;border-radius:5px;">
+                        <select class="achievement-task-status" style="flex:1;min-width:100px;padding:0.4rem;border:1px solid #ccc;border-radius:5px;">
+                            <option value="نجاح من أول مرة">نجاح من أول مرة</option>
+                            <option value="نجاح">نجاح</option>
+                            <option value="إعادة" selected>إعادة</option>
+                        </select>
+                        <button type="button" onclick="removeAchievementTask(this)" class="button small danger" style="padding:0.2rem 0.5rem;">✕</button>
+                    </div>
+                </div>
+            </div>
+            <div style="margin:0.5rem 0;">
+                <button onclick="addAchievementTask()" class="button small" style="background:#2196F3;"><i class="fas fa-plus"></i> إضافة واجب آخر</button>
+            </div>
+            <div style="margin-bottom:0.8rem;">
+                <label style="display:block;font-weight:700;margin-bottom:0.3rem;">ملاحظات (اختياري)</label>
+                <textarea id="achievementNotes" rows="3" style="width:100%;padding:0.5rem;border:1px solid #ccc;border-radius:6px;white-space:pre-wrap;"></textarea>
+            </div>
+            <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+                <button onclick="submitAchievement('${sid}')" class="button" style="background:#00796B;"><i class="fas fa-save"></i> إرسال الإنجاز</button>
+                <button onclick="document.getElementById('achievementModal').remove()" class="button danger">إلغاء</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+window.addAchievementTask = function() {
+    const container = document.getElementById('achievementTasksContainer');
+    const newItem = document.createElement('div');
+    newItem.className = 'achievement-task-item';
+    newItem.style.cssText = 'margin-bottom:0.5rem;background:#f8f9fa;border-radius:8px;padding:0.8rem;border:1px solid #e0e0e0;';
+    newItem.innerHTML = `
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+            <input type="text" class="achievement-task-desc" placeholder="الواجب (اختياري إذا كان إعادة)" style="flex:2;min-width:150px;padding:0.4rem;border:1px solid #ccc;border-radius:5px;">
+            <select class="achievement-task-status" style="flex:1;min-width:100px;padding:0.4rem;border:1px solid #ccc;border-radius:5px;">
+                <option value="نجاح من أول مرة">نجاح من أول مرة</option>
+                <option value="نجاح">نجاح</option>
+                <option value="إعادة" selected>إعادة</option>
+            </select>
+            <button type="button" onclick="removeAchievementTask(this)" class="button small danger" style="padding:0.2rem 0.5rem;">✕</button>
+        </div>
+    `;
+    container.appendChild(newItem);
+};
+
+window.removeAchievementTask = function(btn) {
+    const container = document.getElementById('achievementTasksContainer');
+    if (container.children.length <= 1) {
+        showToast('❌ يجب أن يبقى واجب واحد على الأقل', false);
+        return;
+    }
+    btn.closest('.achievement-task-item').remove();
+};
+
+window.submitAchievement = async function(sid) {
+    const taskItems = document.querySelectorAll('.achievement-task-item');
+    const tasks = [];
+    let hasValid = false;
+    taskItems.forEach(item => {
+        const desc = item.querySelector('.achievement-task-desc').value.trim();
+        const status = item.querySelector('.achievement-task-status').value;
+        if (status === 'إعادة') {
+            // الإعادة لا تتطلب وصفاً، نضيف واجباً فارغاً
+            tasks.push({ description: desc || 'إعادة', status: 'إعادة' });
+            hasValid = true;
+        } else {
+            if (desc) {
+                tasks.push({ description: desc, status: status });
+                hasValid = true;
+            } else {
+                // إذا كان نجاح من أول مرة أو نجاح والوصف فارغ، نطلب منه تعبئته
+                showToast(`❌ يجب تعبئة وصف الواجب لحالة "${status}"`, false);
+                // نضع التركيز على الحقل الفارغ
+                item.querySelector('.achievement-task-desc').focus();
+                return;
+            }
+        }
+    });
+    if (!hasValid) { showToast('❌ يجب إدخال واجب واحد على الأقل', false); return; }
+
+    const notes = document.getElementById('achievementNotes').value.trim();
+
+    const now = getSecureDate();
+    const achievement = {
+        id: generateUniqueId(),
+        studentId: sid,
+        tasks: tasks,
+        notes: notes,
+        date: now.toLocaleDateString('en-GB', { calendar: 'gregory' }),
+        ts: now.getTime()
+    };
+
+    try {
+        // حفظ تحت مسار achievements/{studentId}/{achievementId}
+        await set(ref(db, `achievements/${sid}/${achievement.id}`), achievement);
+        showToast('✅ تم إرسال الإنجاز بنجاح', true);
+        // إعادة تعيين الحقول
+        document.getElementById('achievementModal').remove();
+        renderPendingBadges(); // تحديث الإشعارات
+    } catch(e) {
+        showToast('❌ خطأ في حفظ الإنجاز', false);
+        console.error(e);
+    }
+};
+
+// دوال للمدير: عرض الإنجازات
+function getAchievementCount(sid) {
+    // نعد الإنجازات غير المعتمدة (حسب رغبة المدير، هنا نعد كل الإنجازات)
+    // يمكن تعديل ليعتمد على حالة معتمدة/غير معتمدة
+    // سنستخدم عدد الإنجازات الكلي كإشعار
+    const ach = window._achievementsData && window._achievementsData[sid] ? Object.keys(window._achievementsData[sid]) : 0;
+    return ach;
+}
+
+window.openAchievementsModal = function(sid, sname) {
+    // نافذة عرض الإنجازات للمدير مع إمكانية إضافة نقاط أو حذف
+    const modal = document.createElement('div');
+    modal.id = 'achievementsViewModal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:10011;padding:1rem;overflow-y:auto;';
+    modal.innerHTML = `
+        <div style="background:#fff;border-radius:14px;padding:1.5rem;width:95%;max-width:800px;direction:rtl;max-height:90vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                <h3 style="color:var(--accent);margin:0;"><i class="fas fa-list-check"></i> إنجازات: ${escapeHtml(sname)}</h3>
+                <button onclick="document.getElementById('achievementsViewModal').remove()" class="button small ghost"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="achievementsList"></div>
+            <hr style="margin:1rem 0;">
+            <h4 style="color:#b8860b;"><i class="fas fa-star"></i> سجل النقاط</h4>
+            <div id="achievementPointsLog"></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    // تحميل البيانات
+    loadAchievementsData(sid, sname);
+};
+
+async function loadAchievementsData(sid, sname) {
+    try {
+        const snap = await get(ref(db, `achievements/${sid}`));
+        const achievements = snap.exists() ? snap.val() : {};
+        window._achievementsData = window._achievementsData || {};
+        window._achievementsData[sid] = achievements;
+        renderAchievementsList(sid, sname);
+        renderAchievementPointsLog(sid);
+    } catch(e) {
+        showToast('❌ خطأ في تحميل الإنجازات', false);
+    }
+}
+
+function renderAchievementsList(sid, sname) {
+    const container = document.getElementById('achievementsList');
+    if (!container) return;
+    const achievements = window._achievementsData && window._achievementsData[sid] ? Object.values(window._achievementsData[sid]) : [];
+    if (achievements.length === 0) {
+        container.innerHTML = '<div style="text-align:center;color:#aaa;padding:1rem;">لا توجد إنجازات مسجلة</div>';
+        return;
+    }
+    // ترتيب تنازلي حسب التاريخ
+    achievements.sort((a,b) => (b.ts||0) - (a.ts||0));
+    let html = '';
+    achievements.forEach(ach => {
+        const tasksHtml = ach.tasks.map(t => {
+            const statusColor = t.status === 'نجاح من أول مرة' ? '#28a745' : (t.status === 'نجاح' ? '#4CAF50' : '#dc3545');
+            return `<div style="display:flex;gap:0.5rem;align-items:center;margin:0.2rem 0;"><span style="font-weight:bold;color:${statusColor};">${escapeHtml(t.status)}</span><span>${escapeHtml(t.description || '')}</span></div>`;
+        }).join('');
+        const date = ach.date || new Date(ach.ts).toLocaleDateString('en-GB');
+        html += `
+            <div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:0.8rem;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                    <div><span style="color:#888;font-size:0.85rem;">${date}</span></div>
+                    <div style="display:flex;gap:0.5rem;">
+                        <button onclick="addPointsForAchievement('${sid}','${ach.id}')" class="button small" style="background:#D4AF37;"><i class="fas fa-plus"></i> إضافة نقاط</button>
+                        <button onclick="deleteAchievement('${sid}','${ach.id}')" class="button small danger"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <div>${tasksHtml}</div>
+                ${ach.notes ? `<div style="color:#666;font-size:0.9rem;margin-top:0.3rem;">ملاحظات: ${escapeHtml(ach.notes)}</div>` : ''}
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+window.addPointsForAchievement = async function(sid, achId) {
+    const pts = prompt('أدخل عدد النقاط لإضافتها لهذا الإنجاز:', '5');
+    if (pts === null) return;
+    const num = parseInt(pts);
+    if (isNaN(num) || num <= 0) { showToast('❌ أدخل عدداً صحيحاً موجباً', false); return; }
+    const reason = prompt('سبب الإضافة (اختياري):', 'إنجاز ممتاز');
+    const s = findStudentById(sid);
+    if (!s) { showToast('❌ لم يتم العثور على الطالب', false); return; }
+    const now = getSecureDate();
+    const ds = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+    if (!s.pointsLog) s.pointsLog = [];
+    s.points = (s.points||0) + num;
+    s.pointsLog.push({type:'add', pts:num, note: reason || 'إضافة نقاط من الإنجاز', date: ds, ts: now.getTime()});
+    await updateStudentPointsInFirebase(sid, s);
+    bumpLifetimePoints(sid, num);
+    // إعادة تحميل سجل النقاط
+    renderAchievementPointsLog(sid);
+    // تحديث النقاط في الجدول
+    const disp = document.getElementById('pts_display_'+sid);
+    if(disp) disp.textContent='⭐ '+s.points;
+    showToast(`✅ تم إضافة ${num} نقطة`, true);
+};
+
+window.deleteAchievement = async function(sid, achId) {
+    if (!confirm('حذف هذا الإنجاز نهائياً؟')) return;
+    try {
+        await set(ref(db, `achievements/${sid}/${achId}`), null);
+        // تحديث القائمة
+        if (window._achievementsData && window._achievementsData[sid]) {
+            delete window._achievementsData[sid][achId];
+        }
+        renderAchievementsList(sid, '');
+        renderPendingBadges();
+        showToast('✅ تم حذف الإنجاز', true);
+    } catch(e) {
+        showToast('❌ خطأ في الحذف', false);
+    }
+};
+
+function renderAchievementPointsLog(sid) {
+    const container = document.getElementById('achievementPointsLog');
+    if (!container) return;
+    const s = findStudentById(sid);
+    if (!s) { container.innerHTML = '<div style="color:#aaa;text-align:center;">لا توجد بيانات</div>'; return; }
+    const log = s.pointsLog || [];
+    if (log.length === 0) {
+        container.innerHTML = '<div style="color:#aaa;text-align:center;">لا توجد سجلات نقاط</div>';
+        return;
+    }
+    let html = `<div style="text-align:center;background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid #D4AF37;border-radius:8px;padding:8px;margin-bottom:10px;"><div style="color:#888;font-size:0.9rem;">إجمالي النقاط</div><div style="font-size:1.6rem;font-weight:900;color:#D4AF37;">⭐ ${s.points||0}</div></div>`;
+    const reversed = [...log].reverse();
+    reversed.slice(0, 15).forEach(entry => {
+        const isAdd = ['add', 'wird', 'bonus'].includes(entry.type);
+        const col = isAdd ? '#28a745' : '#dc3545';
+        const icon = isAdd ? '➕' : '➖';
+        html += `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:#f8f9fa;border-radius:6px;margin-bottom:4px;font-size:0.95rem;"><span>${icon}</span><span style="font-weight:700;color:${col};">${isAdd?'+':'-'}${entry.pts}</span><span style="flex:1;color:#444;">${escapeHtml(entry.note||'—')}</span><span style="color:#999;font-size:0.8rem;">${entry.date||''}</span></div>`;
+    });
+    container.innerHTML = html;
+}
+
+// إضافة مستمع للتحديث الفوري للإنجازات
+onValue(ref(db, 'achievements'), (snap) => {
+    window._achievementsData = snap.exists() ? snap.val() : {};
+    renderPendingBadges();
+    // إذا كانت نافذة عرض الإنجازات مفتوحة، نحدّثها
+    const modal = document.getElementById('achievementsViewModal');
+    if (modal && modal.style.display !== 'none') {
+        // نبحث عن الـ sid من العنوان
+        const title = modal.querySelector('h3');
+        if (title) {
+            const match = title.textContent.match(/إنجازات: (.*)/);
+            if (match && match[1]) {
+                const sname = match[1].trim();
+                // نبحث عن الـ sid من الاسم
+                let sid = null;
+                for (const g of data) {
+                    for (const st of g.stickers) {
+                        for (const s of st.students) {
+                            if (s.name === sname) { sid = s.id; break; }
+                        }
+                        if (sid) break;
+                    }
+                    if (sid) break;
+                }
+                if (sid) {
+                    renderAchievementsList(sid, sname);
+                    renderAchievementPointsLog(sid);
+                }
+            }
+        }
+    }
+});
+
+// ============================================================
+console.log("✅ النظام جاهز للعمل مع الاختبارات والمسابقات ونظام الإنجازات الجديد");
 </script>
 </body>
 </html>

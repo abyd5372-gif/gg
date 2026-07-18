@@ -1762,6 +1762,7 @@ window.addAchItemRow = function() {
     row.innerHTML = `
         <input type="text" class="ach-item-name" placeholder="اسم الواجب (اتركه فارغاً إن كانت إعادة)" style="flex:2;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
         <select class="ach-item-status" style="flex:1;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
+            <option value="" selected disabled>-- اختر الحالة --</option>
             <option value="first_time">✅ ناجح من أول مرة</option>
             <option value="pass">✔️ ناجح</option>
             <option value="repeat">🔁 إعادة</option>
@@ -1795,10 +1796,11 @@ window.submitAchievementReport = async function() {
     rows.forEach(row => {
         const name = row.querySelector('.ach-item-name').value.trim();
         const status = row.querySelector('.ach-item-status').value;
+        if(!status) { hasError = true; return; }
         if(!name && status !== 'repeat') { hasError = true; return; }
         items.push({ name, status, statusLabel: ACH_STATUS_LABELS[status] || '' });
     });
-    if(hasError) { showToast('❌ الرجاء إدخال اسم الواجب، أو اختيار "إعادة" إن لم يكن هناك اسم', false); return; }
+    if(hasError) { showToast('❌ الرجاء اختيار حالة كل واجب، وإدخال اسمه إن لم تكن "إعادة"', false); return; }
     if(!items.length) { showToast('❌ الرجاء إدخال واجب واحد على الأقل', false); return; }
     const notes = (document.getElementById('achNotesInput').value || '').trim();
     const now = getSecureDate();
@@ -2633,7 +2635,6 @@ window.removeExamCoverImage = function(i) {
 function renderExamsList() {
     const container = document.getElementById('examsContainer');
     if (!container) return;
-    _examFontSize = 16;
     if (exams.length === 0) {
         container.innerHTML = `
             <div style="text-align:center;padding:3rem 1rem;color:#888;">
@@ -2712,9 +2713,8 @@ function renderExamsList() {
         `;
     });
     container.innerHTML = html;
+    applyExamFontSize();
 }
-
-window.openExamEditor = function(examId = null) {
     if (role !== 'admin') { showToast('❌ صلاحيات المدير فقط', false); return; }
     const modal = document.getElementById('modalExamEditor');
     modal.style.display = 'flex';
@@ -2982,6 +2982,7 @@ window.startExam = function(examId) {
     `;
     container.innerHTML = html;
     window._currentSolvingExamId = examId;
+    applyExamFontSize();
 };
 
 window.submitExamAnswers = async function(examId) {
@@ -3081,19 +3082,23 @@ window.submitExamAnswers = async function(examId) {
     renderExamsList();
 };
 
-var _examFontSize = 16;
-window.changeExamFont = function(delta) {
-    if (delta === 0) {
-        _examFontSize = 16;
-    } else {
-        _examFontSize = Math.max(6, Math.min(64, _examFontSize + delta));
-    }
+var _examFontSize = parseInt(localStorage.getItem('examFontSize_v1')) || 16;
+function applyExamFontSize() {
     const container = document.getElementById('examsContainer');
     if (!container) return;
     container.style.fontSize = _examFontSize + 'px';
     container.querySelectorAll('.question-text, .option-item, .exam-desc, .exam-title, .exam-card, label:not(.button), textarea, .question-card').forEach(el => {
         el.style.fontSize = _examFontSize + 'px';
     });
+}
+window.changeExamFont = function(delta) {
+    if (delta === 0) {
+        _examFontSize = 16;
+    } else {
+        _examFontSize = Math.max(6, Math.min(64, _examFontSize + delta));
+    }
+    localStorage.setItem('examFontSize_v1', _examFontSize);
+    applyExamFontSize();
 };
 
 window.previewEssayImage = function(input, idx) {
@@ -3158,6 +3163,9 @@ window.gradeSubmission = function(examId, submissionIndex) {
     sub.answers.forEach((ans, idx) => {
         const q = exam.questions[ans.questionIndex];
         const pts = q ? (q.points||10) : 10;
+        const currentScore = ans.type === 'multiple'
+            ? (ans.manualScore !== undefined ? ans.manualScore : (ans.isCorrect ? pts : 0))
+            : (ans.score !== null && ans.score !== undefined ? ans.score : 0);
         if (ans.type === 'multiple') {
             const selOpt = ans.selected >= 0 && q.options[ans.selected] ? q.options[ans.selected].text : 'لم يختر';
             const correctOpts = q.options.filter(o=>o.isCorrect).map(o=>o.text).join(' / ');
@@ -3165,11 +3173,9 @@ window.gradeSubmission = function(examId, submissionIndex) {
                 <div style="font-weight:600;margin-bottom:0.3rem;">س: ${escapeHtml(q?q.text:'')}</div>
                 <div>إجابة الطالب: <strong style="color:${ans.isCorrect?'#28a745':'#dc3545'};">${escapeHtml(selOpt)}</strong> ${ans.isCorrect?'✅':'❌'}</div>
                 <div style="font-size:0.85rem;color:#555;">الإجابة الصحيحة: <strong>${escapeHtml(correctOpts)}</strong></div>
-                <div style="font-size:0.85rem;margin-top:0.3rem;">النقاط: <strong style="color:${ans.isCorrect?'#28a745':'#dc3545'};">${ans.isCorrect?pts:0} / ${pts}</strong></div>
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.4rem;">
-                    <label style="font-size:0.85rem;">تعديل الدرجة:</label>
-                    <input type="number" id="mcScore_${idx}" min="0" max="${pts}" value="${ans.isCorrect?pts:0}" style="width:80px;padding:0.2rem;">
-                    <button onclick="saveMCScore('${examId}',${submissionIndex},${idx})" class="button small gold">حفظ</button>
+                    <label style="font-size:0.85rem;">الدرجة (من ${pts}):</label>
+                    <input type="number" class="grade-score-input" data-idx="${idx}" data-max="${pts}" min="0" max="${pts}" value="${currentScore}" style="width:80px;padding:0.2rem;" oninput="updateGradingTotal()">
                 </div>
             </div>`;
         } else {
@@ -3179,22 +3185,14 @@ window.gradeSubmission = function(examId, submissionIndex) {
                 ${ans.imageUrl ? `<div style="margin:0.4rem 0;"><img src="${escapeHtml(ans.imageUrl)}" style="max-width:200px;max-height:150px;border-radius:6px;border:1px solid #ddd;cursor:pointer;" onclick="window.open('${escapeHtml(ans.imageUrl)}','_blank')" title="انقر لعرض بالحجم الكامل"></div>` : ''}
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.4rem;">
                     <label style="font-size:0.85rem;">الدرجة (من ${pts}):</label>
-                    <input type="number" id="essayScore_${idx}" min="0" max="${pts}" value="${ans.score !== null && ans.score !== undefined ? ans.score : ''}" style="width:80px;padding:0.2rem;">
-                    <button onclick="saveEssayScore('${examId}',${submissionIndex},${idx})" class="button small gold">حفظ</button>
+                    <input type="number" class="grade-score-input" data-idx="${idx}" data-max="${pts}" min="0" max="${pts}" value="${currentScore}" style="width:80px;padding:0.2rem;" oninput="updateGradingTotal()">
                 </div>
             </div>`;
         }
     });
-    html += `<div style="margin-top:1rem;background:#e3f2fd;padding:0.8rem;border-radius:8px;">
-        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-            <label style="font-weight:700;">إجمالي الدرجة النهائية (يدوي):</label>
-            <input type="number" id="finalScoreInput" min="0" max="${totalMax}" value="${sub.score||0}" style="width:100px;padding:0.3rem;">
-            <span style="color:#666;font-size:0.85rem;">/ ${totalMax} نقطة</span>
-            <button onclick="saveFinalScore('${examId}',${submissionIndex})" class="button gold"><i class="fas fa-save"></i> حفظ الإجمالي</button>
-        </div>
-    </div>
-    <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem;">
-        <button onclick="autoCalculateTotal('${examId}',${submissionIndex})" class="button" style="background:#2196F3;color:white;"><i class="fas fa-calculator"></i> احتساب تلقائي</button>
+    html += `<div id="gradingTotalBox" style="margin-top:1rem;background:#e3f2fd;padding:0.8rem;border-radius:8px;text-align:center;font-weight:700;font-size:1.05rem;">المجموع: <span id="gradingTotalVal">0</span> / ${totalMax}</div>`;
+    html += `<div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button onclick="saveWholeGrading('${examId}',${submissionIndex})" class="button gold"><i class="fas fa-save"></i> حفظ التصحيح</button>
         <button onclick="closeGradingModal()" class="button danger">إغلاق</button>
     </div>`;
     html += `</div>`;
@@ -3203,74 +3201,48 @@ window.gradeSubmission = function(examId, submissionIndex) {
     modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:flex-start;justify-content:center;z-index:10004;display:flex;padding:1rem;overflow-y:auto;';
     modal.innerHTML = `<div style="background:#fff;border-radius:12px;padding:1.5rem;width:95%;max-width:700px;margin:auto;direction:rtl;">${html}</div>`;
     document.body.appendChild(modal);
+    updateGradingTotal();
 };
 
 window.closeGradingModal = function() { const el = document.getElementById('gradingModal'); if(el) el.remove(); };
 
-window.saveMCScore = function(examId, subIdx, ansIdx) {
-    const exam = exams.find(e => e.id === examId); if(!exam) return;
-    const sub = exam.submissions[subIdx]; if(!sub) return;
-    const inp = document.getElementById(`mcScore_${ansIdx}`); if(!inp) return;
-    const q = exam.questions[sub.answers[ansIdx].questionIndex];
-    const maxPts = q ? (q.points||10) : 10;
-    const val = Math.min(maxPts, Math.max(0, parseFloat(inp.value)||0));
-    sub.answers[ansIdx].isCorrect = val > 0;
-    sub.answers[ansIdx].manualScore = val;
-    saveExamsToFirebase();
-    showToast('✅ تم حفظ الدرجة', true);
+window.updateGradingTotal = function() {
+    const inputs = document.querySelectorAll('#gradingModal .grade-score-input');
+    let total = 0;
+    inputs.forEach(inp => {
+        const max = parseFloat(inp.dataset.max) || 0;
+        let val = parseFloat(inp.value);
+        if (isNaN(val)) val = 0;
+        total += Math.min(max, Math.max(0, val));
+    });
+    const totalEl = document.getElementById('gradingTotalVal');
+    if (totalEl) totalEl.textContent = total;
 };
 
-window.saveEssayScore = function(examId, subIdx, ansIdx) {
+window.saveWholeGrading = function(examId, submissionIndex) {
     const exam = exams.find(e => e.id === examId); if(!exam) return;
-    const sub = exam.submissions[subIdx]; if(!sub) return;
-    const q = exam.questions[sub.answers[ansIdx].questionIndex];
-    const maxPts = q ? (q.points||10) : 10;
-    const inp = document.getElementById(`essayScore_${ansIdx}`); if(!inp) return;
-    const val = Math.min(maxPts, Math.max(0, parseFloat(inp.value)||0));
-    sub.answers[ansIdx].score = val;
-    sub.graded = true;
-    saveExamsToFirebase();
-    showToast('✅ تم حفظ الدرجة', true);
-};
-
-window.saveFinalScore = function(examId, subIdx) {
-    const exam = exams.find(e => e.id === examId); if(!exam) return;
-    const sub = exam.submissions[subIdx]; if(!sub) return;
-    const totalMax = sub.totalMax || exam.questions.reduce((s,q)=>s+(q.points||10),0);
-    const inp = document.getElementById('finalScoreInput'); if(!inp) return;
-    const val = Math.min(totalMax, Math.max(0, parseFloat(inp.value)||0));
-    sub.score = val;
-    sub.autoScore = val;
-    sub.autoMax = totalMax;
-    sub.graded = true;
-    saveExamsToFirebase();
-    showToast('✅ تم حفظ الإجمالي', true);
-    if (document.getElementById('modalExamResults').style.display === 'flex') viewExamResults(examId);
-};
-
-window.autoCalculateTotal = function(examId, subIdx) {
-    const exam = exams.find(e => e.id === examId); if(!exam) return;
-    const sub = exam.submissions[subIdx]; if(!sub) return;
+    const sub = exam.submissions[submissionIndex]; if(!sub) return;
+    const inputs = document.querySelectorAll('#gradingModal .grade-score-input');
     let total = 0, maxTotal = 0;
-    sub.answers.forEach((ans, idx) => {
-        const q = exam.questions[ans.questionIndex];
-        const pts = q ? (q.points||10) : 10;
-        maxTotal += pts;
-        if (ans.type === 'multiple') {
-            total += (ans.manualScore !== undefined ? ans.manualScore : (ans.isCorrect ? pts : 0));
-        } else {
-            total += (ans.score || 0);
-        }
+    inputs.forEach(inp => {
+        const idx = parseInt(inp.dataset.idx);
+        const max = parseFloat(inp.dataset.max) || 0;
+        let val = parseFloat(inp.value);
+        if (isNaN(val)) val = 0;
+        val = Math.min(max, Math.max(0, val));
+        const ans = sub.answers[idx];
+        if (ans.type === 'multiple') { ans.manualScore = val; ans.isCorrect = val >= max; }
+        else { ans.score = val; }
+        total += val; maxTotal += max;
     });
     sub.autoScore = total;
     sub.autoMax = maxTotal;
     sub.totalMax = maxTotal;
-    sub.score = Math.round((total/maxTotal)*100);
+    sub.score = maxTotal > 0 ? Math.round((total/maxTotal)*100) : 0;
     sub.graded = true;
     saveExamsToFirebase();
-    const inp = document.getElementById('finalScoreInput');
-    if (inp) inp.value = total;
-    showToast(`✅ المجموع: ${total}/${maxTotal} (${sub.score}%)`, true);
+    showToast(`✅ تم حفظ التصحيح: ${total}/${maxTotal}`, true);
+    closeGradingModal();
     if (document.getElementById('modalExamResults').style.display === 'flex') viewExamResults(examId);
 };
 

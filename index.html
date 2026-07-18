@@ -1,30 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <script>
-    (function(){
-        function showErr(msg){
-            var b = document.getElementById('_diagErrBanner');
-            if(!b){
-                b = document.createElement('div');
-                b.id = '_diagErrBanner';
-                b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999999;background:#c0392b;color:#fff;padding:10px;font-size:12px;direction:ltr;text-align:left;white-space:pre-wrap;max-height:45vh;overflow-y:auto;font-family:monospace;box-shadow:0 2px 10px rgba(0,0,0,0.5);';
-                (document.body || document.documentElement).appendChild(b);
-            }
-            var line = document.createElement('div');
-            line.style.cssText = 'border-top:1px solid rgba(255,255,255,0.35);padding-top:4px;margin-top:4px;';
-            line.textContent = msg;
-            b.appendChild(line);
-        }
-        window.addEventListener('error', function(e){
-            showErr('JS Error: ' + e.message + '  @  ' + (e.filename||'') + ':' + (e.lineno||'') + ':' + (e.colno||''));
-        });
-        window.addEventListener('unhandledrejection', function(e){
-            var r = e.reason;
-            showErr('Unhandled Promise Rejection: ' + (r && r.message ? r.message : r));
-        });
-    })();
-    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1100, user-scalable=no">
     <meta property="og:title" content="حلقات مسجد إبراهيم الحاج حسن">
@@ -2739,6 +2715,8 @@ function renderExamsList() {
     container.innerHTML = html;
     applyExamFontSize();
 }
+
+window.openExamEditor = function(examId = null) {
     if (role !== 'admin') { showToast('❌ صلاحيات المدير فقط', false); return; }
     const modal = document.getElementById('modalExamEditor');
     modal.style.display = 'flex';

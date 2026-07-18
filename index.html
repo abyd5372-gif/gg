@@ -367,6 +367,24 @@
         @media screen and (max-width: 75rem) { body { overflow-x: auto; } .container { padding: 0.625rem; margin: 0.3125rem auto; } .table-wrap { overflow-x: hidden; } table { min-width: 100%; } }
         @media screen and (max-width: 48rem) { body { padding: 0.5rem; overflow-x: auto; min-width: 68.75rem; } .container { padding: 0.5rem; margin: 0.125rem auto; min-width: 68.75rem; } .header { font-size: 1.7rem; padding: 0.9375rem 0; flex-direction: column; } .header-logo { height: 7.5rem; width: 7.5rem; } .homework-editable { min-height: 4rem; } .messages-box { padding: 0.9375rem; font-size: 1rem; } .group-title { font-size: 1.3rem !important; } .sticker-title { font-size: 1.1rem !important; } }
         @media screen and (max-width: 30rem) { body { padding: 0.3125rem; overflow-x: auto; min-width: 68.75rem; } .container { padding: 0.375rem; min-width: 68.75rem; } .header { font-size: 1.4rem; } .header-logo { height: 6.25rem; width: 6.25rem; } table { min-width: 100%; } th, td { padding: 0.375rem; font-size: 0.8rem; } .button { padding: 0.375rem 0.5rem; font-size: 0.8rem; } }
+        /* ===== خط أكبر وأوضح لنافذتي "تسجيل الإنجاز" و"قراءة الإنجاز" ===== */
+        #modalReportActivity, #modalTransferActivities { font-size: 1.25rem; }
+        #modalReportActivity h3, #modalTransferActivities h3 { font-size: 1.55rem !important; }
+        #modalReportActivity h4, #modalTransferActivities h4 { font-size: 1.3rem !important; }
+        #modalReportActivity label, #modalTransferActivities label { font-size: 1.15rem !important; }
+        #modalReportActivity input, #modalReportActivity select, #modalReportActivity textarea,
+        #modalTransferActivities input, #modalTransferActivities select, #modalTransferActivities textarea { font-size: 1.15rem !important; padding: 0.55rem 0.7rem !important; }
+        #modalReportActivity .button, #modalTransferActivities .button,
+        #modalReportActivity button, #modalTransferActivities button { font-size: 1.05rem !important; }
+        #modalReportActivity .ach-item-row, #modalTransferActivities .ach-item-row,
+        #modalReportActivity .ta-edit-item-row, #modalTransferActivities .ta-edit-item-row { font-size: 1.15rem; }
+        #modalTransferActivities .pending-item, #modalReportActivity .pending-item { font-size: 1.15rem !important; }
+        #modalTransferActivities .pending-item .pi-date, #modalReportActivity .pending-item .pi-date { font-size: 1.05rem !important; }
+        #modalTransferActivities .history-item, #modalReportActivity .history-item { font-size: 1.1rem !important; }
+        #modalTransferActivities .history-date, #modalReportActivity .history-date { font-size: 1.05rem !important; }
+        #modalTransferActivities .history-val, #modalReportActivity .history-val { font-size: 1.2rem !important; }
+        #transferActivitiesList, #achItemsContainer, #taPointsContent, #taHomeworkContent, #reportActivitySentList { font-size: 1.15rem; }
+        #transferActivitiesList *, #reportActivitySentList * { font-size: inherit; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -465,7 +483,7 @@
 <div id="modalMessageBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:500px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 8px 0"><i class="fas fa-edit"></i> تعديل الرسالة الحالية</h3><div style="display:flex;flex-direction:column;gap:8px"><textarea id="modalMessageText" placeholder="نص الرسالة..." rows="4" style="width:100%;resize:vertical"></textarea><div style="display:flex;gap:8px;justify-content:flex-end"><button id="modalMessageCancel" class="button danger"><i class="fas fa-times"></i> إلغاء</button><button id="modalMessageSave" class="button"><i class="fas fa-save"></i> حفظ</button></div></div></div></div>
 <div id="modalMoveBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:420px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 8px 0"><i class="fas fa-exchange-alt"></i> نقل الطالب</h3><div style="display:flex;flex-direction:column;gap:8px"><div id="moveCurrentStudentInfo" style="padding:8px;background:#f5f5f5;border-radius:6px;border:1px solid #ddd"></div><div><label style="font-weight:600;display:block;margin-bottom:4px">المجموعة الهدف:</label><select id="modalTargetGroup" style="width:100%"></select></div><div><label style="font-weight:600;display:block;margin-bottom:4px">الستكر الهدف:</label><select id="modalTargetSticker" style="width:100%"></select></div><div style="display:flex;gap:8px;justify-content:flex-end"><button id="modalMoveCancel" class="button danger"><i class="fas fa-times"></i> إلغاء</button><button id="modalMoveSave" class="button" style="background:#9C27B0;"><i class="fas fa-exchange-alt"></i> نقل</button></div></div></div></div>
 <div id="modalHistoryBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999"><div style="background:#fff;padding:14px;border-radius:10px;width:450px;max-width:95%;direction:rtl;text-align:right"><h3 style="margin:0 0 12px 0; color:var(--accent)"><i class="fas fa-history"></i> سجل التعديلات</h3><div id="historyContent" class="history-list"></div><div style="margin-top:12px;text-align:center"><button onclick="document.getElementById('modalHistoryBackdrop').style.display='none'" class="button small ghost">إغلاق</button></div></div></div>
-<div id="modalReportActivity" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:520px;max-height:85vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="reportActivityTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-clipboard-check"></i> تسجيل الإنجاز</h3><button onclick="closeReportActivityModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="margin-bottom:0.75rem;"><label style="font-weight:700;color:#555;font-size:0.9rem;">الواجبات المنجزة:</label><div id="achItemsContainer" style="margin-top:0.5rem;"></div><button type="button" onclick="addAchItemRow()" class="button small ghost" style="margin-top:4px;"><i class="fas fa-plus"></i> إضافة واجب آخر</button></div><div style="margin-bottom:1rem;"><label style="font-weight:700;color:#555;font-size:0.9rem;">ملاحظات:</label><textarea id="achNotesInput" placeholder="أي ملاحظات إضافية..." style="width:100%;min-height:70px;margin-top:0.4rem;padding:8px 10px;border:1px solid #ccc;border-radius:7px;font-family:inherit;resize:vertical;"></textarea></div><button onclick="submitAchievementReport()" class="button" style="width:100%;background:#28a745;font-size:1.05rem;"><i class="fas fa-paper-plane"></i> إرسال</button></div></div>
+<div id="modalReportActivity" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:95%;max-width:560px;max-height:88vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="reportActivityTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-clipboard-check"></i> تسجيل الإنجاز</h3><button onclick="closeReportActivityModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div id="achEditNotice" style="display:none;background:#fff3cd;border:1px solid #ffc107;color:#8a6d00;border-radius:8px;padding:8px 10px;margin-bottom:0.75rem;font-weight:700;"><i class="fas fa-edit"></i> أنت الآن تعدّل إنجازاً سابقاً</div><div style="margin-bottom:0.75rem;"><label style="font-weight:700;color:#555;font-size:0.9rem;">الواجبات المنجزة:</label><div id="achItemsContainer" style="margin-top:0.5rem;"></div><button type="button" onclick="addAchItemRow()" class="button small ghost" style="margin-top:4px;"><i class="fas fa-plus"></i> إضافة واجب آخر</button></div><div style="margin-bottom:1rem;"><label style="font-weight:700;color:#555;font-size:0.9rem;">ملاحظات:</label><textarea id="achNotesInput" placeholder="أي ملاحظات إضافية..." style="width:100%;min-height:70px;margin-top:0.4rem;padding:8px 10px;border:1px solid #ccc;border-radius:7px;font-family:inherit;resize:vertical;"></textarea></div><div style="display:flex;gap:8px;"><button id="achSubmitBtn" onclick="submitAchievementReport()" class="button" style="flex:1;background:#28a745;font-size:1.05rem;"><i class="fas fa-paper-plane"></i> إرسال</button><button id="achCancelEditBtn" onclick="cancelEditAchievement()" class="button small ghost" style="display:none;"><i class="fas fa-times"></i> إلغاء التعديل</button></div><div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid #eee;"><h4 style="margin:0 0 .6rem 0;color:#2E7D32;"><i class="fas fa-clipboard-list"></i> الإنجاز المُرسل لهذا الطالب</h4><div id="reportActivitySentList"><div style="text-align:center;color:#aaa;padding:1rem;">لا يوجد إنجاز مُرسل بعد.</div></div></div></div></div>
 <div id="modalTransferActivities" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:97%;max-width:820px;max-height:92vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="transferActivitiesTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-clipboard-check"></i> قراءة الإنجاز</h3><button onclick="closeTransferActivitiesModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="background:#fff8e1;border:1px solid #f0dfa0;border-radius:8px;padding:10px;margin-bottom:1rem;"><h4 style="margin:0 0 .6rem 0;color:#8a6d00;"><i class="fas fa-star"></i> إضافة / حذف نقاط</h4><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><input id="taPtsAmt" type="number" min="1" max="9999" placeholder="العدد" style="width:80px;padding:6px 9px;border:1.5px solid #c3e6cb;border-radius:7px;text-align:center;"><input id="taPtsNote" type="text" placeholder="السبب" style="flex:1;min-width:150px;padding:6px 9px;border:1.5px solid #ddd;border-radius:7px;"><button onclick="taInlineAddPts()" class="button small" style="background:#28a745;">إضافة ✚</button><button onclick="taInlineRemPts()" class="button small danger">حذف ✖</button></div></div><div style="margin-bottom:1rem;"><h4 style="margin:0 0 .6rem 0;"><i class="fas fa-clipboard-check"></i> الإنجاز المسجل من المشرف</h4><div id="transferActivitiesList"></div></div><button type="button" id="taLogToggleBtn" onclick="toggleTaLog()" class="button small ghost" style="margin-bottom:1rem;"><i class="fas fa-folder-open"></i> عرض السجل الكامل (الواجبات والنقاط)</button><div id="taLogSection" style="display:none;"><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;min-width:260px;"><h4 style="margin:0 0 .5rem 0;color:#2E7D32;"><i class="fas fa-book"></i> سجل الواجبات</h4><div id="taHomeworkContent"></div></div><div style="flex:1;min-width:260px;border-right:1px solid #eee;padding-right:1rem;"><h4 style="margin:0 0 .5rem 0;color:#b8860b;"><i class="fas fa-history"></i> سجل النقاط</h4><div id="taPointsContent"></div></div></div></div></div></div>
 <div id="modalCombinedRecord" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:10004;padding:1rem;"><div style="background:#fff;border-radius:14px;width:97%;max-width:920px;max-height:92vh;overflow-y:auto;direction:rtl;padding:1.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;"><h3 id="combinedRecordTitle" style="color:var(--accent);margin:0;font-size:1.05rem;"><i class="fas fa-folder-open"></i> سجل الطالب</h3><button onclick="closeCombinedRecordModal()" class="button small ghost"><i class="fas fa-times"></i></button></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div style="flex:1;min-width:280px;"><h4 style="margin:0 0 .5rem 0;color:#2E7D32;"><i class="fas fa-book"></i> سجل الواجبات</h4><div id="combinedHomeworkContent" class="combined-record-list"></div></div><div style="flex:1;min-width:280px;border-right:1px solid #eee;padding-right:1rem;"><h4 style="margin:0 0 .5rem 0;color:#b8860b;"><i class="fas fa-star"></i> سجل النقاط</h4><div id="combinedPointsContent" class="combined-record-list"></div></div></div></div></div>
 <div id="studentProfileModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:9999;padding:1rem;"><div class="student-profile-modal"><div id="studentProfileContent"></div></div></div>
@@ -630,6 +648,9 @@ let pendingActivities = {};
 let currentReportStudentId = null, currentReportStudentName = null;
 let currentTransferStudentId = null, currentTransferStudentName = null;
 let transferActivitiesLiveUnsub = null;
+let reportActivityLiveUnsub = null;
+let currentEditAchEntryId = null;
+let taEditingEntryId = null;
 let currentCombinedRecordStudentId = null;
 let renderTimeout = null, messageIndex = 0, messageTimer = null;
 let currentLogStudentId = null, currentMoveData = null, currentEdit = null;
@@ -1138,7 +1159,7 @@ function render(){
                 }
                 tr.appendChild(numTd);
                 const nameTd=document.createElement('td'); nameTd.style.textAlign='right'; const nameWrap=document.createElement('div'); nameWrap.style.cssText='display:flex;align-items:center;gap:6px;flex-wrap:nowrap;justify-content:flex-end;'; const link=document.createElement('a'); link.href='javascript:void(0)'; link.className='student-name-link'; link.innerHTML=escapeHtml(s.name); link.onclick=()=>openStudentProfile(s.id); nameWrap.appendChild(link);
-                if(role==='admin'||role==='manager'){ const recBtn=document.createElement('button'); recBtn.className='button small ghost'; recBtn.style.cssText='padding:2px 7px;font-size:0.75rem;flex-shrink:0;'; recBtn.title='سجل الواجبات والنقاط'; recBtn.innerHTML='<i class="fas fa-folder-open"></i>'; recBtn.onclick=()=>openCombinedRecordModal(sid); nameWrap.appendChild(recBtn); }
+                if(role==='admin'){ const recBtn=document.createElement('button'); recBtn.className='button small ghost'; recBtn.style.cssText='padding:2px 7px;font-size:0.75rem;flex-shrink:0;'; recBtn.title='سجل الواجبات والنقاط'; recBtn.innerHTML='<i class="fas fa-folder-open"></i>'; recBtn.onclick=()=>openCombinedRecordModal(sid); nameWrap.appendChild(recBtn); }
                 nameTd.appendChild(nameWrap);
                 tr.appendChild(nameTd);
                 if(currentView==='grades'){
@@ -1780,13 +1801,83 @@ function resetAchievementForm() {
 }
 window.openReportActivityModal = function(sid, sname) {
     currentReportStudentId = sid; currentReportStudentName = sname;
+    currentEditAchEntryId = null;
     document.getElementById('reportActivityTitle').innerHTML = `<i class="fas fa-clipboard-check"></i> تسجيل الإنجاز: ${escapeHtml(sname)}`;
+    document.getElementById('achEditNotice').style.display = 'none';
+    document.getElementById('achCancelEditBtn').style.display = 'none';
+    document.getElementById('achSubmitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> إرسال';
     resetAchievementForm();
+    document.getElementById('reportActivitySentList').innerHTML = '<div style="text-align:center;color:#aaa;padding:1rem;"><i class="fas fa-spinner fa-spin"></i> تحميل...</div>';
     document.getElementById('modalReportActivity').style.display = 'flex';
+    history.pushState({ modal: 'reportActivity' }, '', '#reportActivity');
+    if (reportActivityLiveUnsub) { reportActivityLiveUnsub(); reportActivityLiveUnsub = null; }
+    reportActivityLiveUnsub = onValue(ref(db, `pendingActivities/${sid}`), (snap) => {
+        const val = snap.exists() ? snap.val() : null;
+        if (val) pendingActivities[sid] = val; else delete pendingActivities[sid];
+        renderReportActivitySentList();
+        renderPendingBadges();
+    }, (err) => { console.warn('تعذر تتبع الإنجاز المرسل لهذا الطالب', err); });
 };
 window.closeReportActivityModal = function() {
     document.getElementById('modalReportActivity').style.display = 'none';
-    currentReportStudentId = null; currentReportStudentName = null;
+    currentReportStudentId = null; currentReportStudentName = null; currentEditAchEntryId = null;
+    if (reportActivityLiveUnsub) { reportActivityLiveUnsub(); reportActivityLiveUnsub = null; }
+    if (history.state?.modal === 'reportActivity') history.back();
+};
+function renderReportActivitySentList() {
+    if(!currentReportStudentId) return;
+    const el = document.getElementById('reportActivitySentList');
+    if(!el) return;
+    const entries = pendingActivities[currentReportStudentId] || {};
+    const ids = Object.keys(entries);
+    if(!ids.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1rem;">لا يوجد إنجاز مُرسل بعد.</div>'; return; }
+    const sorted = ids.map(id => ({id, ...entries[id]})).sort((a,b) => (b.ts||0) - (a.ts||0));
+    const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'} };
+    let html = '';
+    sorted.forEach(entry => {
+        const dl = getSmartDateLabel(entry.date, entry.ts);
+        const itemsHtml = (entry.items||[]).map(it => {
+            const st = statusStyle[it.status] || {icon:'', color:'#333'};
+            return `<div style="display:flex;justify-content:space-between;gap:8px;padding:3px 0;"><span>${escapeHtml(it.name || '(بدون اسم - إعادة)')}</span><span style="color:${st.color};font-weight:700;white-space:nowrap;">${st.icon} ${escapeHtml(it.statusLabel||'')}</span></div>`;
+        }).join('');
+        html += `<div class="pending-item" style="flex-direction:column;align-items:stretch;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span class="pi-date ${dl.isToday ? 'is-today' : ''}">${dl.label}</span>
+                <button class="button small" style="background:#2196F3;" onclick="editAchievementEntryFromReport('${entry.id}')" title="تعديل"><i class="fas fa-edit"></i> تعديل</button>
+            </div>
+            ${itemsHtml}
+            ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;">${escapeHtml(entry.notes)}</div>` : ''}
+        </div>`;
+    });
+    el.innerHTML = html;
+}
+window.editAchievementEntryFromReport = function(entryId) {
+    const entries = pendingActivities[currentReportStudentId] || {};
+    const entry = entries[entryId];
+    if(!entry) { showToast('❌ لم يتم العثور على هذا الإنجاز', false); return; }
+    currentEditAchEntryId = entryId;
+    const container = document.getElementById('achItemsContainer');
+    container.innerHTML = '';
+    (entry.items||[]).forEach(it => {
+        addAchItemRow();
+        const rows = container.querySelectorAll('.ach-item-row');
+        const row = rows[rows.length-1];
+        row.querySelector('.ach-item-name').value = it.name || '';
+        row.querySelector('.ach-item-status').value = it.status || '';
+    });
+    if(!container.querySelector('.ach-item-row')) addAchItemRow();
+    document.getElementById('achNotesInput').value = entry.notes || '';
+    document.getElementById('achEditNotice').style.display = 'block';
+    document.getElementById('achCancelEditBtn').style.display = 'inline-block';
+    document.getElementById('achSubmitBtn').innerHTML = '<i class="fas fa-save"></i> حفظ التعديل';
+    document.getElementById('modalReportActivity').scrollTop = 0;
+};
+window.cancelEditAchievement = function() {
+    currentEditAchEntryId = null;
+    resetAchievementForm();
+    document.getElementById('achEditNotice').style.display = 'none';
+    document.getElementById('achCancelEditBtn').style.display = 'none';
+    document.getElementById('achSubmitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> إرسال';
 };
 window.submitAchievementReport = async function() {
     if(!currentReportStudentId) return;
@@ -1803,19 +1894,28 @@ window.submitAchievementReport = async function() {
     if(hasError) { showToast('❌ الرجاء اختيار حالة كل واجب، وإدخال اسمه إن لم تكن "إعادة"', false); return; }
     if(!items.length) { showToast('❌ الرجاء إدخال واجب واحد على الأقل', false); return; }
     const notes = (document.getElementById('achNotesInput').value || '').trim();
-    const now = getSecureDate();
-    const entryId = generateUniqueId();
-    const entry = {
-        items,
-        notes,
-        date: now.toLocaleDateString('en-GB', { calendar: 'gregory' }),
-        ts: now.getTime(),
-        reportedBy: currentUser?.email || 'مشرف'
-    };
     try {
-        await set(ref(db, `pendingActivities/${currentReportStudentId}/${entryId}`), entry);
-        showToast('✅ تم الإرسال بنجاح', true);
-        resetAchievementForm();
+        if(currentEditAchEntryId) {
+            const entries = pendingActivities[currentReportStudentId] || {};
+            const existing = entries[currentEditAchEntryId] || {};
+            const updatedEntry = { ...existing, items, notes, editedAt: getSecureDate().toISOString() };
+            await set(ref(db, `pendingActivities/${currentReportStudentId}/${currentEditAchEntryId}`), updatedEntry);
+            showToast('✅ تم حفظ التعديل بنجاح', true);
+            cancelEditAchievement();
+        } else {
+            const now = getSecureDate();
+            const entryId = generateUniqueId();
+            const entry = {
+                items,
+                notes,
+                date: now.toLocaleDateString('en-GB', { calendar: 'gregory' }),
+                ts: now.getTime(),
+                reportedBy: currentUser?.email || 'مشرف'
+            };
+            await set(ref(db, `pendingActivities/${currentReportStudentId}/${entryId}`), entry);
+            showToast('✅ تم الإرسال بنجاح', true);
+            resetAchievementForm();
+        }
     } catch(e) { showToast('❌ خطأ في حفظ الإنجاز', false); }
 };
 
@@ -1836,6 +1936,7 @@ function getSmartDateLabel(entryDateStr, entryTs) {
 }
 window.openTransferActivitiesModal = function(sid, sname) {
     currentTransferStudentId = sid; currentTransferStudentName = sname;
+    taEditingEntryId = null;
     document.getElementById('transferActivitiesTitle').innerHTML = `<i class="fas fa-clipboard-check"></i> قراءة الإنجاز: ${escapeHtml(sname)}`;
     document.getElementById('taPtsAmt').value = '';
     document.getElementById('taPtsNote').value = '';
@@ -1866,9 +1967,77 @@ window.toggleTaLog = function() {
 };
 window.closeTransferActivitiesModal = function() {
     document.getElementById('modalTransferActivities').style.display = 'none';
-    currentTransferStudentId = null; currentTransferStudentName = null;
+    currentTransferStudentId = null; currentTransferStudentName = null; taEditingEntryId = null;
     if (transferActivitiesLiveUnsub) { transferActivitiesLiveUnsub(); transferActivitiesLiveUnsub = null; }
     if (history.state?.modal === 'transferActivities') history.back();
+};
+function renderTaEditForm(entry) {
+    const rowsHtml = (entry.items && entry.items.length ? entry.items : [{name:'',status:''}]).map(it => `
+        <div class="ta-edit-item-row" style="display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" class="ta-edit-item-name" value="${escapeHtml(it.name||'')}" placeholder="اسم الواجب (اتركه فارغاً إن كانت إعادة)" style="flex:2;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
+            <select class="ta-edit-item-status" style="flex:1;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
+                <option value="" ${!it.status?'selected':''} disabled>-- اختر الحالة --</option>
+                <option value="first_time" ${it.status==='first_time'?'selected':''}>✅ ناجح من أول مرة</option>
+                <option value="pass" ${it.status==='pass'?'selected':''}>✔️ ناجح</option>
+                <option value="repeat" ${it.status==='repeat'?'selected':''}>🔁 إعادة</option>
+            </select>
+            <button type="button" onclick="this.parentElement.remove()" class="button small danger" style="padding:5px 9px;" title="حذف هذا الواجب"><i class="fas fa-times"></i></button>
+        </div>`).join('');
+    return `<div class="pending-item" style="flex-direction:column;align-items:stretch;background:#eef6ff;border-color:#90caf9;">
+        <div id="taEditItems_${entry.id}">${rowsHtml}</div>
+        <button type="button" onclick="addTaEditItemRow('${entry.id}')" class="button small ghost" style="margin-bottom:8px;align-self:flex-start;"><i class="fas fa-plus"></i> إضافة واجب آخر</button>
+        <textarea id="taEditNotes_${entry.id}" placeholder="ملاحظات..." style="width:100%;min-height:60px;padding:8px 10px;border:1px solid #ccc;border-radius:7px;font-family:inherit;resize:vertical;margin-bottom:8px;">${escapeHtml(entry.notes||'')}</textarea>
+        <div style="display:flex;gap:8px;">
+            <button class="button small" style="background:#28a745;flex:1;" onclick="saveTaEditEntry('${entry.id}')"><i class="fas fa-save"></i> حفظ</button>
+            <button class="button small ghost" onclick="cancelEditTaEntry()"><i class="fas fa-times"></i> إلغاء</button>
+        </div>
+    </div>`;
+}
+window.addTaEditItemRow = function(entryId) {
+    const container = document.getElementById(`taEditItems_${entryId}`);
+    if(!container) return;
+    const row = document.createElement('div');
+    row.className = 'ta-edit-item-row';
+    row.style.cssText = 'display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap;';
+    row.innerHTML = `
+        <input type="text" class="ta-edit-item-name" placeholder="اسم الواجب (اتركه فارغاً إن كانت إعادة)" style="flex:2;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
+        <select class="ta-edit-item-status" style="flex:1;min-width:140px;padding:7px 9px;border:1px solid #ccc;border-radius:6px;">
+            <option value="" selected disabled>-- اختر الحالة --</option>
+            <option value="first_time">✅ ناجح من أول مرة</option>
+            <option value="pass">✔️ ناجح</option>
+            <option value="repeat">🔁 إعادة</option>
+        </select>
+        <button type="button" onclick="this.parentElement.remove()" class="button small danger" style="padding:5px 9px;" title="حذف هذا الواجب"><i class="fas fa-times"></i></button>
+    `;
+    container.appendChild(row);
+};
+window.startEditTaEntry = function(entryId) { taEditingEntryId = entryId; renderTransferActivitiesList(); };
+window.cancelEditTaEntry = function() { taEditingEntryId = null; renderTransferActivitiesList(); };
+window.saveTaEditEntry = async function(entryId) {
+    if(!currentTransferStudentId) return;
+    const container = document.getElementById(`taEditItems_${entryId}`);
+    const rows = container ? container.querySelectorAll('.ta-edit-item-row') : [];
+    const items = [];
+    let hasError = false;
+    rows.forEach(row => {
+        const name = row.querySelector('.ta-edit-item-name').value.trim();
+        const status = row.querySelector('.ta-edit-item-status').value;
+        if(!status) { hasError = true; return; }
+        if(!name && status !== 'repeat') { hasError = true; return; }
+        items.push({ name, status, statusLabel: ACH_STATUS_LABELS[status] || '' });
+    });
+    if(hasError) { showToast('❌ الرجاء اختيار حالة كل واجب، وإدخال اسمه إن لم تكن "إعادة"', false); return; }
+    if(!items.length) { showToast('❌ الرجاء إدخال واجب واحد على الأقل', false); return; }
+    const notes = (document.getElementById(`taEditNotes_${entryId}`).value || '').trim();
+    try {
+        const entries = pendingActivities[currentTransferStudentId] || {};
+        const existing = entries[entryId] || {};
+        const updatedEntry = { ...existing, items, notes, editedAt: getSecureDate().toISOString() };
+        await set(ref(db, `pendingActivities/${currentTransferStudentId}/${entryId}`), updatedEntry);
+        showToast('✅ تم حفظ التعديل بنجاح', true);
+        taEditingEntryId = null;
+        renderTransferActivitiesList();
+    } catch(e) { showToast('❌ خطأ في حفظ التعديل', false); }
 };
 function renderTransferActivitiesList() {
     if(!currentTransferStudentId) return;
@@ -1880,6 +2049,7 @@ function renderTransferActivitiesList() {
     const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'} };
     let html = '';
     sorted.forEach(entry => {
+        if (taEditingEntryId === entry.id) { html += renderTaEditForm(entry); return; }
         const dl = getSmartDateLabel(entry.date, entry.ts);
         const itemsHtml = (entry.items||[]).map(it => {
             const st = statusStyle[it.status] || {icon:'', color:'#333'};
@@ -1888,7 +2058,10 @@ function renderTransferActivitiesList() {
         html += `<div class="pending-item" style="flex-direction:column;align-items:stretch;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                 <span class="pi-date ${dl.isToday ? 'is-today' : ''}">${dl.label}</span>
-                <button class="button small danger" onclick="rejectPendingActivity('${entry.id}')" title="حذف بعد المراجعة"><i class="fas fa-trash"></i></button>
+                <div style="display:flex;gap:6px;">
+                    <button class="button small" style="background:#2196F3;" onclick="startEditTaEntry('${entry.id}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                    <button class="button small danger" onclick="rejectPendingActivity('${entry.id}')" title="حذف بعد المراجعة"><i class="fas fa-trash"></i></button>
+                </div>
             </div>
             ${itemsHtml}
             ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;font-size:0.9rem;"><i class="fas fa-sticky-note"></i> ${escapeHtml(entry.notes)}</div>` : ''}
@@ -1996,6 +2169,7 @@ function renderPendingBadges() {
 
 // ================= نافذة السجل المدمج (الواجبات + النقاط) =================
 window.openCombinedRecordModal = function(studentId) {
+    if(role!=='admin'){ showToast('❌ صلاحيات المدير فقط', false); return; }
     currentCombinedRecordStudentId = studentId;
     const s = findStudentById(studentId);
     document.getElementById('combinedRecordTitle').innerHTML = `<i class="fas fa-folder-open"></i> سجل الطالب: ${escapeHtml(s?.name||'')}`;
@@ -3701,8 +3875,15 @@ window.addEventListener('popstate', function(event) {
     const transferActivitiesModal = document.getElementById('modalTransferActivities');
     if (transferActivitiesModal && transferActivitiesModal.style.display === 'flex' && state.modal !== 'transferActivities') {
         transferActivitiesModal.style.display = 'none';
-        currentTransferStudentId = null; currentTransferStudentName = null;
+        currentTransferStudentId = null; currentTransferStudentName = null; taEditingEntryId = null;
         if (transferActivitiesLiveUnsub) { transferActivitiesLiveUnsub(); transferActivitiesLiveUnsub = null; }
+        return;
+    }
+    const reportActivityModal = document.getElementById('modalReportActivity');
+    if (reportActivityModal && reportActivityModal.style.display === 'flex' && state.modal !== 'reportActivity') {
+        reportActivityModal.style.display = 'none';
+        currentReportStudentId = null; currentReportStudentName = null; currentEditAchEntryId = null;
+        if (reportActivityLiveUnsub) { reportActivityLiveUnsub(); reportActivityLiveUnsub = null; }
         return;
     }
     const managePointsModal = document.getElementById('modalManagePoints');

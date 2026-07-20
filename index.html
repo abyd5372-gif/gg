@@ -1123,7 +1123,10 @@ onValue(ref(db,'surveyQuestions'),(snap)=>{ surveyQuestions = snap.exists() ? (s
 onValue(ref(db,'surveyResponses'),(snap)=>{ surveyResponses = snap.exists() ? (snap.val()||[]) : []; if(document.getElementById('surveyModal')?.style.display==='flex' && surveyCurrentTab==='results') renderSurveyResults(); });
 
 // ================= دوال العرض الرئيسية =================
-function debouncedRender(){ if(renderTimeout) clearTimeout(renderTimeout); renderTimeout=setTimeout(()=>render(),100); }
+let isTouchingUI = false; let touchEndTimeout = null;
+document.addEventListener('touchstart', () => { isTouchingUI = true; if(touchEndTimeout){ clearTimeout(touchEndTimeout); touchEndTimeout = null; } }, {passive:true});
+document.addEventListener('touchend', () => { if(touchEndTimeout) clearTimeout(touchEndTimeout); touchEndTimeout = setTimeout(() => { isTouchingUI = false; }, 400); }, {passive:true});
+function debouncedRender(){ if(renderTimeout) clearTimeout(renderTimeout); renderTimeout=setTimeout(()=>{ if(isTouchingUI){ debouncedRender(); return; } render(); },100); }
 function updateSaveButtonState(){ if(homeworkModified){ btnSaveHomework.style.backgroundColor='#ff9800'; btnSaveHomework.innerHTML='<i class="fas fa-exclamation-circle"></i> حفظ الواجبات (توجد تغييرات)'; } else { btnSaveHomework.style.backgroundColor=''; btnSaveHomework.innerHTML='<i class="fas fa-save"></i> حفظ جميع الواجبات'; } }
 
 function noteForHifz(v){ if(!v||v==='0') return ''; const n=Number(v); if(n>=10) return 'ممتاز جداً في حفظك'; if(n>=9) return 'ممتاز في حفظك'; if(n>=8) return 'جيد جداً في حفظك'; if(n>=7) return 'جيد في حفظك'; if(n>=6) return 'ضعيف في حفظك'; return 'ضعيف جداً في حفظك'; }
@@ -4069,7 +4072,7 @@ document.addEventListener('focusin', (e) => {
 document.addEventListener('focusout', (e) => {
     focusOutTimeout = setTimeout(() => {
         isRendering = false; 
-        debouncedRender();   
+        // debouncedRender(); // تم التعطيل لمنع إعادة البناء الكاملة للواجهة وضياع النقرات
     }, 300); // زدنا المدة قليلاً لضمان عدم تداخل الأحداث في الهواتف البطيئة
 });
 

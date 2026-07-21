@@ -1140,7 +1140,8 @@ function buildStudentRowPair(gi, si, sti){
     const numTd=document.createElement('td'); numTd.id=`numcell_${sid}`;
     if(currentView==='grades' && role==='admin'){
         const pendCount=getPendingCount(sid);
-        numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="position:relative;font-weight:700;color:var(--accent);text-decoration:underline;" title="قراءة الإنجاز المسجل">${sti+1}${pendCount>0?`<span class="pending-badge">${pendCount}</span>`:''}</a>`;
+        const pendColor=pendCount>0?getPendingBadgeColor(sid):'';
+        numTd.innerHTML=`<a href="javascript:void(0)" class="seq-num-link" style="position:relative;font-weight:700;color:var(--accent);text-decoration:underline;" title="قراءة الإنجاز المسجل">${sti+1}${pendCount>0?`<span class="pending-badge" style="background:${pendColor};">${pendCount}</span>`:''}</a>`;
         numTd.querySelector('a').onclick=()=>openTransferActivitiesModal(sid, s.name);
     } else {
         numTd.textContent=sti+1;
@@ -1619,13 +1620,13 @@ function renderAchievementsStudentList(){
     const filter=document.getElementById('achievementsGroupFilter').value;
     const cont=document.getElementById('achievementsStudentList'); cont.innerHTML='';
     const all=[]; let idx=1;
-    data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ st.students.forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); });
+    data.forEach(g=>{ if(filter && g.name!==filter) return; g.stickers.forEach(st=>{ (st.students||[]).forEach(s=>{ if(search && !s.name.toLowerCase().includes(search)) return; all.push({student:s,group:g,sticker:st,idx:idx++}); }); }); });
     if(all.length===0){ cont.innerHTML='<div style="text-align:center;color:#888;padding:2rem;">لا يوجد طلاب مطابقون</div>'; return; }
     all.forEach(({student:s,group:g,sticker:st,idx:studentIdx})=>{
-        const sid=s.id; const cnt=getPendingCount(sid);
+        const sid=s.id; const cnt=getPendingCount(sid); const cntColor=cnt>0?getPendingBadgeColor(sid):'';
         const row=document.createElement('div');
         row.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:#f8f9fa;border:1px solid #eee;border-radius:10px;cursor:pointer;flex-wrap:wrap;';
-        row.innerHTML=`<div><div style="font-weight:700;color:#333;position:relative;display:inline-block;">${studentIdx}. ${escapeHtml(s.name)}${cnt>0?`<span class="pending-badge" style="position:absolute;top:-6px;left:-14px;">${cnt}</span>`:''}</div><div style="color:#888;font-size:0.85rem;">${escapeHtml(g.name)} / ${escapeHtml(st.title)}</div></div><button class="button small" style="background:var(--accent);"><i class="fas fa-clipboard-check"></i> عرض الإنجازات</button>`;
+        row.innerHTML=`<div><div style="font-weight:700;color:#333;position:relative;display:inline-block;">${studentIdx}. ${escapeHtml(s.name)}${cnt>0?`<span class="pending-badge" style="position:absolute;top:-6px;left:-14px;background:${cntColor};">${cnt}</span>`:''}</div><div style="color:#888;font-size:0.85rem;">${escapeHtml(g.name)} / ${escapeHtml(st.title)}</div></div><button class="button small" style="background:var(--accent);"><i class="fas fa-clipboard-check"></i> عرض الإنجازات</button>`;
         row.onclick=()=>openTransferActivitiesModal(sid, s.name);
         cont.appendChild(row);
     });
@@ -1851,7 +1852,7 @@ window.deleteReason = async function(idx) {
 };
 
 // ================= دوال تسجيل الإنجاز (المشرف) =================
-const ACH_STATUS_LABELS = { first_time: 'ناجح من أول مرة', pass: 'ناجح', repeat: 'إعادة' };
+const ACH_STATUS_LABELS = { first_time: 'ناجح من أول مرة', pass: 'ناجح', repeat: 'إعادة', refer_admin: 'يُحال القرار إلى الإدارة' };
 window.addAchItemRow = function() {
     const container = document.getElementById('achItemsContainer');
     if(!container) return;
@@ -1865,6 +1866,7 @@ window.addAchItemRow = function() {
             <option value="first_time">✅ ناجح من أول مرة</option>
             <option value="pass">✔️ ناجح</option>
             <option value="repeat">🔁 إعادة</option>
+            <option value="refer_admin">📨 يُحال القرار إلى الإدارة</option>
         </select>
         <button type="button" onclick="this.parentElement.remove()" class="button small danger" style="padding:5px 9px;" title="حذف هذا الواجب"><i class="fas fa-times"></i></button>
     `;
@@ -1910,7 +1912,7 @@ function renderReportActivitySentList() {
     const ids = Object.keys(entries);
     if(!ids.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1rem;">لا يوجد إنجاز مُرسل بعد.</div>'; return; }
     const sorted = ids.map(id => ({id, ...entries[id]})).sort((a,b) => (b.ts||0) - (a.ts||0));
-    const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'} };
+    const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'}, refer_admin: {icon:'📨', color:'#8a6d00'} };
     let html = '';
     sorted.forEach(entry => {
         const dl = getSmartDateLabel(entry.date, entry.ts);
@@ -1921,10 +1923,10 @@ function renderReportActivitySentList() {
         html += `<div class="pending-item" style="flex-direction:column;align-items:stretch;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                 <span class="pi-date ${dl.isToday ? 'is-today' : ''}">${dl.label}</span>
-                <button class="button small" style="background:#2196F3;" onclick="editAchievementEntryFromReport('${entry.id}')" title="تعديل"><i class="fas fa-edit"></i> تعديل</button>
+                ${entry.reviewed ? `<span style="color:#28a745;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-check-circle"></i> تمت مراجعة الإنجاز</span>` : `<button class="button small" style="background:#2196F3;" onclick="editAchievementEntryFromReport('${entry.id}')" title="تعديل"><i class="fas fa-edit"></i> تعديل</button>`}
             </div>
             ${itemsHtml}
-            ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;">${escapeHtml(entry.notes)}</div>` : ''}
+            ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;white-space:pre-wrap;">${escapeHtml(entry.notes)}</div>` : ''}
         </div>`;
     });
     el.innerHTML = html;
@@ -2001,7 +2003,20 @@ window.submitAchievementReport = async function() {
 function getPendingCount(sid) {
     const entries = pendingActivities[sid];
     if(!entries) return 0;
-    return Object.keys(entries).length;
+    return Object.values(entries).filter(e=>!e.reviewed).length;
+}
+function getPendingBadgeColor(sid) {
+    const entries = pendingActivities[sid];
+    if(!entries) return '#dc3545';
+    const unreviewed = Object.values(entries).filter(e=>!e.reviewed);
+    if(!unreviewed.length) return '#dc3545';
+    const latestTs = Math.max(...unreviewed.map(e=>e.ts||0));
+    const now = getSecureDate();
+    const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const diffDays = Math.round((startOfDay(now) - startOfDay(new Date(latestTs))) / 86400000);
+    if (diffDays <= 0) return '#dc3545'; // اليوم: أحمر
+    if (diffDays === 1) return '#28a745'; // أمس: أخضر
+    return '#2196F3'; // أول أمس أو أقدم: أزرق
 }
 function getSmartDateLabel(entryDateStr, entryTs) {
     const now = getSecureDate();
@@ -2124,7 +2139,7 @@ function renderTransferActivitiesList() {
     const ids = Object.keys(entries);
     if(!ids.length) { el.innerHTML = '<div style="text-align:center;color:#aaa;padding:1.5rem;">لا يوجد إنجاز مسجل لهذا الطالب حالياً.</div>'; return; }
     const sorted = ids.map(id => ({id, ...entries[id]})).sort((a,b) => (b.ts||0) - (a.ts||0));
-    const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'} };
+    const statusStyle = { first_time: {icon:'✅', color:'#28a745'}, pass: {icon:'✔️', color:'#2E7D32'}, repeat: {icon:'🔁', color:'#c0392b'}, refer_admin: {icon:'📨', color:'#8a6d00'} };
     let html = '';
     sorted.forEach(entry => {
         if (taEditingEntryId === entry.id) { html += renderTaEditForm(entry); return; }
@@ -2133,20 +2148,29 @@ function renderTransferActivitiesList() {
             const st = statusStyle[it.status] || {icon:'', color:'#333'};
             return `<div style="display:flex;justify-content:space-between;gap:8px;padding:3px 0;"><span>${escapeHtml(it.name || '(بدون اسم - إعادة)')}</span><span style="color:${st.color};font-weight:700;white-space:nowrap;">${st.icon} ${escapeHtml(it.statusLabel||'')}</span></div>`;
         }).join('');
-        html += `<div class="pending-item" style="flex-direction:column;align-items:stretch;">
+        html += `<div class="pending-item" style="flex-direction:column;align-items:stretch;${entry.reviewed?'opacity:0.65;':''}">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                 <span class="pi-date ${dl.isToday ? 'is-today' : ''}">${dl.label}</span>
-                <div style="display:flex;gap:6px;">
-                    <button class="button small" style="background:#2196F3;" onclick="startEditTaEntry('${entry.id}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                <div style="display:flex;gap:6px;align-items:center;">
+                    ${entry.reviewed ? `<span style="color:#28a745;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-check-circle"></i> تمت المراجعة</span>` : `<button class="button small" style="background:#28a745;" onclick="markAchievementReviewed('${entry.id}')" title="تم الاطلاع والمكافأة"><i class="fas fa-check"></i> تم</button>`}
                     <button class="button small danger" onclick="rejectPendingActivity('${entry.id}')" title="حذف بعد المراجعة"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
             ${itemsHtml}
-            ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;font-size:0.9rem;"><i class="fas fa-sticky-note"></i> ${escapeHtml(entry.notes)}</div>` : ''}
+            ${entry.notes ? `<div style="margin-top:6px;padding-top:6px;border-top:1px dashed #e0d8a0;color:#666;font-size:0.9rem;white-space:pre-wrap;"><i class="fas fa-sticky-note"></i> ${escapeHtml(entry.notes)}</div>` : ''}
         </div>`;
     });
     el.innerHTML = html;
 }
+window.markAchievementReviewed = async function(entryId) {
+    if(!currentTransferStudentId) return;
+    try {
+        await update(ref(db, `pendingActivities/${currentTransferStudentId}/${entryId}`), { reviewed: true, reviewedAt: getSecureDate().toISOString() });
+        showToast('✅ تم تسجيل المراجعة', true);
+        renderTransferActivitiesList();
+        renderPendingBadges();
+    } catch(e) { showToast('❌ خطأ في تسجيل المراجعة', false); }
+};
 window.rejectPendingActivity = async function(entryId) {
     if(!currentTransferStudentId) return;
     if(!confirm('حذف هذا الإنجاز بعد الاطلاع عليه؟')) return;
@@ -2239,8 +2263,8 @@ function renderPendingBadges() {
         if(!a) return;
         const existing = a.querySelector('.pending-badge');
         const count = getPendingCount(sid);
-        if(count > 0 && !existing) { const badge=document.createElement('span'); badge.className='pending-badge'; badge.textContent=count; a.appendChild(badge); }
-        else if(count > 0 && existing) { existing.textContent = count; }
+        if(count > 0 && !existing) { const badge=document.createElement('span'); badge.className='pending-badge'; badge.style.background=getPendingBadgeColor(sid); badge.textContent=count; a.appendChild(badge); }
+        else if(count > 0 && existing) { existing.textContent = count; existing.style.background=getPendingBadgeColor(sid); }
         else if(count === 0 && existing) { existing.remove(); }
     });
 }

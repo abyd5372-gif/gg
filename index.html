@@ -597,6 +597,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getDatabase, ref, set, get, onValue, runTransaction, serverTimestamp, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyBu28HyFN5bzZVGK8m8yC6oADp9l-2dvPg",
     authDomain: "quran2-eafc8.firebaseapp.com",
@@ -1164,7 +1165,7 @@ function buildStudentRowPair(gi, si, sti){
     return {tr, ptsRow};
 }
 function findStudentIndices(sid){
-    for(let gi=0; gi<data.length; gi++){ const g=data[gi]; for(let si=0; si<g.stickers.length; si++){ const st=g.stickers[si]; for(let sti=0; sti<st.students.length; sti++){ if(st.students[sti].id===sid) return {gi,si,sti}; } } }
+    for(let gi=0; gi<data.length; gi++){ const g=data[gi]; for(let si=0; si<g.stickers.length; si++){ const st=g.stickers[si]; if(!Array.isArray(st.students)) continue; for(let sti=0; sti<st.students.length; sti++){ if(st.students[sti].id===sid) return {gi,si,sti}; } } }
     return null;
 }
 function refreshStudentRow(gi, si, sti){
@@ -2318,7 +2319,7 @@ window.markWirdComplete = async function(studentId){
     try {
         let currentPointsValue = pointsPerWird; let currentBonusValue = weeklyBonusPoints;
         let student = null;
-        for(let gi=0;gi<data.length;gi++){ const group=data[gi]; for(let si=0;si<group.stickers.length;si++){ const sticker=group.stickers[si]; const idx=sticker.students.findIndex(s=>s.id===studentId); if(idx!==-1){ student=sticker.students[idx]; break; } } if(student) break; }
+        for(let gi=0;gi<data.length;gi++){ const group=data[gi]; for(let si=0;si<group.stickers.length;si++){ const sticker=group.stickers[si]; if(!Array.isArray(sticker.students)) continue; const idx=sticker.students.findIndex(s=>s.id===studentId); if(idx!==-1){ student=sticker.students[idx]; break; } } if(student) break; }
         if(!student){ showToast('❌ لم يتم العثور على الطالب', false); return; }
         // فحص سريع (بالتوقيت المحلي) لتفادي الانتظار على الشبكة في حال إعادة الضغط بعد تسجيل الورد
         const quickTodayStr = getTodayDateString();
@@ -2359,7 +2360,7 @@ window.markWirdComplete = async function(studentId){
         setTimeout(function(){ render(); openStudentProfile(studentId); }, 30);
         // الحفظ على الخادم يصير بالخلفية بدون انتظار، حتى لا يؤخر ظهور الاحتفال أو فتح الصفحة الشخصية
         let targetGroupIndex = -1, targetStickerIndex = -1, targetStudentIndex = -1;
-        for(let gi=0; gi<data.length; gi++){ for(let si=0; si<data[gi].stickers.length; si++){ const sti = data[gi].stickers[si].students.findIndex(s => s.id === studentId); if(sti !== -1){ targetGroupIndex = gi; targetStickerIndex = si; targetStudentIndex = sti; break; } } if(targetStudentIndex !== -1) break; }
+        for(let gi=0; gi<data.length; gi++){ for(let si=0; si<data[gi].stickers.length; si++){ if(!Array.isArray(data[gi].stickers[si].students)) continue; const sti = data[gi].stickers[si].students.findIndex(s => s.id === studentId); if(sti !== -1){ targetGroupIndex = gi; targetStickerIndex = si; targetStudentIndex = sti; break; } } if(targetStudentIndex !== -1) break; }
         if(targetStudentIndex !== -1) {
             const updates = {};
             const basePath = `groups/${targetGroupIndex}/stickers/${targetStickerIndex}/students/${targetStudentIndex}`;
@@ -2408,7 +2409,7 @@ function calculateDailyWird(profile, studentId){
 function getSurahLabel(page,surahIdx){ if(!surahIdx){ let surahs=QURAN_DATA.filter(q=>page>=q.s&&page<=q.e); return surahs.map(s=>s.n).join("، "); } else{ const s=QURAN_DATA.find(q=>q.i===surahIdx); return s?s.n:`ص${page}`; } }
 window.openStudentProfile = async function(studentId, noPush = false){
     let student=null, group=null, sticker=null;
-    for(let gi=0;gi<data.length;gi++){ const g=data[gi]; for(let si=0;si<g.stickers.length;si++){ const st=g.stickers[si]; const s=st.students.find(s=>s.id===studentId); if(s){ student=s; group=g; sticker=st; break; } } if(student) break; }
+    for(let gi=0;gi<data.length;gi++){ const g=data[gi]; for(let si=0;si<g.stickers.length;si++){ const st=g.stickers[si]; if(!Array.isArray(st.students)) continue; const s=st.students.find(s=>s.id===studentId); if(s){ student=s; group=g; sticker=st; break; } } if(student) break; }
     if(!student){ showToast('❌ لم يتم العثور على بيانات الطالب', false); return; }
     const profile=studentProfiles[studentId]||{certificates:[],customRanges:[],joinDate:getSecureDate().toISOString().split('T')[0],startDate:getSecureDate().toISOString().split('T')[0]};
     if(!profile.customRanges) profile.customRanges=[];
@@ -2477,7 +2478,7 @@ window.closeImageModal = function(){
 async function incrementVisitorIfNeeded() { try { const today = getSecureDate().toISOString().slice(0,10); const localKey='visited_date_'+location.hostname; const last=localStorage.getItem(localKey); if(last===today) return; const countRef=ref(db,'visitors/count'); await runTransaction(countRef,(current)=>(current||0)+1); localStorage.setItem(localKey,today); } catch(e){} }
 async function readVisitorsOnce() { try { const snap=await get(ref(db,'visitors')); if(!snap.exists()) return {count:0,lastReset:null}; const v=snap.val(); return {count:v.count||0,lastReset:v.lastReset||null}; } catch(e){ return {count:0,lastReset:null}; } }
 async function resetVisitors() { if(role!=='admin'){ showToast('❌ المدير فقط', false); return; } if(!confirm('هل أنت متأكد من تصفير عدد الزوار؟')) return; try { await set(ref(db,'visitors/count'),0); const ts=getSecureDate().toISOString(); await set(ref(db,'visitors/lastReset'),ts); showToast('✅ تم تصفير العداد بنجاح', true); updateVisitorsUI(0,ts); } catch(e){ showToast('❌ حدث خطأ أثناء التصفير', false); } }
-function updateVisitorsUI(count,lastReset){ if(visitorsCountEl) visitorsCountEl.textContent=count||0; if(lastResetTextEl) lastResetTextEl.textContent=lastReset?'(آخر تصفير: '+lastReset.slice(0,10)+')':'(آخر تصفير: -)'; }
+function updateVisitorsUI(count,lastReset){ const vEl=document.getElementById('visitorsCount'); const lEl=document.getElementById('lastResetText'); if(vEl) vEl.textContent=count||0; if(lEl) lEl.textContent=lastReset?'(آخر تصفير: '+lastReset.slice(0,10)+')':'(آخر تصفير: -)'; }
 
 // ================= دوال التراكمي =================
 async function calculateCumulativeAll(){ if(role!=='admin'){ showToast('❌ المدير فقط', false); return; } if(!confirm('حساب التراكمي لجميع الطلاب الآن؟')) return; showLoading(); try{ cumBackup=JSON.parse(JSON.stringify({cumHistory:{...cumHistory},data:JSON.parse(JSON.stringify(data))})); localStorage.setItem(CUM_BACKUP_KEY,JSON.stringify(cumBackup)); const updates=[]; let total=0; data.forEach(g=>{ if(g.showStudents===false) return; g.stickers.forEach(st=>{ if(st.visible===false) return; st.students.forEach(s=>{ if(!s.id) return; total++; const idKey=s.id; let currAvg=null, newCnt=0, prevCnt=Number(cumHistory[idKey+'_count']||0); if(s.attendance==='absent_excused') return; if(s.attendance==='absent_unexcused'){ currAvg=0; newCnt=prevCnt+1; } else{ const h=Number(s.gradeHifz)||0, w=Number(s.gradeWard)||0, a=Number(s.gradeAkhlak)||0; if(h===0&&w===0&&a===0) return; currAvg=(h+w+a)/3; newCnt=prevCnt+1; } const prev=Number(cumHistory[idKey]||0); const newCum=prevCnt>0?(prev*prevCnt+currAvg)/newCnt:currAvg; cumHistory[idKey]=Math.round(newCum*100)/100; cumHistory[idKey+'_count']=newCnt; s.cumulative=cumHistory[idKey]; s.count=newCnt; updates.push({name:s.name,group:g.name,sticker:st.title,current:Math.round(currAvg*100)/100,cumulative:s.cumulative,count:newCnt}); }); }); }); writeCumToFirebase(cumHistory); writeGroupsToFirebase(data); updates.sort((a,b)=>b.cumulative-a.cumulative); renderCumulativeResults(updates); showToast(`✅ انتهى حساب التراكمي لعدد ${updates.length} من ${total} طالب`, true); } finally{ hideLoading(); } }
@@ -3935,9 +3936,11 @@ onValue(ref(db,'groups'), (snap) => {
         try { incomingJSON = JSON.stringify(incoming); sameAsLocal = (incomingJSON === lastGroupsJSON); } catch(e) { sameAsLocal = false; }
         if (!sameAsLocal) {
             // بيانات جديدة فعلاً (تغيير من جهاز/مستخدم آخر) - نحدّث ونعيد الرسم
-            data = incoming; lastGroupsJSON = incomingJSON;
+            data = incoming;
+            normalizeData(); // فايربيس بيحذف المصفوفات الفارغة (زي students:[]) تلقائياً، فلازم نعيد بناءها هون قبل أي استخدام
+            lastGroupsJSON = JSON.stringify(data);
             if (_groupsLocalStorageTimeout) clearTimeout(_groupsLocalStorageTimeout);
-            try{ localStorage.setItem(STORAGE_KEY, incomingJSON ?? JSON.stringify(data)); }catch(e){}
+            try{ localStorage.setItem(STORAGE_KEY, lastGroupsJSON); }catch(e){}
             if (document.getElementById('mainContentArea')?.style.display !== 'none') debouncedRender();
         }
         // إن كانت البيانات مطابقة لما هو معروض محلياً بالفعل (صدى لتحديث محلي قمنا به للتو)، نتجاهل إعادة الرسم المكرر لتحسين الأداء

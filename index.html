@@ -151,30 +151,6 @@
         .hidaya-card-body { padding: 1rem 1.2rem; font-size: var(--hidaya-body-size) !important; color: #333; line-height: 1.9; white-space: pre-wrap; transition: font-size 0.2s ease; }
         .hidaya-card-image { width: 100%; max-height: 320px; object-fit: cover; display: block; }
         .hidaya-card-actions { display: flex; gap: 5px; margin-right: auto; }
-        .home-card-calendar .home-card-icon { background: linear-gradient(135deg, #8E24AA, #4A148C); }
-        /* ===== بطاقة التقويم بطراز إسلامي (رق/ذهبي) ===== */
-        .cal-parchment-card { background: linear-gradient(160deg, #fdf3d7, #f6e6b8); border: 3px solid #b8860b; border-radius: 18px; padding: 1.4rem 1.3rem 1.6rem; margin-bottom: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12); position: relative; }
-        .cal-card-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem; }
-        .cal-badge { background: #fff; border: 2px solid #8b1e1e; border-radius: 8px; padding: 0.3rem 0.8rem; font-size: 0.85rem; font-weight: 800; color: #8b1e1e; }
-        .cal-weekday-title { text-align: center; font-family: 'Aref Ruqaa', 'Amiri', serif; font-size: 2.4rem; font-weight: 900; color: #8b1e1e; text-shadow: 1px 1px 0 rgba(0,0,0,0.08); margin: 0.2rem 0 1rem 0; }
-        .cal-dates-row { display: flex; align-items: center; justify-content: center; gap: 1.2rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-        .cal-date-box { background: linear-gradient(160deg, #f7d998, #e2b34f); border: 2px solid #3a2a12; border-radius: 14px; padding: 0.6rem 1rem; min-width: 6.5rem; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
-        .cal-date-day { font-size: 1.8rem; font-weight: 900; color: #8b1e1e; line-height: 1.1; }
-        .cal-date-month { font-size: 1.15rem; font-weight: 800; color: #2a2a2a; }
-        .cal-date-year { font-size: 0.95rem; color: #2a2a2a; }
-        .cal-emblem { width: 5.5rem; height: 5.5rem; border-radius: 50%; border: 3px solid #b8860b; background: #fff url('https://i.ibb.co/XZkDMwLx/1000182481-removebg-preview.png') center center / cover; box-shadow: 0 0 8px rgba(0,0,0,0.2); flex-shrink: 0; }
-        .cal-section-title { text-align: center; font-family: 'Aref Ruqaa', 'Amiri', serif; font-size: 1.9rem; font-weight: 900; color: #8b1e1e; margin: 0.3rem 0 0.8rem 0; }
-        .cal-parchment-inner { background: linear-gradient(160deg, #fdf3d7, #f2e0ab); border: 2px solid #8b1e1e; border-radius: 12px; padding: 1.1rem 1.2rem; box-shadow: inset 0 0 12px rgba(0,0,0,0.06); }
-        .cal-divider { text-align: center; color: #b8860b; font-size: 1.2rem; margin-top: 0.8rem; letter-spacing: 0.4rem; }
-        .cal-prayers-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; background: linear-gradient(160deg, #f7d998, #d9a83e); border: 2px solid #3a2a12; border-radius: 12px; padding: 0.7rem 0.8rem; margin-top: 1.2rem; }
-        .cal-prayer-item { display: flex; flex-direction: column; align-items: center; min-width: 4.8rem; }
-        .cal-prayer-name { font-size: 0.85rem; font-weight: 800; color: #5a1414; }
-        .cal-prayer-time { font-size: 1.05rem; font-weight: 900; color: #1a1a1a; }
-        .cal-article-box { background: transparent; border: none; padding: 0; margin-bottom: 1.5rem; }
-        .cal-schedule-box { background: linear-gradient(160deg, #fdf3d7, #f6e6b8); border: 3px solid #b8860b; border-radius: 18px; padding: 1.1rem 1.3rem; margin-bottom: 1.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-        .cal-schedule-box h3 { color: #8b1e1e !important; }
-        .cal-schedule-box td input.cal-sched-input { width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 0.35rem; font-size: 0.9rem; }
-        @media screen and (max-width: 30rem) { .cal-weekday-title { font-size: 1.8rem; } .cal-emblem { width: 4rem; height: 4rem; } .cal-date-day { font-size: 1.4rem; } }
         .vision-admin-controls { background: #f0faf0; border: 2px dashed #4CAF50; border-radius: 10px; padding: 1rem; margin: 1rem 0; }
         .vision-admin-controls h4 { color: var(--accent); margin: 0 0 0.8rem 0; }
         .vision-item-actions { display: flex; gap: 5px; margin-top: 0.5rem; }
@@ -469,11 +445,6 @@
                 <h3>🌿 هدايات</h3>
                 <p>هدايات ومقالات ودرر من القرآن والسنة</p>
             </div>
-            <div class="home-card home-card-calendar" onclick="showCalendarSection()">
-                <div class="home-card-icon"><i class="fas fa-calendar-alt"></i></div>
-                <h3>📅 التقويم</h3>
-                <p>التاريخ الهجري والميلادي وأوقات الصلاة وجدول الدوام</p>
-            </div>
         </div>
     </div>
     <div id="mainContentArea" style="display:none;">
@@ -496,11 +467,6 @@
     <div id="visionSection" style="display:none;">
         <button type="button" class="back-home-btn" onclick="showHomeScreen()"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
         <div id="visionContainer" class="vision-section"></div>
-    </div>
-    <!-- قسم التقويم -->
-    <div id="calendarPageSection" style="display:none;">
-        <button type="button" class="back-home-btn" onclick="showHomeScreen()"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
-        <div id="calendarPageContainer"></div>
     </div>
     <div id="surveyModal" style="display:none;"></div>
     <div class="messages-area card" id="messagesArea">
@@ -2592,7 +2558,7 @@ function _restoreFontGroupsForCurrentSection(){
     if (document.getElementById('instructionsSection')?.style.display !== 'none') { _setActiveFontGroups([]); return; }
     _setActiveFontGroups([]);
 }
-function _hideAllSections(){ homeScreen.style.display='none'; mainContentArea.style.display='none'; examsSection.style.display='none'; document.getElementById('visionSection').style.display='none'; document.getElementById('instructionsSection').style.display='none'; document.getElementById('calendarPageSection').style.display='none'; }
+function _hideAllSections(){ homeScreen.style.display='none'; mainContentArea.style.display='none'; examsSection.style.display='none'; document.getElementById('visionSection').style.display='none'; document.getElementById('instructionsSection').style.display='none'; }
 function showHomeScreen(noPush){
     _hideAllSections();
     homeScreen.style.display='block';
@@ -2639,15 +2605,6 @@ window.showInstructionsSection = function(noPush){
     renderInstructionsSection();
     if (!noPush && window.location.hash !== '#instructions') {
         history.pushState({ section: 'instructions' }, '', '#instructions');
-    }
-};
-window.showCalendarSection = function(noPush){
-    _hideAllSections();
-    document.getElementById('calendarPageSection').style.display='block';
-    _setActiveFontGroups([]);
-    renderCalendarPage();
-    if (!noPush && window.location.hash !== '#calendar') {
-        history.pushState({ section: 'calendar' }, '', '#calendar');
     }
 };
 window.showHomeScreen=showHomeScreen; window.showSection=showSection; window.showExamsSection=showExamsSection;
@@ -3785,152 +3742,6 @@ onValue(ref(db, 'instructions'), snap => {
     if (document.getElementById('instructionsSection')?.style.display !== 'none') renderInstructionsSection();
 });
 
-// ================= قسم التقويم (تاريخ هجري/ميلادي + أوقات الصلاة + مقالة + جدول الدوام) =================
-let calendarPageData = { article: '', schedule: [] };
-onValue(ref(db, 'calendarPage'), (snap) => {
-    calendarPageData = snap.exists() ? (snap.val() || {}) : {};
-    if (!calendarPageData.schedule) calendarPageData.schedule = [];
-    if (calendarPageData.article === undefined) calendarPageData.article = '';
-    if (document.getElementById('calendarPageSection')?.style.display !== 'none') renderCalendarPage();
-});
-
-function renderCalendarPage() {
-    const cont = document.getElementById('calendarPageContainer');
-    if (!cont) return;
-    const isAdmin = role === 'admin';
-    const schedule = calendarPageData.schedule || [];
-    const scheduleRowsHtml = schedule.map(row => `<tr data-id="${escapeHtml(row.id||'')}">
-        <td>${isAdmin ? `<input type="text" class="cal-sched-input" data-field="day" value="${escapeHtml(row.day||'')}">` : escapeHtml(row.day||'')}</td>
-        <td>${isAdmin ? `<input type="text" class="cal-sched-input" data-field="time" value="${escapeHtml(row.time||'')}">` : escapeHtml(row.time||'')}</td>
-        <td>${isAdmin ? `<input type="text" class="cal-sched-input" data-field="lesson" value="${escapeHtml(row.lesson||'')}">` : escapeHtml(row.lesson||'')}</td>
-        ${isAdmin ? `<td><button onclick="removeCalendarScheduleRow('${escapeHtml(row.id||'')}')" class="button small danger"><i class="fas fa-trash"></i></button></td>` : ''}
-    </tr>`).join('');
-
-    cont.innerHTML = `
-        <div class="cal-parchment-card">
-            <div class="cal-card-topbar">
-                <span class="cal-badge">التقويم الهجري</span>
-                <span class="cal-badge">حلقات مسجد إبراهيم الحاج حسن</span>
-            </div>
-            <div id="calDynamicArea">
-                <div style="text-align:center;padding:1.5rem;color:#5a1414;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل التاريخ وأوقات الصلاة...</div>
-            </div>
-            <h3 class="cal-section-title"><i class="fas fa-feather-alt"></i> المقالة</h3>
-            <div class="cal-parchment-inner">
-                ${isAdmin ? `
-                    <textarea id="calendarArticleInput" rows="6" style="width:100%;padding:0.6rem;border:1px solid #b8860b;border-radius:8px;white-space:pre-wrap;background:#fffdf5;" placeholder="اكتب المقالة هنا...">${escapeHtml(calendarPageData.article||'')}</textarea>
-                    <div style="margin-top:0.5rem;text-align:left;"><button onclick="saveCalendarArticle()" class="button" style="background:#8b1e1e;"><i class="fas fa-save"></i> حفظ المقالة</button></div>
-                ` : (calendarPageData.article ? `<div style="white-space:pre-wrap;line-height:1.9;color:#2a2a2a;">${escapeHtml(calendarPageData.article)}</div>` : `<p style="color:#8a7a55;text-align:center;padding:1rem;margin:0;">لا توجد مقالة بعد</p>`)}
-                <div class="cal-divider">❖ ۞ ❖</div>
-            </div>
-        </div>
-        <div class="cal-schedule-box">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.8rem;">
-                <h3 style="margin:0;"><i class="fas fa-clock"></i> جدول أوقات دوام الطلاب</h3>
-                ${isAdmin ? `<button onclick="addCalendarScheduleRow()" class="button" style="background:#2196F3;"><i class="fas fa-plus"></i> إضافة صف</button>` : ''}
-            </div>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>اليوم</th><th>الوقت</th><th>الدرس</th>${isAdmin ? '<th></th>' : ''}</tr></thead>
-                    <tbody id="calScheduleTableBody">
-                        ${scheduleRowsHtml || `<tr><td colspan="${isAdmin?4:3}" style="color:#aaa;">لا يوجد جدول بعد</td></tr>`}
-                    </tbody>
-                </table>
-            </div>
-            ${isAdmin ? `<div style="margin-top:0.8rem;text-align:left;"><button onclick="saveCalendarSchedule()" class="button gold"><i class="fas fa-save"></i> حفظ الجدول</button></div>` : ''}
-        </div>`;
-    loadPrayerTimesAndHijri();
-}
-
-async function loadPrayerTimesAndHijri() {
-    const area = document.getElementById('calDynamicArea');
-    if (!area) return;
-    const todayKey = new Date().toISOString().slice(0,10);
-    const cacheKey = 'calPrayerCache_' + todayKey;
-    let payload = null;
-    try {
-        const cached = localStorage.getItem(cacheKey);
-        if (cached) payload = JSON.parse(cached);
-    } catch(e) {}
-    if (!payload) {
-        try {
-            const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Amman&country=Jordan&method=23');
-            const json = await res.json();
-            if (json && json.data) {
-                payload = json.data;
-                localStorage.setItem(cacheKey, JSON.stringify(payload));
-            }
-        } catch(e) { console.error('prayer times fetch failed', e); }
-    }
-    const currentArea = document.getElementById('calDynamicArea');
-    if (!currentArea) return;
-    if (!payload) {
-        currentArea.innerHTML = `<div style="text-align:center;padding:1.2rem;color:#8b1e1e;"><i class="fas fa-exclamation-triangle"></i> تعذر جلب التاريخ وأوقات الصلاة، حاول لاحقاً</div>`;
-        return;
-    }
-    const g = payload.date.gregorian, h = payload.date.hijri, t = payload.timings || {};
-    const prayerLabels = [['Fajr','الفجر'], ['Sunrise','الشروق'], ['Dhuhr','الظهر'], ['Asr','العصر'], ['Maghrib','المغرب'], ['Isha','العشاء']];
-    const prayersHtml = prayerLabels.map(([key,label]) => `<div class="cal-prayer-item"><span class="cal-prayer-name">${label}</span><span class="cal-prayer-time">${escapeHtml((t[key]||'').split(' ')[0])}</span></div>`).join('');
-    currentArea.innerHTML = `
-        <div class="cal-weekday-title">${escapeHtml(h?.weekday?.ar||'')}</div>
-        <div class="cal-dates-row">
-            <div class="cal-date-box">
-                <div class="cal-date-day">${escapeHtml(h?.day||'')}</div>
-                <div class="cal-date-month">${escapeHtml(h?.month?.ar||'')}</div>
-                <div class="cal-date-year">${escapeHtml(h?.year||'')}هـ</div>
-            </div>
-            <div class="cal-emblem"></div>
-            <div class="cal-date-box">
-                <div class="cal-date-day">${escapeHtml(g?.day||'')}</div>
-                <div class="cal-date-month">${escapeHtml(g?.month?.en||'')}</div>
-                <div class="cal-date-year">${escapeHtml(g?.year||'')}م</div>
-            </div>
-        </div>
-        <div class="cal-prayers-bar">${prayersHtml}</div>`;
-}
-
-window.addCalendarScheduleRow = function() {
-    if (role !== 'admin') return;
-    if (!calendarPageData.schedule) calendarPageData.schedule = [];
-    calendarPageData.schedule.push({ id: generateUniqueId(), day: '', time: '', lesson: '' });
-    renderCalendarPage();
-};
-
-window.removeCalendarScheduleRow = function(id) {
-    if (role !== 'admin') return;
-    calendarPageData.schedule = (calendarPageData.schedule || []).filter(r => r.id !== id);
-    renderCalendarPage();
-};
-
-window.saveCalendarSchedule = async function() {
-    if (role !== 'admin') return;
-    const rows = document.querySelectorAll('#calScheduleTableBody tr[data-id]');
-    const newSchedule = [];
-    rows.forEach(tr => {
-        const id = tr.getAttribute('data-id') || generateUniqueId();
-        const day = tr.querySelector('[data-field="day"]')?.value.trim() || '';
-        const time = tr.querySelector('[data-field="time"]')?.value.trim() || '';
-        const lesson = tr.querySelector('[data-field="lesson"]')?.value.trim() || '';
-        newSchedule.push({ id, day, time, lesson });
-    });
-    calendarPageData.schedule = newSchedule;
-    try {
-        await set(ref(db, 'calendarPage/schedule'), calendarPageData.schedule);
-        showToast('✅ تم حفظ جدول الدوام', true);
-    } catch(e) { showToast('❌ خطأ في حفظ الجدول', false); }
-    renderCalendarPage();
-};
-
-window.saveCalendarArticle = async function() {
-    if (role !== 'admin') return;
-    const val = document.getElementById('calendarArticleInput')?.value || '';
-    calendarPageData.article = val.trim();
-    try {
-        await set(ref(db, 'calendarPage/article'), calendarPageData.article);
-        showToast('✅ تم حفظ المقالة', true);
-    } catch(e) { showToast('❌ خطأ في حفظ المقالة', false); }
-};
-
 function renderVisionSection() {
     const cont = document.getElementById('visionContainer');
     if (!cont) return;
@@ -4251,7 +4062,6 @@ window.addEventListener('popstate', function(event) {
                 case 'exams': showExamsSection(true); break;
                 case 'vision': showVisionSection(true); break;
                 case 'instructions': showInstructionsSection(true); break;
-                case 'calendar': showCalendarSection(true); break;
                 default: showHomeScreen(true);
             }
             return;
@@ -4269,7 +4079,6 @@ window.addEventListener('popstate', function(event) {
             case 'exams': showExamsSection(true); break;
             case 'vision': showVisionSection(true); break;
             case 'instructions': showInstructionsSection(true); break;
-            case 'calendar': showCalendarSection(true); break;
             default: showHomeScreen(true);
         }
     } else {
